@@ -1,12 +1,13 @@
 from Compania import Compania  # Cambiamos la importación
 
 class Vuelos:
-    def __init__(self, origen,destino,duracion,fecha,compania):
+    def __init__(self, origen,destino,duracion,fecha,compania,capacidad):
         self.__origen = origen
         self.__destino = destino
         self.__duracion = duracion
         self.__fecha = fecha
         self.__compania = Compania().validar_compania(compania)
+        self.__capacidad = capacidad
     @property
     def origen(self):    
         return self.__origen
@@ -35,5 +36,12 @@ class Vuelos:
     def fecha(self, fecha): 
         self.__fecha = fecha   
         
+    @property
+    def capacidad(self):
+        return self.__capacidad
+    @capacidad.setter
+    def capacidad(self, capacidad): 
+        self.__capacidad = capacidad   
+        
     def registrar_vuelo(self):
-        return ("Vuelo registrado", self.__origen, self.__destino, self.__duracion, self.__fecha, self.__compania)
+        return ("Vuelo registrado", self.__origen, self.__destino, self.__duracion, self.__fecha, self.__compania,self.__capacidad)
