@@ -31,4 +31,5 @@ class Compania:
         else:
             raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}") # revisar luego
 
-        
+    def registrar_compania(self):
+        return ("Compañia registrada", self.__nombre, self.__pais, self.__codigo) 
