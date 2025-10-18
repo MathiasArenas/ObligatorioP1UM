@@ -1,7 +1,7 @@
-from Cliente import Cliente
-from Tripulante import Tripulante
-from Vuelos import Vuelos
-from Sistema import Sistema
+from cliente import Cliente
+from tripulante import Tripulante
+from vuelos import Vuelos
+from sistema import Sistema
 
 class Main:
     pass

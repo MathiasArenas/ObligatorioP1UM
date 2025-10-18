@@ -1,8 +1,8 @@
 import os
 from utiles import Utiles
-from Persona import Persona
-from Cliente import Cliente
-from Tripulante import Tripulante
+from persona import Persona
+from cliente import Cliente
+from tripulante import Tripulante
 
 class Sistema:
     @staticmethod
@@ -102,7 +102,3 @@ class Sistema:
             else:
                 Sistema.casos_opciones(opcion)
     
-
-if __name__ == "__main__":
-    os.system('cls' if os.name == 'nt' else 'clear')
-    Sistema.manejar_menu()

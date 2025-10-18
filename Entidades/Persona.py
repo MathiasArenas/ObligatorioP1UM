@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
 
 class Persona(ABC):
-    #inicializacion de constructores
     def __init__(self, nombre, apellido, documentoId, email, celular):
         self.__nombre = nombre
         self.__apellido = apellido        
