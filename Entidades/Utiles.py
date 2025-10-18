@@ -1,6 +1,8 @@
 class Utiles:
+    def __init__(self):
+        pass
 
-    def controlar_numero(self, entrada):
+    def controlar_numero(entrada):
         while True:
             try:
                 valor = int(entrada)
@@ -24,3 +26,12 @@ class Utiles:
                 return fecha.strftime(formato_fecha)
             except ValueError:
                 entrada = input(f"Fecha inválida. Por favor, ingrese una fecha en el formato {formato_fecha}: ")
+
+if __name__ == "__main__":
+    utiles = Utiles()
+    numero = utiles.controlar_numero("abc")
+    print(f"Número ingresado: {numero}")
+    texto = utiles.controlar_srting("   ")
+    print(f"Texto ingresado: '{texto}'")
+    fecha = utiles.controlar_fecha("2024-13-01")
+    print(f"Fecha ingresada: {fecha}")

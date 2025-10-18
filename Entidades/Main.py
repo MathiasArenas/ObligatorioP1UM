@@ -1,7 +1,10 @@
 from Cliente import Cliente
 from Tripulante import Tripulante
 from Vuelos import Vuelos
-from Sistema import Sistema as Sis
+from Sistema import Sistema
+
+class Main:
+    pass
 
 if __name__ == "__main__":
     # cliente1=Cliente("Juan", "Perez", "12345678", "mathias@mail","099882299", "Uruguayo", ["Vuelo1", "Vuelo2"])
@@ -10,4 +13,4 @@ if __name__ == "__main__":
     # print(cliente1.registrar_persona())
     # print(tripulante1.registrar_persona())
     # print(vuelo1.registrar_vuelo())
-    Sis().menu()
+    Sistema.manejar_menu()
