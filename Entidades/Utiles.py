@@ -1,6 +1,12 @@
+import os
+
 class Utiles:
     def __init__(self):
         pass
+
+    @staticmethod
+    def cls():
+        os.system('cls' if os.name == 'nt' else 'clear')
 
     def controlar_numero(self, entrada):
         while True:

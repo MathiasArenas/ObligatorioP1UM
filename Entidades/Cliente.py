@@ -9,3 +9,5 @@ class Cliente(Persona):
         return ("Cliente registrado", self.nombre, self.apellido, self.documentoId, self.email, self.celular, self.__nacionalidad, self.__historial_vuelos)
 
 
+    # cliente1=Cliente("Juan", "Perez", "12345678", "mathias@mail","099882299", "Uruguayo", ["Vuelo1", "Vuelo2"])
+    # print(cliente1.registrar_persona())

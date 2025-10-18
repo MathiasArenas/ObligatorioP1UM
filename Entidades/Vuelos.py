@@ -45,3 +45,6 @@ class Vuelos:
         
     def registrar_vuelo(self):
         return ("Vuelo registrado", self.__origen, self.__destino, self.__duracion, self.__fecha, self.__compania,self.__capacidad)
+
+    # vuelo1=Vuelos("Montevideo", "Buenos Aires", 1.5, "2024-07-01", "pluna")
+    # print(vuelo1.registrar_vuelo())

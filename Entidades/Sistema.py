@@ -18,6 +18,7 @@ class Sistema:
 
     @staticmethod
     def menu():
+        Utiles.cls()
         Sistema.bienvenida()
         print('1. Registrar Persona')
         print('2. Registrar Compañia')
