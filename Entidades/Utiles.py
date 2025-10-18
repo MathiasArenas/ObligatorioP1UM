@@ -2,7 +2,7 @@ class Utiles:
     def __init__(self):
         pass
 
-    def controlar_numero(entrada):
+    def controlar_numero(self, entrada):
         while True:
             try:
                 valor = int(entrada)

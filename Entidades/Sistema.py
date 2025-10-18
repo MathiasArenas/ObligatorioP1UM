@@ -1,5 +1,5 @@
 import os
-from Utiles import Utiles
+from utiles import Utiles
 from Persona import Persona
 from Cliente import Cliente
 from Tripulante import Tripulante
@@ -96,14 +96,11 @@ class Sistema:
         while True:
             Sistema.menu()
             opcion = Sistema.pedir_opcion()
-            print(f'Opción seleccionada: {opcion}\n')
-
             if opcion == 0:
                 Sistema.salir()
                 break
             else:
-                print(f"La opción {opcion} no es valida\n")
-                input("Presione Enter para continuar...")
+                Sistema.casos_opciones(opcion)
     
 
 if __name__ == "__main__":
