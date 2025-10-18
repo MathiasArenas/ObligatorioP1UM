@@ -1,0 +1,33 @@
+REGLAS DE BUENAS PRÁCTICAS EN PYTHON
+
+1. Nombres de archivos
+- Usar minúsculas y guiones bajos (snake_case).
+- Ejemplos: sistema.py, cliente.py, utiles.py, controlador_vuelos.py
+- Evitar mayúsculas, espacios o caracteres especiales.
+
+2. Nombres de clases
+- Usar CamelCase (PascalCase), comenzando con mayúscula.
+- Ejemplos: Sistema, Cliente, Tripulante, ControladorInformes
+- Evitar guiones bajos o nombres en minúscula.
+
+3. Nombres de variables
+- Usar snake_case: minúsculas con guiones bajos para separar palabras.
+- Ejemplos: nombre_cliente, historial_vuelos, fecha_registro
+- Evitar abreviaturas crípticas o nombres genéricos como x, data, temp.
+
+4. Nombres de métodos
+- Usar snake_case, igual que las variables.
+- Ejemplos: registrar_persona(), controlar_fecha(), mostrar_informe()
+- Evitar mayúsculas o prefijos innecesarios como get_ o set_ si se usan propiedades.
+
+5. Uso del bloque __main__
+- Usar el bloque if __name__ == "__main__": solo para iniciar el sistema o ejecutar pruebas.
+- Mantener la lógica principal en funciones o clases reutilizables.
+
+6. Separación por responsabilidad
+- Cada clase debe tener una responsabilidad clara.
+  Ejemplos:
+    - Cliente modela datos de cliente.
+    - Sistema coordina menús y flujo.
+    - Utiles valida entradas.
+- Esto facilita la modularización, el testeo y el mantenimiento.
