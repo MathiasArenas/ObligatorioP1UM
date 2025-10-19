@@ -25,14 +25,14 @@ class Compania:
         def codigo(self, codigo): 
             self.__codigo = codigo
 
-    def validar_compania(self, compania):  #  ahora recibe el parámetro
+    def validar_compania(self, compania): 
         if compania in Compania.lista_companias:
-            return compania   # devuelve el compania válido
+            return compania   
         else:
             raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}") # revisar luego
 
-    def registrar_compania(self):
-        self.__nombre = input("Ingrese el nombre de la compañia: ")
-        self.__pais = input("Ingrese el país de la compañia: ")
-        self.__codigo = input("Ingrese el código de la compañia: ")
-        return ("Compañia registrada", self.__nombre, self.__pais, self.__codigo) 
+    def registrar_compania():
+        nombre = input("Ingrese el nombre de la compañia: ")
+        pais = input("Ingrese el país de la compañia: ")
+        codigo = input("Ingrese el código de la compañia: ")
+        return ("Compañia registrada", nombre, pais, codigo) 

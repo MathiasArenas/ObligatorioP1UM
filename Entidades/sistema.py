@@ -66,42 +66,42 @@ class Sistema:
                 opcion_persona = Sistema.pedir_opcion()
                 match opcion_persona:
                     case 1: # Registrar Cliente
-                        Cliente().registrar_persona() 
+                        Cliente.registrar_persona() 
                     case 2: # Registrar Tripulante
-                        Tripulante().registrar_persona()
+                        Tripulante.registrar_persona()
                     case 0:
                         Sistema.menu()
                     case _:
                         print("Opción no válida")
             case 2:
-                Compania().registrar_compania()
+                Compania.registrar_compania()
             case 3:
-                Vuelos().registrar_vuelo()
+                Vuelos.registrar_vuelo()
             case 4:
-                Ticket().crear_ticket()
+                Ticket.crear_ticket()
                 pass
             case 5:
-                Tripulante().asignar_personal_vuelo()
+                Tripulante.asignar_personal_vuelo()
             case 6:
-                Equipaje().registrar_equipaje_bodega()
+                Equipaje.registrar_equipaje_bodega()
             case 7:
-                Vuelos().visualizar_vuelos()
+                Vuelos.visualizar_vuelos()
             case 8:
-                Ticket().cancelar_ticket()
+                Ticket.cancelar_ticket()
             case 9:
-                Vuelos().cancelar_vuelo()
+                Vuelos.cancelar_vuelo()
             case 10:
                 Sistema.menu_informes()
                 opcion_informe = Sistema.pedir_opcion()
                 match opcion_informe:
                     case 1:
-                        Ticket().informe_pasajeros_por_vuelo()
+                        Ticket.informe_pasajeros_por_vuelo()
                     case 2:
-                        Tripulante().informe_personal_asignado()
+                        Tripulante.informe_personal_asignado()
                     case 3:
-                        Vuelos().informe_vuelos_por_compania()
+                        Vuelos.informe_vuelos_por_compania()
                     case 4:
-                        Vuelos().informe_vuelos_cancelados()
+                        Vuelos.informe_vuelos_cancelados()
                     case 0:
                         Sistema.menu()
                     case _:
