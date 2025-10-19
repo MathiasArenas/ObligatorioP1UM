@@ -44,4 +44,10 @@ class Vuelos:
         self.__capacidad = capacidad   
         
     def registrar_vuelo(self):
+        self.__origen = input("Ingrese el origen del vuelo: ")
+        self.__destino = input("Ingrese el destino del vuelo: ")
+        self.__duracion = input("Ingrese la duración del vuelo: ")
+        self.__fecha = input("Ingrese la fecha del vuelo (DD/MM/AAAA): ")
+        self.__compania = input("Ingrese la compañía del vuelo: ")
+        self.__capacidad = input("Ingrese la capacidad del vuelo: ")
         return ("Vuelo registrado", self.__origen, self.__destino, self.__duracion, self.__fecha, self.__compania,self.__capacidad)
