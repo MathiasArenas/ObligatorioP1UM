@@ -1,5 +1,5 @@
-from persona import Persona
-from roles import Roles
+from Persona import Persona
+from Roles import Roles
 
 class Tripulante(Persona): 
     def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo):

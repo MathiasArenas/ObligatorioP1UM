@@ -1,8 +1,8 @@
 import os
-from utiles import Utiles
-from persona import Persona
-from cliente import Cliente
-from tripulante import Tripulante
+from Utiles import Utiles
+from Persona import Persona
+from Cliente import Cliente
+from Tripulante import Tripulante
 
 class Sistema:
     @staticmethod
