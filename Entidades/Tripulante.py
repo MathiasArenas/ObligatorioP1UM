@@ -19,3 +19,5 @@ class Tripulante(Persona):
         self.__horas_vuelo = input ("Ingrese las horas de vuelo del tripulante: ")        
         return ("Tripulante registrado", self.nombre, self.apellido, self.documentoId, self.email, self.celular, self.__rol, self.__fecha_ingreso, self.__horas_vuelo)
         
+    # tripulante1=Tripulante("Ana", "Gomez", "87654321", "ana@mail","098877766", "Piloto", "2020-01-15", 1500)
+    # print(tripulante1.registrar_persona())

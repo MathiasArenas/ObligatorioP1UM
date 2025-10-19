@@ -3,6 +3,9 @@ from utiles import Utiles
 from persona import Persona
 from cliente import Cliente
 from tripulante import Tripulante
+from vuelos import Vuelos
+from compania import Compania
+from ticket import Ticket
 
 class Sistema:
     @staticmethod
@@ -15,6 +18,7 @@ class Sistema:
 
     @staticmethod
     def menu():
+        Utiles.cls()
         Sistema.bienvenida()
         print('1. Registrar Persona')
         print('2. Registrar Compañia')
@@ -59,34 +63,49 @@ class Sistema:
         match opcion:
             case 1: # Registrar Persona
                 Sistema.menu_persona()
-                sub_opcion = Sistema.pedir_opcion()
-                match sub_opcion:
+                opcion_persona = Sistema.pedir_opcion()
+                match opcion_persona:
                     case 1: # Registrar Cliente
-                        cliente = Cliente().registrar_persona() 
+                        Cliente().registrar_persona() 
                     case 2: # Registrar Tripulante
-                        tripulante = Tripulante().registrar_persona()
+                        Tripulante().registrar_persona()
                     case 0:
                         Sistema.menu()
                     case _:
                         print("Opción no válida")
             case 2:
-                pass
+                Compania().registrar_compania()
             case 3:
-                pass
+                Vuelos().registrar_vuelo()
             case 4:
+                Ticket().crear_ticket()
                 pass
             case 5:
-                pass
+                Tripulante().asignar_personal_vuelo()
             case 6:
-                pass
+                Equipaje().registrar_equipaje_bodega()
             case 7:
-                pass
+                Vuelos().visualizar_vuelos()
             case 8:
-                pass
+                Ticket().cancelar_ticket()
             case 9:
-                pass
+                Vuelos().cancelar_vuelo()
             case 10:
-                pass
+                Sistema.menu_informes()
+                opcion_informe = Sistema.pedir_opcion()
+                match opcion_informe:
+                    case 1:
+                        Ticket().informe_pasajeros_por_vuelo()
+                    case 2:
+                        Tripulante().informe_personal_asignado()
+                    case 3:
+                        Vuelos().informe_vuelos_por_compania()
+                    case 4:
+                        Vuelos().informe_vuelos_cancelados()
+                    case 0:
+                        Sistema.menu()
+                    case _:
+                        print("Opción no válida")
             case 0:
                 Sistema.salir()
             case _:

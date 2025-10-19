@@ -1,6 +1,3 @@
-from cliente import Cliente
-from tripulante import Tripulante
-from vuelos import Vuelos
 from sistema import Sistema
 
 class Main:
