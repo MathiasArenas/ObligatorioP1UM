@@ -19,13 +19,4 @@ class Cliente(Persona):
         @historial_vuelos.setter
         def historial_vuelos(self, historial_vuelos):
             self.__historial_vuelos = historial_vuelos
-            
-    def registrar_persona():
-        nombre = input ("Ingrese el nombre del cliente: ")
-        apellido = input ("Ingrese el apellido del cliente: ")
-        documentoId = input ("Ingrese el documento de identidad del cliente: ")
-        email = input ("Ingrese el email del cliente: ")
-        celular = input ("Ingrese el celular del cliente: ")
-        nacionalidad = input ("Ingrese la nacionalidad del cliente: ")
-        historial_vuelos = input ("Ingrese el historial de vuelos del cliente: ")
-        return ("Cliente registrado", nombre, apellido, documentoId, email, celular, nacionalidad, historial_vuelos)
+    
