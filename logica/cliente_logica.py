@@ -10,4 +10,5 @@ class ClienteLogica:
         nacionalidad = input ("Ingrese la nacionalidad del cliente: ")
         historial_vuelos = input ("Ingrese el historial de vuelos del cliente: ")
         cliente = Cliente(nombre, apellido, documentoId, email, celular, nacionalidad, historial_vuelos)
+        cliente.registrar_persona(cliente)
         return ("Cliente registrado", cliente)

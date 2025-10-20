@@ -33,6 +33,6 @@ class Equipaje:
     @costo.setter
     def costo(self, costo): 
         self.__costo = costo
-            
+        
     def registrar_equipaje(self):
-        return ("Equipaje registrado", self.__peso_en_kg, self.__pasajero, self.__vuelo, self.__costo)
+        pass

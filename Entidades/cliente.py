@@ -19,4 +19,6 @@ class Cliente(Persona):
         @historial_vuelos.setter
         def historial_vuelos(self, historial_vuelos):
             self.__historial_vuelos = historial_vuelos
-    
+
+    def registrar_persona(self):
+        pass

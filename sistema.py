@@ -1,11 +1,11 @@
 import os
 from utiles import Utiles
-from persona import Persona
-from cliente import Cliente
-from tripulante import Tripulante
-from vuelos import Vuelos
-from compania import Compania
-from ticket import Ticket
+from entidades.persona import Persona
+from entidades.cliente import Cliente
+from entidades.tripulante import Tripulante
+from entidades.vuelos import Vuelos
+from entidades.compania import Compania
+from entidades.ticket import Ticket
 
 class Sistema:
     lista_tripulantes = []
@@ -123,4 +123,4 @@ class Sistema:
                 break
             else:
                 Sistema.casos_opciones(opcion)
-    
+
