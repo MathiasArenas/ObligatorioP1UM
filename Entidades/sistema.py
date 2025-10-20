@@ -8,9 +8,11 @@ from compania import Compania
 from ticket import Ticket
 
 class Sistema:
+    lista_tripulantes = []
     @staticmethod
     def bienvenida():        
         print("*** Bienvenido al sistema ***")
+    
 
     @staticmethod    
     def salir():
@@ -81,7 +83,8 @@ class Sistema:
                 Ticket.crear_ticket()
                 pass
             case 5:
-                Tripulante.asignar_personal_vuelo()
+                tripulante = Tripulante.asignar_personal_vuelo()
+                Sistema.lista_tripulantes.append(tripulante)
             case 6:
                 Equipaje.registrar_equipaje_bodega()
             case 7:

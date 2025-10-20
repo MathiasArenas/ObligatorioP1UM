@@ -37,3 +37,11 @@ class Tripulante(Persona):
         horas_vuelo = input ("Ingrese las horas de vuelo del tripulante: ")        
         return ("Tripulante registrado", nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo)
         
+    def asignar_personal_vuelo():
+        #print("Asignar personal a vuelo")
+        id_vuelo = input("Ingrese el ID del vuelo: ")
+        tipo_vuelo = input("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): ")
+        nombre = input("Ingrese el nombre del tripulante: ")
+        apellido = input("Ingrese el apellido del tripulante: ")
+        estado_vuelo = input("Ingrese el estado del vuelo (Activo/Cancelado): ")
+        return ("Personal asignado", id_vuelo, tipo_vuelo, nombre, apellido, estado_vuelo)
