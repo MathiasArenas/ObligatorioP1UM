@@ -1,4 +1,4 @@
-from compania import Compania  # Cambiamos la importación
+from entidades.compania import Compania  
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
