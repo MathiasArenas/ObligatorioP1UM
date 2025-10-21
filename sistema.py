@@ -6,6 +6,11 @@ from entidades.tripulante import Tripulante
 from entidades.vuelos import Vuelos
 from entidades.compania import Compania
 from entidades.ticket import Ticket
+from logica.cliente_logica import ClienteLogica
+# from logica.tripulante_logica import TripulanteLogica
+# from logica.vuelos_logica import VuelosLogica
+from logica.compania_logica import CompaniaLogica
+from logica.equipaje_logica import EquipajeLogica
 
 class Sistema:
     lista_tripulantes = []
@@ -68,15 +73,16 @@ class Sistema:
                 opcion_persona = Sistema.pedir_opcion()
                 match opcion_persona:
                     case 1: # Registrar Cliente
-                        Cliente.registrar_persona() 
+                       cliente = ClienteLogica.registrar_persona()
                     case 2: # Registrar Tripulante
-                        Tripulante.registrar_persona()
+                        pass
+                        # tripulante = TripulanteLogica.registrar_persona()
                     case 0:
                         Sistema.menu()
                     case _:
                         print("Opción no válida")
             case 2:
-                Compania.registrar_compania()
+                compania =CompaniaLogica.registrar_compania()
             case 3:
                 Vuelos.registrar_vuelo()
             case 4:
@@ -86,7 +92,7 @@ class Sistema:
                 tripulante = Tripulante.asignar_personal_vuelo()
                 Sistema.lista_tripulantes.append(tripulante)
             case 6:
-                Equipaje.registrar_equipaje_bodega()
+                equipaje = EquipajeLogica.registrar_equipaje()
             case 7:
                 Vuelos.visualizar_vuelos()
             case 8:
