@@ -1,10 +1,10 @@
 from entidades.persona import Persona
 
 class Cliente(Persona):
-    def __init__(self, nombre, apellido, documentoId, email, celular,nacionalidad,historial_vuelos):
+    def __init__(self, nombre, apellido, documentoId, email, celular,nacionalidad,historial_vuelos=None):
         super().__init__(nombre, apellido, documentoId, email, celular)
         self.__nacionalidad = nacionalidad
-        self.__historial_vuelos = historial_vuelos
+        self.__historial_vuelos = historial_vuelos if None else []
         
         @property
         def nacionalidad(self): 

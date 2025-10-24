@@ -2,11 +2,12 @@ from entidades.persona import Persona
 from entidades.roles import Roles
 
 class Tripulante(Persona): 
-    def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo):
+    def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo=None):
         super().__init__(nombre, apellido, documentoId, email, celular)
         self.__rol = Roles().validar_rol(rol)
         self.__fecha_ingreso = fecha_ingreso
-        self.__horas_vuelo = horas_vuelo
+        #self.__horas_vuelo = horas_vuelo if None else []
+        
         @property
         def rol(self):
             return self.__rol
@@ -27,21 +28,6 @@ class Tripulante(Persona):
             self.__horas_vuelo = horas_vuelo
     
     def registrar_persona():
-        nombre = input ("Ingrese el nombre del tripulante: ")
-        apellido = input ("Ingrese el apellido del tripulante: ")
-        documentoId = input ("Ingrese el documento de identidad del tripulante: ")
-        email = input ("Ingrese el email del tripulante: ")
-        celular = input ("Ingrese el celular del tripulante: ")
-        rol = input ("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): ")
-        fecha_ingreso = input ("Ingrese la fecha de ingreso del tripulante (DD/MM/AAAA): ")
-        horas_vuelo = input ("Ingrese las horas de vuelo del tripulante: ")        
-        return ("Tripulante registrado", nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo)
-        
+        pass
     def asignar_personal_vuelo():
-        #print("Asignar personal a vuelo")
-        id_vuelo = input("Ingrese el ID del vuelo: ")
-        tipo_vuelo = input("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): ")
-        nombre = input("Ingrese el nombre del tripulante: ")
-        apellido = input("Ingrese el apellido del tripulante: ")
-        estado_vuelo = input("Ingrese el estado del vuelo (Activo/Cancelado): ")
-        return ("Personal asignado", id_vuelo, tipo_vuelo, nombre, apellido, estado_vuelo)
+        pass

@@ -7,13 +7,17 @@ from entidades.vuelos import Vuelos
 from entidades.compania import Compania
 from entidades.ticket import Ticket
 from logica.cliente_logica import ClienteLogica
-# from logica.tripulante_logica import TripulanteLogica
-# from logica.vuelos_logica import VuelosLogica
+from logica.tripulante_logica import TripulanteLogica
+#from logica.vuelos_logica import VuelosLogica
 from logica.compania_logica import CompaniaLogica
 from logica.equipaje_logica import EquipajeLogica
 
 class Sistema:
+    
     lista_tripulantes = []
+    lista_clientes = []
+    lista_asignar_personal_vuelo = []
+    
     @staticmethod
     def bienvenida():        
         print("*** Bienvenido al sistema ***")
@@ -73,10 +77,13 @@ class Sistema:
                 opcion_persona = Sistema.pedir_opcion()
                 match opcion_persona:
                     case 1: # Registrar Cliente
-                       cliente = ClienteLogica.registrar_persona()
+                        cliente = ClienteLogica.registrar_persona()
+                        Sistema.lista_clientes.append(cliente)
                     case 2: # Registrar Tripulante
-                        pass
-                        # tripulante = TripulanteLogica.registrar_persona()
+                        tripulante = TripulanteLogica.registrar_persona()
+                        Sistema.lista_tripulantes.append(tripulante)
+                        asignar_personal_vuelo = TripulanteLogica.asignar_personal_vuelo()
+                        Sistema.lista_asignar_personal_vuelo.append(tripulante)
                     case 0:
                         Sistema.menu()
                     case _:
