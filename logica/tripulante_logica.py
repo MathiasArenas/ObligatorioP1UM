@@ -31,5 +31,4 @@ class TripulanteLogica:
             "apellido": apellido,
             "estado_vuelo": estado_vuelo
         }
-        
         return asignacion

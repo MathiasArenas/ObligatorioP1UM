@@ -95,7 +95,7 @@ class Sistema:
                 compania =CompaniaLogica.registrar_compania()
                 Sistema.lista_companias.append(compania)
             case 3:
-                Vuelos.registrar_vuelo()
+                vuelos = VuelosLogica.registrar_vuelo()
                 Sistema.lista_vuelos.append(Vuelos)
             case 4:
                 ticket = TicketLogica.crear_ticket()

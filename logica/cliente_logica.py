@@ -1,6 +1,7 @@
 from entidades.cliente import Cliente
 
 class ClienteLogica:
+    
     def registrar_persona():
         nombre = input ("Ingrese el nombre del cliente: ")
         apellido = input ("Ingrese el apellido del cliente: ")
