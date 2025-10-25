@@ -98,8 +98,8 @@ class Sistema:
                 Vuelos.registrar_vuelo()
                 Sistema.lista_vuelos.append(Vuelos)
             case 4:
-                Ticket.crear_ticket()
-                Sistema.lista_tickets.append(Ticket)
+                ticket = TicketLogica.crear_ticket()
+                Sistema.lista_tickets.append(ticket)
                 pass
             case 5:
                 asignacion = TripulanteLogica.asignar_personal_vuelo()
