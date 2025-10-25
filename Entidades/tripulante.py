@@ -27,7 +27,7 @@ class Tripulante(Persona):
         def horas_vuelo(self, horas_vuelo):
             self.__horas_vuelo = horas_vuelo
     
-    def registrar_persona():
+    def registrar_persona(self):
         pass
-    def asignar_personal_vuelo():
+    def asignar_personal_vuelo(self):
         pass

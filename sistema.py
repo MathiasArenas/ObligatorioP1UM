@@ -82,8 +82,8 @@ class Sistema:
                     case 2: # Registrar Tripulante
                         tripulante = TripulanteLogica.registrar_persona()
                         Sistema.lista_tripulantes.append(tripulante)
-                        asignar_personal_vuelo = TripulanteLogica.asignar_personal_vuelo()
-                        Sistema.lista_asignar_personal_vuelo.append(tripulante)
+                        # asignar_personal_vuelo = TripulanteLogica.asignar_personal_vuelo()
+                        # Sistema.lista_asignar_personal_vuelo.append(tripulante)
                     case 0:
                         Sistema.menu()
                     case _:
