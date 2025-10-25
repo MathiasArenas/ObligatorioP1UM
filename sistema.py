@@ -8,15 +8,20 @@ from entidades.compania import Compania
 from entidades.ticket import Ticket
 from logica.cliente_logica import ClienteLogica
 from logica.tripulante_logica import TripulanteLogica
-#from logica.vuelos_logica import VuelosLogica
+from logica.vuelos_logica import VuelosLogica
 from logica.compania_logica import CompaniaLogica
 from logica.equipaje_logica import EquipajeLogica
+from logica.ticket_logica import TicketLogica
 
 class Sistema:
     
     lista_tripulantes = []
     lista_clientes = []
     lista_asignar_personal_vuelo = []
+    lista_companias = []
+    lista_vuelos = []
+    lista_tickets = []
+    lista_equipajes = []
     
     @staticmethod
     def bienvenida():        
@@ -82,24 +87,26 @@ class Sistema:
                     case 2: # Registrar Tripulante
                         tripulante = TripulanteLogica.registrar_persona()
                         Sistema.lista_tripulantes.append(tripulante)
-                        # asignar_personal_vuelo = TripulanteLogica.asignar_personal_vuelo()
-                        # Sistema.lista_asignar_personal_vuelo.append(tripulante)
                     case 0:
                         Sistema.menu()
                     case _:
                         print("Opción no válida")
             case 2:
                 compania =CompaniaLogica.registrar_compania()
+                Sistema.lista_companias.append(compania)
             case 3:
                 Vuelos.registrar_vuelo()
+                Sistema.lista_vuelos.append(Vuelos)
             case 4:
                 Ticket.crear_ticket()
+                Sistema.lista_tickets.append(Ticket)
                 pass
             case 5:
                 tripulante = Tripulante.asignar_personal_vuelo()
                 Sistema.lista_tripulantes.append(tripulante)
             case 6:
                 equipaje = EquipajeLogica.registrar_equipaje()
+                Sistema.lista_equipajes.append(equipaje)
             case 7:
                 Vuelos.visualizar_vuelos()
             case 8:
