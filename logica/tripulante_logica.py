@@ -18,10 +18,18 @@ class TripulanteLogica:
     def asignar_personal_vuelo():
         #print("Asignar personal a vuelo")
         id_vuelo = input("Ingrese el ID del vuelo: ")
-        tipo_vuelo = input("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): ")
+        rol = input("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): ")
         nombre = input("Ingrese el nombre del tripulante: ")
         apellido = input("Ingrese el apellido del tripulante: ")
         estado_vuelo = input("Ingrese el estado del vuelo (Activo/Cancelado): ")
-        asignar_personal_vuelo = (id_vuelo, tipo_vuelo, nombre, apellido, estado_vuelo)
-        asignar_personal_vuelo.asignar_personal_vuelo()
-        return ("Personal asignado",asignar_personal_vuelo)
+        
+         # Crear un diccionario con la asignación
+        asignacion = {
+            "id_vuelo": id_vuelo,
+            "rol": rol,
+            "nombre": nombre,
+            "apellido": apellido,
+            "estado_vuelo": estado_vuelo
+        }
+        
+        return asignacion

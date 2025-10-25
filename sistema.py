@@ -102,8 +102,8 @@ class Sistema:
                 Sistema.lista_tickets.append(Ticket)
                 pass
             case 5:
-                tripulante = Tripulante.asignar_personal_vuelo()
-                Sistema.lista_tripulantes.append(tripulante)
+                asignacion = TripulanteLogica.asignar_personal_vuelo()
+                Sistema.lista_asignar_personal_vuelo.append(asignacion)
             case 6:
                 equipaje = EquipajeLogica.registrar_equipaje()
                 Sistema.lista_equipajes.append(equipaje)

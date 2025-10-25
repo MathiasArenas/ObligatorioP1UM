@@ -1,4 +1,4 @@
-from entidades.vuelos import VuelosLogica
+from entidades.vuelos import Vuelos
 
 class VuelosLogica:
     pass
