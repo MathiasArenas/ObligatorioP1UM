@@ -29,5 +29,4 @@ class Tripulante(Persona):
     
     def registrar_persona(self):
         pass
-    def asignar_personal_vuelo(self):
-        pass
+    

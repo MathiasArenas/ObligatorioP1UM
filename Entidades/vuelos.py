@@ -11,6 +11,9 @@ class Vuelos:
         self.__tipo_vuelo = tipo_vuelo
         self.__id_vuelo = id_vuelo
         self.__estado_vuelo = estado_vuelo
+        self.__tripulantes = []
+        self.__clientes = []
+        self.__equipajes = []
 
     @property
     def origen(self):    
@@ -73,9 +76,16 @@ class Vuelos:
     @estado_vuelo.setter
     def estado_vuelo(self, estado_vuelo):
         self.__estado_vuelo = estado_vuelo
-
        
     def registrar_vuelo():
         pass
     def validar_tipo_vuelo(tipo_vuelo):
+        pass
+    def asignar_personal_vuelo(self):
+        pass
+    def asignar_cliente_a_vuelo(lista_clientes):
+        pass
+    def asignar_equipaje_a_vuelo(lista_equipajes):
+        pass
+    def visualizar_vuelos(vuelo):
         pass

@@ -17,11 +17,12 @@ class Sistema:
     
     lista_tripulantes = []
     lista_clientes = []
-    lista_asignar_personal_vuelo = []
     lista_companias = []
     lista_vuelos = []
     lista_tickets = []
     lista_equipajes = []
+    vuelo: Vuelos = None
+   
     
     @staticmethod
     def bienvenida():        
@@ -95,15 +96,16 @@ class Sistema:
                 compania =CompaniaLogica.registrar_compania()
                 Sistema.lista_companias.append(compania)
             case 3:
-                vuelos = VuelosLogica.registrar_vuelo()
-                Sistema.lista_vuelos.append(Vuelos)
+                vuelo = VuelosLogica.registrar_vuelo()
+                Sistema.lista_vuelos.append(vuelo)
             case 4:
                 ticket = TicketLogica.crear_ticket()
                 Sistema.lista_tickets.append(ticket)
                 pass
             case 5:
-                asignacion = TripulanteLogica.asignar_personal_vuelo()
-                Sistema.lista_asignar_personal_vuelo.append(asignacion)
+                tripulante = TripulanteLogica.registrar_persona()   
+                VuelosLogica.registrar_vuelo(vuelo,tripulante)
+                VuelosLogica.visualizar_vuelos(lista_vuelos[0])
             case 6:
                 equipaje = EquipajeLogica.registrar_equipaje()
                 Sistema.lista_equipajes.append(equipaje)
