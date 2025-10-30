@@ -33,6 +33,6 @@ class Compania:
                 f"País: {self.pais}, Código: {self.codigo}")
 
     def mostrar_compania(self):
-        print("\nCliente registrado exitosamente:")
+        print("\nCompania registrado exitosamente:")
         print(self)
         input("\nPresione Enter para continuar...")
