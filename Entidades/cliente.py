@@ -1,4 +1,5 @@
 from entidades.persona import Persona
+from utiles import Utiles
 
 class Cliente(Persona):
     def __init__(self, nombre, apellido, documentoId, email, celular,nacionalidad,historial_vuelos=None):
@@ -22,14 +23,12 @@ class Cliente(Persona):
 
     def registrar_persona(self):
         pass
-
     
     def __str__(self):
-        return (f"Cliente: {self.nombre} {self.apellido}, "
-                f"Documento: {self.documentoId}, Email: {self.email}, "
-                f"Celular: {self.celular}, Nacionalidad: {self.nacionalidad}")
+        return super().__str__() + f",\nNacionalidad: {self.nacionalidad}"
 
     def mostrar_cliente(self):
+        Utiles.cls()
         print("\nCliente registrado exitosamente:")
         print(self)
         input("\nPresione Enter para continuar...")

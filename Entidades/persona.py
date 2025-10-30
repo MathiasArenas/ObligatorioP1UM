@@ -46,7 +46,19 @@ class Persona(ABC):
     @abstractmethod
     def registrar_persona(self):
         pass
+
+    def __str__(self):
+        return (
+            f"\nNombre: {self.nombre},"
+            f"\nApellido: {self.apellido},"
+            f"\nDocumento: {self.documentoId},"
+            f"\nEmail: {self.email},"
+            f"\nCelular: {self.celular}"
+            )    
     
+    def mostrar_persona(self):
+        print(self)
+
 
 
 

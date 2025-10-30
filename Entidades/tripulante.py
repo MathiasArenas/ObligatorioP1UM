@@ -1,5 +1,6 @@
 from entidades.persona import Persona
 from entidades.roles import Roles
+from utiles import Utiles
 
 class Tripulante(Persona): 
     def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo=None):
@@ -29,4 +30,17 @@ class Tripulante(Persona):
     
     def registrar_persona(self):
         pass
+
+    def __str__(self):
+        return (
+        super().__str__() +
+        f",\nRol: {self.rol},"
+        f"\nFecha de Ingreso: {self.fecha_ingreso}"
+        )      
+
+    def mostrar_tripulante(self):
+        Utiles.cls()
+        print("\Tripulante registrado exitosamente:")
+        print(self)
+        input("\nPresione Enter para continuar...")
     
