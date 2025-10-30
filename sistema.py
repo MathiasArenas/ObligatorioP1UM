@@ -84,7 +84,11 @@ class Sistema:
                 match opcion_persona:
                     case 1: # Registrar Cliente
                         cliente = ClienteLogica.registrar_persona()
-                        Sistema.lista_clientes.append(cliente)
+                        Sistema.lista_clientes.append(cliente)                        
+                        print("\nCliente registrado exitosamente:")
+                        print(cliente)
+                        input("\nPresione Enter para continuar...")
+
                     case 2: # Registrar Tripulante
                         tripulante = TripulanteLogica.registrar_persona()
                         Sistema.lista_tripulantes.append(tripulante)
@@ -105,7 +109,6 @@ class Sistema:
             case 5:
                 tripulante = TripulanteLogica.registrar_persona()   
                 VuelosLogica.registrar_vuelo(vuelo,tripulante)
-                VuelosLogica.visualizar_vuelos(lista_vuelos[0])
             case 6:
                 equipaje = EquipajeLogica.registrar_equipaje()
                 Sistema.lista_equipajes.append(equipaje)
