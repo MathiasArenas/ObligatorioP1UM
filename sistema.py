@@ -90,6 +90,7 @@ class Sistema:
                     case 2: # Registrar Tripulante
                         tripulante = TripulanteLogica.registrar_persona()
                         Sistema.lista_tripulantes.append(tripulante)
+                        tripulante.mostrar_tripulante()
                     case 0:
                         Sistema.menu()
                     case _:
@@ -97,6 +98,7 @@ class Sistema:
             case 2:
                 compania =CompaniaLogica.registrar_compania()
                 Sistema.lista_companias.append(compania)
+                compania.mostrar_compania()
             case 3:
                 vuelo = VuelosLogica.registrar_vuelo()
                 Sistema.lista_vuelos.append(vuelo)
