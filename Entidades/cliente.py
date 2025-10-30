@@ -23,7 +23,13 @@ class Cliente(Persona):
     def registrar_persona(self):
         pass
 
+    
     def __str__(self):
         return (f"Cliente: {self.nombre} {self.apellido}, "
                 f"Documento: {self.documentoId}, Email: {self.email}, "
                 f"Celular: {self.celular}, Nacionalidad: {self.nacionalidad}")
+
+    def mostrar_cliente(self):
+        print("\nCliente registrado exitosamente:")
+        print(self)
+        input("\nPresione Enter para continuar...")

@@ -85,9 +85,7 @@ class Sistema:
                     case 1: # Registrar Cliente
                         cliente = ClienteLogica.registrar_persona()
                         Sistema.lista_clientes.append(cliente)                        
-                        print("\nCliente registrado exitosamente:")
-                        print(cliente)
-                        input("\nPresione Enter para continuar...")
+                        cliente.mostrar_cliente()
 
                     case 2: # Registrar Tripulante
                         tripulante = TripulanteLogica.registrar_persona()
