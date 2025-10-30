@@ -13,6 +13,6 @@ class TripulanteLogica:
         #horas_vuelo = input ("Ingrese las horas de vuelo del tripulante: ") 
         tripulante = Tripulante (nombre, apellido, documentoId, email, celular, rol, fecha_ingreso,[]) 
         tripulante.registrar_persona()
-        return ("Tripulante registrado", tripulante)
+        return tripulante
         
     
