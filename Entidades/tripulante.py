@@ -28,7 +28,6 @@ class Tripulante(Persona):
     def horas_vuelo(self, horas_vuelo):
         self.__horas_vuelo = horas_vuelo
     
-<<<<<<< HEAD
     def registrar_persona(self):
         pass
 
@@ -45,16 +44,3 @@ class Tripulante(Persona):
         print(self)
         input("\nPresione Enter para continuar...")
     
-=======
-    
-    def __str__(self):
-        return (f"Tripulante: {self.nombre} {self.apellido}, "
-                f"Documento: {self.documentoId}, Email: {self.email}, "
-                f"Celular: {self.celular}, Rol: {self.rol}, "
-                f"Fecha de Ingreso: {self.fecha_ingreso}")
-        
-    def mostrar_tripulante(self):
-        print("\nTripulante registrado exitosamente:")
-        print(self)
-        input("\nPresione Enter para continuar...")    
->>>>>>> f22db57a2e9cbf653a7a6a7629674f16b567fb78
