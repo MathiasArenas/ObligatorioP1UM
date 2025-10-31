@@ -1,19 +1,49 @@
+import uuid
 from entidades.vuelos import Vuelos
 
 class VuelosLogica:
-    
-    def registrar_vuelo():
+
+    @staticmethod
+    def registrar_vuelo(lista_companias):
         origen = input("Ingrese el origen del vuelo: ")
         destino = input("Ingrese el destino del vuelo: ")
-        duracion = input("Ingrese la duración del vuelo: ")
+        duracion = input("Ingrese la duración del vuelo (en horas): ")
         fecha = input("Ingrese la fecha del vuelo (DD/MM/AAAA): ")
-        compania = input("Ingrese la compañía del vuelo: ")
+
+        print("\nCompañías disponibles:")
+        for idx, comp in enumerate(lista_companias):
+            print(f"{idx + 1}. {comp.nombre} ({comp.codigo})") 
+
+        seleccion = input("Seleccione el número de la compañía: ")
+        try:
+            seleccion = int(seleccion)
+            compania = lista_companias[seleccion - 1]
+        except (ValueError, IndexError):
+            raise ValueError("Selección inválida de compañía.")
+
         capacidad = input("Ingrese la capacidad del vuelo: ")
         tipo_vuelo = input("Ingrese el tipo de vuelo (Nacional/Internacional): ")
-        id_vuelo = input("Ingrese el ID del vuelo: ")
-        estado_vuelo = input("Ingrese el estado del vuelo (Activo/Cancelado): ")
-        return ("Vuelo registrado", origen, destino, duracion, fecha, compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo)
-    
+        id_vuelo = str(uuid.uuid4())[:3] # Generar un ID único corto y el 8 es la longitud
+        estado_vuelo = "Activo"
+
+        tipo_vuelo = VuelosLogica.validar_tipo_vuelo(tipo_vuelo)
+
+        vuelo = Vuelos(
+            origen=origen,
+            destino=destino,
+            duracion=duracion,
+            fecha=fecha,
+            compania=compania,
+            capacidad=capacidad,
+            tipo_vuelo=tipo_vuelo,
+            id_vuelo=id_vuelo,
+            estado_vuelo=estado_vuelo
+        )
+
+        print(f"\nVuelo {id_vuelo} registrado correctamente.")
+        return vuelo
+
+    @staticmethod
     def validar_tipo_vuelo(tipo_vuelo):
         tipos_validos = ['Nacional', 'Internacional']
         if tipo_vuelo in tipos_validos:

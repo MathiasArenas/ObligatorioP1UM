@@ -6,7 +6,8 @@ class Vuelos:
         self.__destino = destino
         self.__duracion = duracion
         self.__fecha = fecha
-        self.__compania = Compania().validar_compania(compania)
+        # self.__compania = Compania().validar_compania(compania)
+        self.__compania = compania
         self.__capacidad = capacidad
         self.__tipo_vuelo = tipo_vuelo
         self.__id_vuelo = id_vuelo
