@@ -12,11 +12,13 @@ class Utiles:
         while True:
             try:
                 valor = int(entrada)
+                if valor < 0:
+                    raise ValueError("El número debe ser positivo.")
                 return valor
             except ValueError:
                 entrada = input("Entrada inválida. Por favor, ingrese un número: ")
 
-    def controlar_srting(self, entrada):
+    def controlar_string(self, entrada):
         while True:
             if entrada.strip() == "":
                 entrada = input("Entrada inválida. Por favor, ingrese un texto válido: ")

@@ -1,4 +1,5 @@
-from entidades.compania import Compania  
+from entidades.compania import Compania
+from sistema import Sistema  
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
@@ -90,3 +91,11 @@ class Vuelos:
         pass
     def visualizar_vuelos(vuelo):
         pass
+
+    def informe_pasajeros_por_vuelo():
+        for vuelo in Sistema.lista_vuelos:
+            print(f"Vuelo ID: {vuelo.id_vuelo}")
+            print("Pasajeros:")
+            for cliente in vuelo.clientes:
+                print(f" - {cliente.nombre}, {cliente.cedula}, {cliente.nacionalidad}, {cliente.cantidad_equipaje}")
+            print("\n")

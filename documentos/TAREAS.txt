@@ -1,12 +1,15 @@
 Mathi
     Crear Vuelo
     Crear Ticket
+
 Ema
-    Cancelar Vuelo
-    Informes a emitir
+    Cancelar Vuelo (In-Progress)
+    Informes a emitir (In-Progress)
+
 Horacio
     Registrar equipaje en bodega
     Visualizar Vuelo
+
 Diego
     Asignar personal a vuelo
     Cancelar Ticket

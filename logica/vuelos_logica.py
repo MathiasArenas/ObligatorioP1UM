@@ -50,3 +50,11 @@ class VuelosLogica:
             return tipo_vuelo
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
+        
+    @staticmethod
+    def cancelar_vuelo(vuelo):
+        # primero tengo que validar si puedo reasignar a otro vuelo personal, pasajeros y equipajes, y si puedo cancelar debo tener una causa y fecha
+        causa_cancelacion = input("Ingrese la causa de la cancelación del vuelo: ")
+        fecha_cancelacion = input("Ingrese la fecha de cancelación (DD/MM/AAAA): ")
+        vuelo.estado_vuelo = "Cancelado"
+        print(f"El vuelo {vuelo.id_vuelo} ha sido cancelado por la siguiente causa: {causa_cancelacion} en la fecha {fecha_cancelacion}.")

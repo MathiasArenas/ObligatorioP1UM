@@ -27,7 +27,6 @@ class Sistema:
     @staticmethod
     def bienvenida():        
         print("*** Bienvenido al sistema ***")
-    
 
     @staticmethod    
     def salir():
@@ -73,6 +72,7 @@ class Sistema:
     def pedir_opcion():
         opcion = input("Seleccione una opción: ")
         opcion = Utiles().controlar_numero(opcion)
+        Utiles.cls()
 
         return opcion
     
@@ -118,13 +118,17 @@ class Sistema:
             case 8:
                 Ticket.cancelar_ticket()
             case 9:
-                Vuelos.cancelar_vuelo()
+                print("Eliga el vuelo a cancelar:")
+                Vuelos.visualizar_vuelos()
+                vuelo_a_cancelar = input("Ingrese el ID del vuelo a cancelar: ")
+                VuelosLogica.cancelar_vuelo(vuelo_a_cancelar)
             case 10:
                 Sistema.menu_informes()
                 opcion_informe = Sistema.pedir_opcion()
                 match opcion_informe:
                     case 1:
-                        Ticket.informe_pasajeros_por_vuelo()
+                        # a. Informe de pasajeros por vuelo: Listado con nombre, cédula, nacionalidad y cantidad de equipaje.
+                        Vuelos.informe_pasajeros_por_vuelo()
                     case 2:
                         Tripulante.informe_personal_asignado()
                     case 3:
