@@ -79,70 +79,87 @@ class Sistema:
     def casos_opciones(opcion):
         match opcion:
             case 1: # Registrar Persona
+                Utiles.cls()
                 Sistema.menu_persona()
                 opcion_persona = Sistema.pedir_opcion()
                 match opcion_persona:
                     case 1: # Registrar Cliente
+                        Utiles.cls()
                         cliente = ClienteLogica.registrar_persona()
                         Sistema.lista_clientes.append(cliente)                        
                         cliente.mostrar_cliente()
-
                     case 2: # Registrar Tripulante
+                        Utiles.cls()
                         tripulante = TripulanteLogica.registrar_persona()
                         Sistema.lista_tripulantes.append(tripulante)
                         tripulante.mostrar_tripulante()
                     case 0:
+                        Utiles.cls()
                         Sistema.menu()
                     case _:
+                        Utiles.cls()
                         print("Opción no válida")
             case 2:
+                Utiles.cls()
                 compania =CompaniaLogica.registrar_compania()
                 Sistema.lista_companias.append(compania)
                 compania.mostrar_compania()
             case 3:
+                Utiles.cls()
                 vuelo = VuelosLogica.registrar_vuelo(Sistema.lista_companias)
                 Sistema.lista_vuelos.append(vuelo)
                 VuelosLogica.mostrar_vuelo(vuelo)
-
             case 4:
+                Utiles.cls()
                 ticket = TicketLogica.crear_ticket()
                 Sistema.lista_tickets.append(ticket)
                 pass
             case 5:
+                Utiles.cls()
                 tripulante = TripulanteLogica.registrar_persona()   
                 VuelosLogica.registrar_vuelo(vuelo,tripulante)
             case 6:
+                Utiles.cls()
                 equipaje = EquipajeLogica.registrar_equipaje()
                 Sistema.lista_equipajes.append(equipaje)
             case 7:
+                Utiles.cls()
                 Vuelos.visualizar_vuelos()
             case 8:
+                Utiles.cls()
                 Ticket.cancelar_ticket()
             case 9:
-                print("Eliga el vuelo a cancelar:")
-                Vuelos.visualizar_vuelos()
-                vuelo_a_cancelar = input("Ingrese el ID del vuelo a cancelar: ")
-                VuelosLogica.cancelar_vuelo(vuelo_a_cancelar)
+                Utiles.cls()
+                VuelosLogica.cancelar_vuelo(Sistema.lista_vuelos)
             case 10:
+                Utiles.cls()
                 Sistema.menu_informes()
                 opcion_informe = Sistema.pedir_opcion()
                 match opcion_informe:
                     case 1:
+                        Utiles.cls()
                         # a. Informe de pasajeros por vuelo: Listado con nombre, cédula, nacionalidad y cantidad de equipaje.
                         Vuelos.informe_pasajeros_por_vuelo(Sistema.lista_vuelos)
                     case 2:
+                        Utiles.cls()
                         Tripulante.informe_personal_asignado()
                     case 3:
+                        Utiles.cls()
                         Vuelos.informe_vuelos_por_compania()
                     case 4:
+                        Utiles.cls()
                         Vuelos.informe_vuelos_cancelados()
                     case 0:
+                        Utiles.cls()
                         Sistema.menu()
                     case _:
+                        Utiles.cls()
                         print("Opción no válida")
             case 0:
+                Utiles.cls()
                 Sistema.salir()
             case _:
+                Utiles.cls()
                 print("Opción no válida")
     
     def manejar_menu():

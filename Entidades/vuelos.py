@@ -88,9 +88,8 @@ class Vuelos:
     def asignar_cliente_a_vuelo(lista_clientes):
         pass
     def asignar_equipaje_a_vuelo(lista_equipajes):
-        pass
-    def visualizar_vuelos(vuelo):
-        pass
+        pass      
+        
 
     def informe_pasajeros_por_vuelo(lista_vuelos):
         for vuelo in lista_vuelos:
