@@ -1,4 +1,5 @@
 from entidades.compania import Compania  
+from utiles import Utiles
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
@@ -90,3 +91,4 @@ class Vuelos:
         pass
     def visualizar_vuelos(vuelo):
         pass
+    

@@ -102,6 +102,7 @@ class Sistema:
             case 3:
                 vuelo = VuelosLogica.registrar_vuelo(Sistema.lista_companias)
                 Sistema.lista_vuelos.append(vuelo)
+                VuelosLogica.mostrar_vuelo(vuelo)
 
             case 4:
                 ticket = TicketLogica.crear_ticket()

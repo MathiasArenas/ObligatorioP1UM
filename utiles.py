@@ -32,3 +32,7 @@ class Utiles:
                 return fecha.strftime(formato_fecha)
             except ValueError:
                 entrada = input(f"Fecha inválida. Por favor, ingrese una fecha en el formato {formato_fecha}: ")
+    
+    def generar_id_unico(self, longitud=8):
+        import uuid
+        return str(uuid.uuid4())[:longitud]

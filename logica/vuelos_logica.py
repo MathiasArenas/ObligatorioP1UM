@@ -1,5 +1,5 @@
-import uuid
 from entidades.vuelos import Vuelos
+from utiles import Utiles
 
 class VuelosLogica:
 
@@ -23,7 +23,7 @@ class VuelosLogica:
 
         capacidad = input("Ingrese la capacidad del vuelo: ")
         tipo_vuelo = input("Ingrese el tipo de vuelo (Nacional/Internacional): ")
-        id_vuelo = str(uuid.uuid4())[:3] # Generar un ID único corto y el 8 es la longitud
+        id_vuelo = Utiles().generar_id_unico()
         estado_vuelo = "Activo"
 
         tipo_vuelo = VuelosLogica.validar_tipo_vuelo(tipo_vuelo)
@@ -50,3 +50,19 @@ class VuelosLogica:
             return tipo_vuelo
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
+        
+    
+    @staticmethod
+    def mostrar_vuelo(vuelo):
+        Utiles.cls()
+        print("\nInformación del vuelo:")
+        print(f"ID: {vuelo.id_vuelo}")
+        print(f"Origen: {vuelo.origen}")
+        print(f"Destino: {vuelo.destino}")
+        print(f"Duración: {vuelo.duracion} horas")
+        print(f"Fecha: {vuelo.fecha}")
+        print(f"Compañía: {vuelo.compania.nombre} ({vuelo.compania.codigo})")
+        print(f"Capacidad: {vuelo.capacidad} pasajeros")
+        print(f"Tipo de vuelo: {vuelo.tipo_vuelo}")
+        print(f"Estado: {vuelo.estado_vuelo}")
+        input("\nPresione Enter para continuar...")
