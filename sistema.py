@@ -102,6 +102,7 @@ class Sistema:
             case 3:
                 vuelo = VuelosLogica.registrar_vuelo(Sistema.lista_companias)
                 Sistema.lista_vuelos.append(vuelo)
+                VuelosLogica.mostrar_vuelo(vuelo)
 
             case 4:
                 ticket = TicketLogica.crear_ticket()
@@ -128,7 +129,7 @@ class Sistema:
                 match opcion_informe:
                     case 1:
                         # a. Informe de pasajeros por vuelo: Listado con nombre, cédula, nacionalidad y cantidad de equipaje.
-                        Vuelos.informe_pasajeros_por_vuelo()
+                        Vuelos.informe_pasajeros_por_vuelo(Sistema.lista_vuelos)
                     case 2:
                         Tripulante.informe_personal_asignado()
                     case 3:

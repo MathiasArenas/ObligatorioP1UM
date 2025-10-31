@@ -29,8 +29,8 @@ class Compania:
         pass
     
     def __str__(self):
-        return (f"Compañía: {self.nombre}, "
-                f"País: {self.pais}, Código: {self.codigo}")
+        return (f"\nCompañía: {self.nombre} "
+                f"\nPaís: {self.pais} \nCódigo: {self.codigo}")
 
     def mostrar_compania(self):
         print("\nCompania registrado exitosamente:")
