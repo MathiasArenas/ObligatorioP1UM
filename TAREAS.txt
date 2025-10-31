@@ -1,0 +1,12 @@
+Mathi
+    Crear Vuelo
+    Crear Ticket
+Ema
+    Cancelar Vuelo
+    Informes a emitir
+Horacio
+    Registrar equipaje en bodega
+    Visualizar Vuelo
+Diego
+    Asignar personal a vuelo
+    Cancelar Ticket
