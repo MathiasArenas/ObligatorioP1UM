@@ -3,11 +3,11 @@ from entidades.roles import Roles
 from utiles import Utiles
 
 class Tripulante(Persona): 
-    def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo=None):
+    def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo):
         super().__init__(nombre, apellido, documentoId, email, celular)
         self.__rol = Roles().validar_rol(rol)
         self.__fecha_ingreso = fecha_ingreso
-        #self.__horas_vuelo = horas_vuelo if None else []
+        self.__horas_vuelo = horas_vuelo
         
     @property
     def rol(self):
@@ -43,4 +43,17 @@ class Tripulante(Persona):
         print("\Tripulante registrado exitosamente:")
         print(self)
         input("\nPresione Enter para continuar...")
+
+    @staticmethod
+    def mostrar_lista_tripulantes(lista_tripulantes):
+        Utiles.cls()
+        print("Lista de Tripulantes:")
+        for tripulante in lista_tripulantes:
+            print(f"Nombre: {tripulante.nombre}, Apellido: {tripulante.apellido}, Rol: {tripulante.rol}, Fecha de Ingreso: {tripulante.fecha_ingreso}")
     
+    @staticmethod
+    def buscar_tripulante_por_id(lista_tripulantes, documentoId):
+        for tripulante in lista_tripulantes:
+            if tripulante.documentoId == documentoId:
+                return tripulante
+        return None

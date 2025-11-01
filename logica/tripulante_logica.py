@@ -1,4 +1,5 @@
 from entidades.tripulante import Tripulante
+from entidades.vuelos import Vuelos
 
 class TripulanteLogica:
     
@@ -14,5 +15,6 @@ class TripulanteLogica:
         tripulante = Tripulante (nombre, apellido, documentoId, email, celular, rol, fecha_ingreso,[]) 
         tripulante.registrar_persona()
         return tripulante
+
         
     

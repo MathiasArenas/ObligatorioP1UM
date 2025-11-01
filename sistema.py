@@ -12,6 +12,7 @@ from logica.vuelos_logica import VuelosLogica
 from logica.compania_logica import CompaniaLogica
 from logica.equipaje_logica import EquipajeLogica
 from logica.ticket_logica import TicketLogica
+from datos_prueba import DatosPrueba as dp
 
 class Sistema:
     
@@ -22,7 +23,10 @@ class Sistema:
     lista_tickets = []
     lista_equipajes = []
     vuelo: Vuelos = None
-   
+
+    lista_vuelos.extend([dp.vuelo1, dp.vuelo2])
+    lista_tripulantes.append(dp.tripulante1)
+
     
     @staticmethod
     def bienvenida():        
@@ -116,8 +120,7 @@ class Sistema:
                 pass
             case 5:
                 Utiles.cls()
-                tripulante = TripulanteLogica.registrar_persona()   
-                VuelosLogica.registrar_vuelo(vuelo,tripulante)
+                Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes)                
             case 6:
                 Utiles.cls()
                 equipaje = EquipajeLogica.registrar_equipaje()

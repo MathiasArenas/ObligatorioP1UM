@@ -1,3 +1,4 @@
+from entidades.tripulante import Tripulante
 from entidades.compania import Compania  
 from utiles import Utiles
 
@@ -78,13 +79,60 @@ class Vuelos:
     @estado_vuelo.setter
     def estado_vuelo(self, estado_vuelo):
         self.__estado_vuelo = estado_vuelo
+
+    @property
+    def tripulantes(self):
+        return self.__tripulantes
+    @tripulantes.setter
+    def tripulantes(self,tripulantes):
+        self.__tripulantes = tripulantes
        
     def registrar_vuelo():
         pass
     def validar_tipo_vuelo(tipo_vuelo):
         pass
-    def asignar_personal_vuelo(self):
-        pass
+
+    @staticmethod
+    def mostrar_lista_vuelos(lista_vuelos):
+        Utiles.cls()
+        print("Lista de Vuelos:")
+        for vuelo in lista_vuelos:
+            print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania}, Estado: {vuelo.estado_vuelo}")
+        
+    @staticmethod
+    def buscar_vuelo_por_id(lista_vuelos, id_vuelo):
+        for vuelo in lista_vuelos:
+            if vuelo.id_vuelo == id_vuelo:
+                return vuelo
+        return None
+
+    @staticmethod
+    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
+        
+        Vuelos.mostrar_lista_vuelos(lista_vuelos)
+
+        id_vuelo = input("Ingrese el ID del vuelo al que desea asignar un tripulante: ")
+        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos, id_vuelo)
+
+        if not vuelo:
+            print(f"No se encontró el vuelo con ID {id_vuelo}.")
+            input("\nPresione Enter para continuar...")
+            return
+        
+        Tripulante.mostrar_lista_tripulantes(lista_tripulantes)
+
+        documentoId = input("Ingrese el documento del tripulante: ")
+        tripulante = Tripulante.buscar_tripulante_por_id(lista_tripulantes, documentoId)
+
+        if not tripulante:
+            print(f"No se encontró el tripulante con documento {documentoId}.")
+            input("\nPresione Enter para continuar...")
+            return        
+       
+        lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
+        print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
+        input("\nPresione Enter para continuar...")
+
     def asignar_cliente_a_vuelo(lista_clientes):
         pass
     def asignar_equipaje_a_vuelo(lista_equipajes):
