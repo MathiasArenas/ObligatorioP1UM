@@ -1,4 +1,5 @@
 import os
+from entidades import equipaje
 from utiles import Utiles
 from entidades.persona import Persona
 from entidades.cliente import Cliente
@@ -115,7 +116,8 @@ class Sistema:
                 VuelosLogica.mostrar_vuelo(vuelo)
             case 4:
                 Utiles.cls()
-                ticket = TicketLogica.crear_ticket()
+                #ticket = TicketLogica.crear_ticket()
+                ticket = TicketLogica.crear_ticket(Sistema.lista_clientes, Sistema.lista_vuelos)
                 Sistema.lista_tickets.append(ticket)
                 pass
             case 5:
@@ -123,8 +125,10 @@ class Sistema:
                 Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes)                
             case 6:
                 Utiles.cls()
-                equipaje = EquipajeLogica.registrar_equipaje()
-                Sistema.lista_equipajes.append(equipaje)
+                equipaje = EquipajeLogica.registrar_equipaje(Sistema.lista_vuelos, Sistema.lista_tickets)
+                if equipaje:
+                    Sistema.lista_equipajes.append(equipaje)
+
             case 7:
                 Utiles.cls()
                 Vuelos.visualizar_vuelos()
