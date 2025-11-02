@@ -86,7 +86,15 @@ class Vuelos:
     @tripulantes.setter
     def tripulantes(self,tripulantes):
         self.__tripulantes = tripulantes
-       
+
+    @property
+    def equipajes(self):   
+        return self.__equipajes
+    
+    @equipajes.setter
+    def equipajes(self, equipajes): 
+        self.__equipajes = equipajes
+
     def registrar_vuelo():
         pass
     def validar_tipo_vuelo(tipo_vuelo):
