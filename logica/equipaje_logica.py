@@ -21,8 +21,8 @@ class EquipajeLogica:
 
     def registrar_equipaje(lista_vuelos, lista_tickets):
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
-        id_vuelo = input("Ingrese el ID del vuelo: ")
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos, id_vuelo)
+        # id_vuelo = input("Ingrese el ID del vuelo: ")
+        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
 
         if not vuelo:
             print("Vuelo no encontrado.")
@@ -30,7 +30,7 @@ class EquipajeLogica:
             return None
 
         id_ticket = input("Ingrese el número de ticket: ")
-        ticket = next((t for t in lista_tickets if t.id_ticket == id_ticket and t.vuelo.id_vuelo == id_vuelo), None)
+        ticket = next((t for t in lista_tickets if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo), None)
 
         if not ticket or not ticket.cliente:
             print("Ticket inválido o sin cliente asignado.")

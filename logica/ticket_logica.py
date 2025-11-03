@@ -16,7 +16,7 @@ class TicketLogica:
 
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
         id_vuelo = input("Ingrese el ID del vuelo asociado: ")
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos, id_vuelo)
+        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
         if not vuelo:
             print("Vuelo no encontrado.")
             return None

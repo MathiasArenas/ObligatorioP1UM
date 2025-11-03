@@ -6,12 +6,14 @@ class Equipaje:
         self.__vuelo = vuelo
         self.__costo = costo
 
+
     @property
     def codigo_equipaje(self):
         return self.__codigo_equipaje
     @codigo_equipaje.setter
     def codigo_equipaje(self, codigo_equipaje):
         self.__codigo_equipaje = codigo_equipaje
+
 
     @property
     def peso_en_kg(self):
@@ -48,3 +50,4 @@ class Equipaje:
         return (f"Equipaje {self.codigo_equipaje} - "
             f"Pasajero: {self.pasajero.nombre} {self.pasajero.apellido}, "
             f"Peso: {self.peso_en_kg}kg, Costo: USD {self.costo}")
+

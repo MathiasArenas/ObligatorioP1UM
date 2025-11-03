@@ -104,17 +104,17 @@ class Vuelos:
     def __str__(self):
         return (
             f"\nID Vuelo: {self.id_vuelo},"
-            f"\nOrigen: {self.origen},"
-            f"\nDestino: {self.destino},"
-            f"\nDuración: {self.duracion} horas,"
-            f"\nFecha: {self.fecha},"
-            f"\nCompañía: {self.compania},"
-            f"\nCapacidad: {self.capacidad} pasajeros,"
-            f"\nTipo de Vuelo: {self.tipo_vuelo},"
-            f"\nEstado del Vuelo: {self.estado_vuelo},"
-            f"\nCantidad de Tripulantes Asignados: {len(self.tripulantes)},"
-            f"\nCantidad de Clientes Asignados: {len(self.clientes)},"
-            f"\nCantidad de Equipajes Asignados: {len(self.equipajes)}"
+            f"Origen: {self.origen},"
+            f"Destino: {self.destino},"
+            f"Duración: {self.duracion} horas,"
+            f"Fecha: {self.fecha},"
+            f"Compañía: {self.compania},"
+            f"Capacidad: {self.capacidad} pasajeros,"
+            f"Tipo de Vuelo: {self.tipo_vuelo},"
+            f"Estado del Vuelo: {self.estado_vuelo},"
+            f"Cantidad de Tripulantes Asignados: {len(self.tripulantes)},"
+            f"Cantidad de Clientes Asignados: {len(self.clientes)},"
+            f"Cantidad de Equipajes Asignados: {len(self.equipajes)}\n"
         )
     
     def mostrar_vuelo(self):
@@ -136,7 +136,7 @@ class Vuelos:
     def buscar_vuelo_por_id(lista_vuelos):
         Utiles.cls()
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
-        id_vuelo = input("Ingrese el ID del vuelo al que desea asignar un tripulante: ")
+        id_vuelo = input("Ingrese el ID del vuelo: ")
 
         for vuelo in lista_vuelos:
             if vuelo.id_vuelo == id_vuelo:
