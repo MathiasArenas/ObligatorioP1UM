@@ -105,8 +105,11 @@ class Vuelos:
         Utiles.cls()
         print("Lista de Vuelos:")
         for vuelo in lista_vuelos:
-            print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania}, Estado: {vuelo.estado_vuelo}")
-        
+                #print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania}, Estado: {vuelo.estado_vuelo}")
+            fecha = vuelo.fecha
+            print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {fecha}, Compañía: {vuelo.compania.nombre}, Estado: {vuelo.estado_vuelo}")
+
+   
     @staticmethod
     def buscar_vuelo_por_id(lista_vuelos, id_vuelo):
         for vuelo in lista_vuelos:
@@ -146,7 +149,6 @@ class Vuelos:
     def asignar_equipaje_a_vuelo(lista_equipajes):
         pass      
         
-
     def informe_pasajeros_por_vuelo(lista_vuelos):
         for vuelo in lista_vuelos:
             print(f"Vuelo ID: {vuelo.id_vuelo}")
@@ -154,3 +156,8 @@ class Vuelos:
             for cliente in vuelo.clientes:
                 print(f" - {cliente.nombre}, {cliente.cedula}, {cliente.nacionalidad}, {cliente.cantidad_equipaje}")
             print("\n")
+    @staticmethod
+
+    def visualizar_vuelos(lista_vuelos):
+        Vuelos.mostrar_lista_vuelos(lista_vuelos)
+        input("\nPresione Enter para continuar...")

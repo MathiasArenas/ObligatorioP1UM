@@ -1,14 +1,23 @@
 from entidades.tripulante import Tripulante
 from entidades.vuelos import Vuelos
+from entidades.compania import Compania
+
+
+
 
 class DatosPrueba:
-         # Vuelos para pruebas
+     # Compañías para pruebas
+    compania1 = Compania("Aerolíneas Argentinas", "Argentina", "AR")
+    compania2 = Compania("Iberia", "España", "IB")
+
+    # Vuelos para pruebas
     vuelo1 = Vuelos(
         origen="Montevideo",
         destino="Buenos Aires",
         duracion=1.0,
         fecha="2025-11-15",
-        compania="Aerolíneas Argentinas",
+        #compania="Aerolíneas Argentinas",
+        compania=compania1,
         capacidad=180,
         tipo_vuelo="Internacional",
         id_vuelo="AR123",
@@ -20,7 +29,8 @@ class DatosPrueba:
         destino="Barcelona",
         duracion=1.2,
         fecha="2025-12-01",
-        compania="Iberia",
+        #compania="Iberia",
+        compania=compania2,
         capacidad=150,
         tipo_vuelo="Doméstico",
         id_vuelo="IB456",

@@ -131,7 +131,8 @@ class Sistema:
 
             case 7:
                 Utiles.cls()
-                Vuelos.visualizar_vuelos()
+                #Vuelos.visualizar_vuelos()
+                Vuelos.visualizar_vuelos(Sistema.lista_vuelos)
             case 8:
                 Utiles.cls()
                 Ticket.cancelar_ticket()
@@ -178,4 +179,5 @@ class Sistema:
                 break
             else:
                 Sistema.casos_opciones(opcion)
+
 
