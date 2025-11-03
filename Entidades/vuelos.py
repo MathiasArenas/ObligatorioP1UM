@@ -8,7 +8,6 @@ class Vuelos:
         self.__destino = destino
         self.__duracion = duracion
         self.__fecha = fecha
-        # self.__compania = Compania().validar_compania(compania)
         self.__compania = compania
         self.__capacidad = capacidad
         self.__tipo_vuelo = tipo_vuelo
@@ -88,12 +87,38 @@ class Vuelos:
         self.__tripulantes = tripulantes
 
     @property
+    def clientes(self):
+        return self.__clientes
+    @clientes.setter
+    def clientes(self,clientes):
+        self.__clientes = clientes
+
+    @property
     def equipajes(self):   
         return self.__equipajes
     
     @equipajes.setter
     def equipajes(self, equipajes): 
         self.__equipajes = equipajes
+
+    def __str__(self):
+        return (
+            f"\nID Vuelo: {self.id_vuelo},"
+            f"\nOrigen: {self.origen},"
+            f"\nDestino: {self.destino},"
+            f"\nDuración: {self.duracion} horas,"
+            f"\nFecha: {self.fecha},"
+            f"\nCompañía: {self.compania},"
+            f"\nCapacidad: {self.capacidad} pasajeros,"
+            f"\nTipo de Vuelo: {self.tipo_vuelo},"
+            f"\nEstado del Vuelo: {self.estado_vuelo},"
+            f"\nCantidad de Tripulantes Asignados: {len(self.tripulantes)},"
+            f"\nCantidad de Clientes Asignados: {len(self.clientes)},"
+            f"\nCantidad de Equipajes Asignados: {len(self.equipajes)}"
+        )
+    
+    def mostrar_vuelo(self):
+        print(self)
 
     def registrar_vuelo():
         pass
@@ -105,41 +130,34 @@ class Vuelos:
         Utiles.cls()
         print("Lista de Vuelos:")
         for vuelo in lista_vuelos:
-            print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania}, Estado: {vuelo.estado_vuelo}")
+            Vuelos.mostrar_vuelo(vuelo)
         
     @staticmethod
-    def buscar_vuelo_por_id(lista_vuelos, id_vuelo):
+    def buscar_vuelo_por_id(lista_vuelos):
+        Utiles.cls()
+        Vuelos.mostrar_lista_vuelos(lista_vuelos)
+        id_vuelo = input("Ingrese el ID del vuelo al que desea asignar un tripulante: ")
+
         for vuelo in lista_vuelos:
             if vuelo.id_vuelo == id_vuelo:
                 return vuelo
-        return None
-
-    @staticmethod
-    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
-        
-        Vuelos.mostrar_lista_vuelos(lista_vuelos)
-
-        id_vuelo = input("Ingrese el ID del vuelo al que desea asignar un tripulante: ")
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos, id_vuelo)
-
+            
         if not vuelo:
             print(f"No se encontró el vuelo con ID {id_vuelo}.")
             input("\nPresione Enter para continuar...")
             return
-        
-        Tripulante.mostrar_lista_tripulantes(lista_tripulantes)
 
-        documentoId = input("Ingrese el documento del tripulante: ")
-        tripulante = Tripulante.buscar_tripulante_por_id(lista_tripulantes, documentoId)
+    @staticmethod
+    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
 
-        if not tripulante:
-            print(f"No se encontró el tripulante con documento {documentoId}.")
-            input("\nPresione Enter para continuar...")
-            return        
-       
+        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
+        tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
         lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
-        print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
+
+        print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.\n")
+        print(vuelo)
         input("\nPresione Enter para continuar...")
+
 
     def asignar_cliente_a_vuelo(lista_clientes):
         pass
