@@ -41,7 +41,7 @@ class DatosPrueba:
     tripulante1 = Tripulante(
         nombre="Lucía",
         apellido="Fernández",
-        documentoId="UYT123456",
+        documentoId="123456",
         email="lucia.fernandez@aviacion.com",
         celular="+59891234567",
         rol="Copiloto",
