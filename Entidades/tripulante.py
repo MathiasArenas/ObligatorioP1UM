@@ -49,7 +49,7 @@ class Tripulante(Persona):
         Utiles.cls()
         print("Lista de Tripulantes:")
         for tripulante in lista_tripulantes:
-            print(f"Nombre: {tripulante.nombre}, Apellido: {tripulante.apellido}, Rol: {tripulante.rol}, Fecha de Ingreso: {tripulante.fecha_ingreso}")
+            print(f"Documento: {tripulante.documentoId}, Nombre: {tripulante.nombre}, Apellido: {tripulante.apellido}, Rol: {tripulante.rol}, Fecha de Ingreso: {tripulante.fecha_ingreso}")
     
     @staticmethod
     def buscar_tripulante_por_id(lista_tripulantes, documentoId):
