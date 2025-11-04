@@ -49,3 +49,4 @@ class objetoNoEncontradoError(ValidacionError):
     def __init__(self, mensaje="El objeto no fue encontrado"):
         self.mensaje = mensaje
         super().__init__(self.mensaje)
+        

@@ -141,7 +141,7 @@ class Vuelos:
         id_vuelo = Utiles.controlar_string(input("Ingrese el ID del vuelo: "))    
         
         for vuelo in lista_vuelos:
-            if vuelo.id_vuelo == id_vuelo:
+            if vuelo.id_vuelo.upper() == id_vuelo.upper():
                 return vuelo            
       
         raise objetoNoEncontradoError("Vuelo no encontrado.")     
@@ -150,20 +150,24 @@ class Vuelos:
     def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
 
         try:
-            vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
-        
+            vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)        
         except objetoNoEncontradoError as e:
             print(e.mensaje)
             input("\nPresione Enter para continuar...")
             return
         
-        tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
+        try:
+            tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
+        except DatoDuplicadoError as e:
+            print(e.mensaje)
+            input("\nPresione Enter para continuar...")
+            return
+
         lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
 
         print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.\n")
         print(vuelo)
         input("\nPresione Enter para continuar...")
-
 
     def asignar_cliente_a_vuelo(lista_clientes):
         pass
@@ -177,8 +181,8 @@ class Vuelos:
             for cliente in vuelo.clientes:
                 print(f" - {cliente.nombre}, {cliente.cedula}, {cliente.nacionalidad}, {cliente.cantidad_equipaje}")
             print("\n")
-    @staticmethod
 
+    @staticmethod
     def visualizar_vuelos(lista_vuelos):
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
         input("\nPresione Enter para continuar...")

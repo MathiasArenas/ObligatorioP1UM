@@ -1,6 +1,7 @@
 from entidades.persona import Persona
 from entidades.roles import Roles
 from utiles import Utiles
+from Excepciones.excepciones import *
 
 class Tripulante(Persona): 
     def __init__(self, nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo):
@@ -67,15 +68,11 @@ class Tripulante(Persona):
         tripulante = Tripulante.buscar_tripulante_por_id(lista_tripulantes, documentoId)
 
         if not tripulante:
-            print(f"No se encontró el tripulante con documento {documentoId}.")
-            input("\nPresione Enter para continuar...")
-            return
+            raise objetoNoEncontradoError(f"No se encontró el tripulante con documento {documentoId}.")
         else:
             disponible = Tripulante.verificar_disponibilidad_tripulante(vuelo, documentoId, lista_vuelos)
             if not disponible:
-                print(f"El tripulante {documentoId} está asignado en vuelo {vuelo.id_vuelo} - destino {vuelo.destino}.")
-                input("\nPresione Enter para continuar...")
-                return
+                raise DatoDuplicadoError(f"El tripulante {documentoId} está asignado en vuelo {vuelo.id_vuelo} - destino {vuelo.destino}.")
             
         return tripulante
     
