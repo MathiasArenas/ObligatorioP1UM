@@ -18,7 +18,8 @@ class Utiles:
             except ValueError:
                 entrada = input("Entrada inválida. Por favor, ingrese un número: ")
 
-    def controlar_string(self, entrada):
+    @staticmethod
+    def controlar_string(entrada):
         while True:
             if entrada.strip() == "":
                 entrada = input("Entrada inválida. Por favor, ingrese un texto válido: ")

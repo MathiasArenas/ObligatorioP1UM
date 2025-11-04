@@ -80,10 +80,8 @@ class Tripulante(Persona):
         return tripulante
     
     @staticmethod
-    def verificar_disponibilidad_tripulante(vuelo, documentoId, lista_vuelos):
-        # fecha_fin = Utiles.calcular_fecha_fin(vuelo.fecha, vuelo.duracion)
+    def verificar_disponibilidad_tripulante(vuelo, documentoId, lista_vuelos):        
         for v in lista_vuelos:
-            # if vuelo.fecha >= v.fecha and vuelo.fecha <= fecha_fin: 
             if vuelo.fecha == v.fecha:               
                 for tripulante in v.tripulantes:
                     if tripulante.documentoId == documentoId:

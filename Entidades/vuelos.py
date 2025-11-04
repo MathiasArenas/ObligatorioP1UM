@@ -1,6 +1,7 @@
 from entidades.tripulante import Tripulante
 from entidades.compania import Compania  
 from utiles import Utiles
+from Excepciones.excepciones import *
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
@@ -132,25 +133,30 @@ class Vuelos:
         for vuelo in lista_vuelos:
             Vuelos.mostrar_vuelo(vuelo)
         
+   
     @staticmethod
     def buscar_vuelo_por_id(lista_vuelos):
         Utiles.cls()
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
-        id_vuelo = input("Ingrese el ID del vuelo: ")
-
+        id_vuelo = Utiles.controlar_string(input("Ingrese el ID del vuelo: "))    
+        
         for vuelo in lista_vuelos:
             if vuelo.id_vuelo == id_vuelo:
-                return vuelo
-            
-        if not vuelo:
-            print(f"No se encontró el vuelo con ID {id_vuelo}.")
-            input("\nPresione Enter para continuar...")
-            return
+                return vuelo            
+      
+        raise objetoNoEncontradoError("Vuelo no encontrado.")     
 
     @staticmethod
     def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
 
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
+        try:
+            vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
+        
+        except objetoNoEncontradoError as e:
+            print(e.mensaje)
+            input("\nPresione Enter para continuar...")
+            return
+        
         tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
         lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
 
