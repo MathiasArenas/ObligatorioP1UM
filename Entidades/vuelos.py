@@ -176,3 +176,43 @@ class Vuelos:
     def visualizar_vuelos(lista_vuelos):
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
         input("\nPresione Enter para continuar...")
+
+        
+    def informe_personal_asignado(lista_vuelos):
+        Utiles.cls()
+        print("Informe de personal asignado por vuelo:")
+        for vuelo in lista_vuelos:
+            print(f"\nVuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
+            if vuelo.tripulantes:
+                for tripulante in vuelo.tripulantes:
+                    print(f"  - Tripulante Documento: {tripulante.documentoId}, Nombre: {tripulante.nombre} {tripulante.apellido}, Rol: {tripulante.rol}")
+            else:
+                print("  No hay tripulantes asignados a este vuelo.")
+        input("\nPresione Enter para continuar...")
+
+    def informe_vuelos_por_compania(lista_vuelos):
+        Utiles.cls()
+        companias_vuelos = {}
+        for vuelo in lista_vuelos:
+            nombre_compania = vuelo.compania.nombre
+            if nombre_compania not in companias_vuelos:
+                companias_vuelos[nombre_compania] = []
+            companias_vuelos[nombre_compania].append(vuelo)
+
+        print("Informe de vuelos por compañía:")
+        for compania, vuelos in companias_vuelos.items():
+            print(f"\nCompañía: {compania}")
+            for vuelo in vuelos:
+                print(f"  - Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Estado: {vuelo.estado_vuelo}")
+        input("\nPresione Enter para continuar...")
+
+    def informe_vuelos_cancelados(lista_vuelos):
+        Utiles.cls()
+        print("Informe de vuelos cancelados:")
+        vuelos_cancelados = [vuelo for vuelo in lista_vuelos if vuelo.estado_vuelo == "Cancelado"]
+        if not vuelos_cancelados:
+            print("No hay vuelos cancelados.")
+        else:
+            for vuelo in vuelos_cancelados:
+                print(f"Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania.nombre}, Causa de Cancelación: {getattr(vuelo, 'causa_cancelacion', 'N/A')}")
+        input("\nPresione Enter para continuar...")

@@ -149,17 +149,16 @@ class Sistema:
                 match opcion_informe:
                     case 1:
                         Utiles.cls()
-                        # a. Informe de pasajeros por vuelo: Listado con nombre, cédula, nacionalidad y cantidad de equipaje.
                         Vuelos.informe_pasajeros_por_vuelo(Sistema.lista_vuelos)
                     case 2:
                         Utiles.cls()
-                        Tripulante.informe_personal_asignado()
+                        Vuelos.informe_personal_asignado(Sistema.lista_vuelos)
                     case 3:
                         Utiles.cls()
-                        Vuelos.informe_vuelos_por_compania()
+                        Vuelos.informe_vuelos_por_compania(Sistema.lista_vuelos)
                     case 4:
                         Utiles.cls()
-                        Vuelos.informe_vuelos_cancelados()
+                        Vuelos.informe_vuelos_cancelados(Sistema.lista_vuelos)
                     case 0:
                         Utiles.cls()
                         Sistema.menu()
