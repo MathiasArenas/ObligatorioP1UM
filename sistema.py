@@ -112,14 +112,17 @@ class Sistema:
             case 3:
                 Utiles.cls()
                 vuelo = VuelosLogica.registrar_vuelo(Sistema.lista_companias)
+                if vuelo is None:
+                    # Si no se pudo crear el vuelo (por ejemplo, no hay compañías), volver al menú principal
+                    return
                 Sistema.lista_vuelos.append(vuelo)
                 VuelosLogica.mostrar_vuelo(vuelo)
             case 4:
                 Utiles.cls()
                 #ticket = TicketLogica.crear_ticket()
                 ticket = TicketLogica.crear_ticket(Sistema.lista_clientes, Sistema.lista_vuelos)
-                Sistema.lista_tickets.append(ticket)
-                pass
+                if ticket:
+                    Sistema.lista_tickets.append(ticket)
             case 5:
                 Utiles.cls()
                 Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes)                

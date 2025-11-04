@@ -5,6 +5,12 @@ class VuelosLogica:
 
     @staticmethod
     def registrar_vuelo(lista_companias):
+        
+        if not lista_companias:
+            print("No hay compañías registradas. Debe crear al menos una compañía antes de crear un vuelo.")
+            input("\nPresione Enter para continuar...")
+            return None
+
         origen = input("Ingrese el origen del vuelo: ")
         destino = input("Ingrese el destino del vuelo: ")
         duracion = input("Ingrese la duración del vuelo (en horas): ")
