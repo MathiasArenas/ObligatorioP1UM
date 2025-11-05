@@ -1,6 +1,7 @@
 from entidades.tripulante import Tripulante
 from entidades.compania import Compania  
 from utiles import Utiles
+from Excepciones.excepciones import *
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
@@ -132,12 +133,13 @@ class Vuelos:
         for vuelo in lista_vuelos:
             Vuelos.mostrar_vuelo(vuelo)
         
+   
     @staticmethod
     def buscar_vuelo_por_id(lista_vuelos):
         Utiles.cls()
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
-        id_vuelo = input("Ingrese el ID del vuelo: ")
-
+        id_vuelo = Utiles.controlar_string(input("Ingrese el ID del vuelo: "))    
+        
         for vuelo in lista_vuelos:
             if vuelo.id_vuelo == id_vuelo:
                 return vuelo
@@ -182,6 +184,39 @@ class Vuelos:
             vuelo_cancelar.estado_vuelo = "Cancelado"
             print(f"Vuelo {vuelo_cancelar.id_vuelo} cancelado. No hay vuelos similares para reubicar a los pasajeros.")
         input("\nPresione Enter para continuar...")
+        if vuelo.id_vuelo.upper() == id_vuelo.upper():
+            return vuelo            
+
+        raise objetoNoEncontradoError("Vuelo no encontrado.")     
+
+    @staticmethod
+    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
+
+        try:
+            vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)        
+        except Exception as e:
+            print(str(e))
+            input("\nPresione Enter para continuar...")
+            return
+        
+        try:
+            tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
+        except Exception as e:
+            print(str(e))
+            input("\nPresione Enter para continuar...")
+            return
+
+        lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
+
+        print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.\n")
+        print(vuelo)
+        input("\nPresione Enter para continuar...")
+
+    def asignar_cliente_a_vuelo(lista_clientes):
+        pass
+    def asignar_equipaje_a_vuelo(lista_equipajes):
+        pass      
+        
     def informe_pasajeros_por_vuelo(lista_vuelos):
         for vuelo in lista_vuelos:
             print(f"Vuelo ID: {vuelo.id_vuelo}")
@@ -189,8 +224,8 @@ class Vuelos:
             for cliente in vuelo.clientes:
                 print(f" - {cliente.nombre}, {cliente.cedula}, {cliente.nacionalidad}, {cliente.cantidad_equipaje}")
             print("\n")
-    @staticmethod
 
+    @staticmethod
     def visualizar_vuelos(lista_vuelos):
         Vuelos.mostrar_lista_vuelos(lista_vuelos)
         input("\nPresione Enter para continuar...")

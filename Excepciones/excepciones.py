@@ -43,3 +43,10 @@ class AsignacionError(ValidacionError):
     def __init__(self, mensaje="Error en la asignación"):
         self.mensaje = mensaje
         super().__init__(self.mensaje)
+
+class objetoNoEncontradoError(ValidacionError):
+    """Excepción para cuando un objeto no es encontrado"""
+    def __init__(self, mensaje="El objeto no fue encontrado"):
+        self.mensaje = mensaje
+        super().__init__(self.mensaje)
+        
