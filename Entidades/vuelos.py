@@ -1,7 +1,7 @@
 from entidades.tripulante import Tripulante
 from entidades.compania import Compania  
+from excepciones.excepciones import Excepciones
 from utiles import Utiles
-from Excepciones.excepciones import *
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
@@ -187,7 +187,7 @@ class Vuelos:
         if vuelo.id_vuelo.upper() == id_vuelo.upper():
             return vuelo            
 
-        raise objetoNoEncontradoError("Vuelo no encontrado.")     
+        raise Excepciones.objetoNoEncontradoError("Vuelo no encontrado.")     
 
     @staticmethod
     def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
