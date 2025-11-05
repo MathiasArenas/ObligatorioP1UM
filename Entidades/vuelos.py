@@ -142,28 +142,46 @@ class Vuelos:
             if vuelo.id_vuelo == id_vuelo:
                 return vuelo
             
-        if not vuelo:
-            print(f"No se encontró el vuelo con ID {id_vuelo}.")
+        if not lista_vuelos:
+            print("No hay vuelos registrados.")
+            return
+        Utiles.cls()
+        print("\n=== Lista de vuelos disponibles para cancelar ===")
+        if not lista_vuelos:
+            print("No hay vuelos registrados.")
             input("\nPresione Enter para continuar...")
             return
-
-    @staticmethod
-    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
-
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
-        tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
-        lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
-
-        print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.\n")
-        print(vuelo)
+        for vuelo in lista_vuelos:
+            print(f"ID Vuelo: {vuelo.id_vuelo} | Origen: {vuelo.origen} | Destino: {vuelo.destino} | Fecha: {vuelo.fecha} | Compañía: {vuelo.compania.nombre} | Estado: {vuelo.estado_vuelo}")
+        vuelo_cancelar_id = input("\nIngrese el ID del vuelo a cancelar: ")
+        vuelo_cancelar = next((v for v in lista_vuelos if v.id_vuelo == vuelo_cancelar_id), None)
+        if not vuelo_cancelar:
+            print(f"\n[ERROR] No se encontró el vuelo con ID '{vuelo_cancelar_id}'. Volviendo al menú principal.")
+            input("\nPresione Enter para continuar...")
+            return
+        vuelos_similares = [
+            v for v in lista_vuelos
+            if v.origen == vuelo_cancelar.origen and
+               v.destino == vuelo_cancelar.destino and
+               v.capacidad >= vuelo_cancelar.capacidad and
+               v.id_vuelo != vuelo_cancelar.id_vuelo and
+               v.estado_vuelo != "Cancelado"
+        ]
+        if vuelos_similares:
+            print("\nVuelos similares disponibles para reubicación:")
+            for vuelo in vuelos_similares:
+                print(f"ID Vuelo: {vuelo.id_vuelo} | Origen: {vuelo.origen} | Destino: {vuelo.destino} | Fecha: {vuelo.fecha} | Compañía: {vuelo.compania.nombre} | Estado: {vuelo.estado_vuelo}")
+            nuevo_vuelo_id = input("\nIngrese el ID del vuelo para reubicar a los pasajeros: ")
+            nuevo_vuelo = next((v for v in vuelos_similares if v.id_vuelo == nuevo_vuelo_id), None)
+            if nuevo_vuelo:
+                vuelo_cancelar.estado_vuelo = "Cancelado"
+                print(f"Vuelo {vuelo_cancelar.id_vuelo} cancelado. Pasajeros reubicados al vuelo {nuevo_vuelo.id_vuelo}.")
+            else:
+                print(f"No se encontró el vuelo de reubicación con ID {nuevo_vuelo_id}.")
+        else:
+            vuelo_cancelar.estado_vuelo = "Cancelado"
+            print(f"Vuelo {vuelo_cancelar.id_vuelo} cancelado. No hay vuelos similares para reubicar a los pasajeros.")
         input("\nPresione Enter para continuar...")
-
-
-    def asignar_cliente_a_vuelo(lista_clientes):
-        pass
-    def asignar_equipaje_a_vuelo(lista_equipajes):
-        pass      
-        
     def informe_pasajeros_por_vuelo(lista_vuelos):
         for vuelo in lista_vuelos:
             print(f"Vuelo ID: {vuelo.id_vuelo}")
@@ -216,3 +234,54 @@ class Vuelos:
             for vuelo in vuelos_cancelados:
                 print(f"Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania.nombre}, Causa de Cancelación: {getattr(vuelo, 'causa_cancelacion', 'N/A')}")
         input("\nPresione Enter para continuar...")
+
+    @staticmethod
+    def cancelar_vuelo(lista_vuelos):
+        Utiles.cls()
+        print("\n=== Lista de vuelos disponibles para cancelar ===")
+        if not lista_vuelos:
+            print("No hay vuelos registrados.")
+            input("\nPresione Enter para continuar...")
+            return
+        
+        for vuelo in lista_vuelos:
+            print(f"ID Vuelo: {vuelo.id_vuelo} | Origen: {vuelo.origen} | Destino: {vuelo.destino} | Fecha: {vuelo.fecha} | Compañía: {vuelo.compania.nombre} | Estado: {vuelo.estado_vuelo}")
+        
+        vuelo_cancelar_id = input("\nIngrese el ID del vuelo a cancelar: ")
+        vuelo_cancelar = next((v for v in lista_vuelos if v.id_vuelo == vuelo_cancelar_id), None)
+        
+        if not vuelo_cancelar:
+            print(f"\n[ERROR] No se encontró el vuelo con ID '{vuelo_cancelar_id}'. Volviendo al menú principal.")
+            input("\nPresione Enter para continuar...")
+            return
+        
+        # Buscar vuelos similares para reubicación
+        vuelos_similares = [
+            v for v in lista_vuelos
+            if v.origen == vuelo_cancelar.origen and
+               v.destino == vuelo_cancelar.destino and
+               v.capacidad >= vuelo_cancelar.capacidad and
+               v.id_vuelo != vuelo_cancelar.id_vuelo and
+               v.estado_vuelo != "Cancelado"
+        ]
+        
+        if not vuelos_similares:
+            print(f"\n[ERROR] No se puede cancelar el vuelo {vuelo_cancelar.id_vuelo}. Debe haber al menos 1 vuelo disponible para reasignar a los pasajeros.")
+            input("\nPresione Enter para continuar...")
+            return
+        
+        print("\nVuelos similares disponibles para reubicación:")
+        for vuelo in vuelos_similares:
+            print(f"ID Vuelo: {vuelo.id_vuelo} | Origen: {vuelo.origen} | Destino: {vuelo.destino} | Fecha: {vuelo.fecha} | Compañía: {vuelo.compania.nombre} | Estado: {vuelo.estado_vuelo}")
+        
+        nuevo_vuelo_id = input("\nIngrese el ID del vuelo para reubicar a los pasajeros: ")
+        nuevo_vuelo = next((v for v in vuelos_similares if v.id_vuelo == nuevo_vuelo_id), None)
+        
+        if nuevo_vuelo:
+            vuelo_cancelar.estado_vuelo = "Cancelado"
+            print(f"\nVuelo {vuelo_cancelar.id_vuelo} cancelado. Pasajeros reubicados al vuelo {nuevo_vuelo.id_vuelo}.")
+        else:
+            print(f"\n[ERROR] No se encontró el vuelo de reubicación con ID '{nuevo_vuelo_id}'.")
+        
+        input("\nPresione Enter para continuar...")
+

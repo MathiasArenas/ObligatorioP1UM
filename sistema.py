@@ -13,22 +13,99 @@ from logica.vuelos_logica import VuelosLogica
 from logica.compania_logica import CompaniaLogica
 from logica.equipaje_logica import EquipajeLogica
 from logica.ticket_logica import TicketLogica
-from datos_prueba import DatosPrueba as dp
 
 class Sistema:
     
-    lista_tripulantes = []
+    cliente1 = Cliente(
+        nombre="Juan",
+        apellido="Pérez",
+        documentoId="12345678",
+        email="juan.perez@email.com",
+        celular="099123456",
+        nacionalidad="Uruguayo"
+    )
+    cliente2 = Cliente(
+        nombre="María",
+        apellido="González",
+        documentoId="87654321",
+        email="maria.gonzalez@email.com",
+        celular="098765432",
+        nacionalidad="Argentina"
+    )
+    cliente3 = Cliente(
+        nombre="Carlos",
+        apellido="Rodríguez",
+        documentoId="11223344",
+        email="carlos.rodriguez@email.com",
+        celular="097111222",
+        nacionalidad="Brasileño"
+    )
+
+    tripulante1 = Tripulante(
+        nombre="Ana",
+        apellido="López",
+        documentoId="55667788",
+        email="ana.lopez@airline.com",
+        celular="096333444",
+        rol="Piloto",
+        fecha_ingreso="2010-01-15",
+        horas_vuelo=5000
+    )
+    tripulante2 = Tripulante(
+        nombre="Pedro",
+        apellido="Martínez",
+        documentoId="99887766",
+        email="pedro.martinez@airline.com",
+        celular="095555666",
+        rol="Azafata",
+        fecha_ingreso="2015-03-20",
+        horas_vuelo=2500
+    )
+
+    compania1 = Compania(
+        nombre="Sky Airlines",
+        pais="Uruguay",
+        codigo="AIRLINE001"
+    )
+    compania2 = Compania(
+        nombre="Blue Wings",
+        pais="Argentina",
+        codigo="AIRLINE002"
+    )
+
+    vuelo1 = Vuelos(
+        origen="Montevideo",
+        destino="Buenos Aires",
+        duracion=3.25,
+        fecha="2024-06-15 10:30",
+        compania=compania1,
+        capacidad=150,
+        tipo_vuelo="Internacional",
+        id_vuelo="FL001",
+        estado_vuelo="Programado"
+    )
+    vuelo2 = Vuelos(
+        origen="Buenos Aires",
+        destino="São Paulo",
+        duracion=2.5,
+        fecha="2024-06-16 14:20",
+        compania=compania2,
+        capacidad=180,
+        tipo_vuelo="Internacional",
+        id_vuelo="FL002",
+        estado_vuelo="Confirmado"
+    )
+
     lista_clientes = []
+    lista_tripulantes = []
     lista_companias = []
     lista_vuelos = []
-    lista_tickets = []
-    lista_equipajes = []
-    vuelo: Vuelos = None
 
-    lista_vuelos.extend([dp.vuelo1, dp.vuelo2])
-    lista_tripulantes.append(dp.tripulante1)
+    lista_clientes.extend([cliente1, cliente2, cliente3])
+    lista_tripulantes.extend([tripulante1, tripulante2])
+    lista_companias.extend([compania1, compania2])
+    lista_vuelos.extend([vuelo1, vuelo2])
 
-    
     @staticmethod
     def bienvenida():        
         print("*** Bienvenido al sistema ***")
@@ -141,7 +218,7 @@ class Sistema:
                 Ticket.cancelar_ticket()
             case 9:
                 Utiles.cls()
-                VuelosLogica.cancelar_vuelo(Sistema.lista_vuelos)
+                Vuelos.cancelar_vuelo(Sistema.lista_vuelos)
             case 10:
                 Utiles.cls()
                 Sistema.menu_informes()
