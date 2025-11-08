@@ -4,7 +4,8 @@ from utiles import Utiles
 from excepciones.excepciones import Excepciones as exc
 
 class Vuelos:
-    def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo):
+    def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
+                 tickets=None):
         self.__origen = origen
         self.__destino = destino
         self.__duracion = duracion
@@ -17,6 +18,7 @@ class Vuelos:
         self.__tripulantes = []
         self.__clientes = []
         self.__equipajes = []
+        self.__tickets = []
 
     @property
     def origen(self):    
@@ -102,6 +104,13 @@ class Vuelos:
     def equipajes(self, equipajes): 
         self.__equipajes = equipajes
 
+    @property
+    def tickets(self):   
+        return self.__tickets
+    @tickets.setter
+    def tickets(self, tickets): 
+        self.__tickets = tickets
+
     def __str__(self):
         return (
             f"\nID Vuelo: {self.id_vuelo},"
@@ -115,7 +124,8 @@ class Vuelos:
             f"Estado del Vuelo: {self.estado_vuelo},"
             f"Cantidad de Tripulantes Asignados: {len(self.tripulantes)},"
             f"Cantidad de Clientes Asignados: {len(self.clientes)},"
-            f"Cantidad de Equipajes Asignados: {len(self.equipajes)}\n"
+            f"Cantidad de Equipajes Asignados: {len(self.equipajes)},"
+            f"Tickets vendidos: {len(self.__tickets)}\n"
         )
     
     def mostrar_vuelo(self):
@@ -226,3 +236,10 @@ class Vuelos:
             for vuelo in vuelos_cancelados:
                 print(f"Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania.nombre}, Causa de Cancelación: {getattr(vuelo, 'causa_cancelacion', 'N/A')}")
         input("\nPresione Enter para continuar...")
+
+    
+    def agregar_ticket(self, ticket):
+        if len(self.__tickets) < self.__capacidad:
+            self.__tickets.append(ticket)
+        else:
+            print("No se pueden agregar más tickets, capacidad máxima alcanzada.")

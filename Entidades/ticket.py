@@ -1,5 +1,5 @@
 from entidades.vuelos import Vuelos
-from sistema import Sistema
+from utiles import Utiles
 
 class Ticket:
     def __init__(self, id_ticket, cliente, estado, vuelo):
@@ -30,6 +30,8 @@ class Ticket:
 
     @estado.setter
     def estado(self, value):
+        if value not in ("Activo", "Cancelado"):
+            raise ValueError("Estado debe ser 'Activo' o 'Cancelado'.")
         self.__estado = value
 
     @property
@@ -44,20 +46,27 @@ class Ticket:
         pass
     
     @staticmethod
-    def cancelar_ticket():
-        ticket_cancelado = None
-        vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos)
+    def cancelar_ticket(lista_vuelos, lista_tickets_cancelados):
+        Utiles.cls()
+        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
         id_ticket = input("Ingrese ticket a cancelar: ")
 
-        for ticket in vuelo.__clientes:
-            if ticket.__id_ticket.upper() == id_ticket.upper():
-                ticket.__estado = "Cancelado"
+        for ticket in vuelo.tickets:
+            if ticket.id_ticket.upper() == id_ticket.upper():
+                ticket.estado = "Cancelado"
+                Ticket.agregar_en_tickets_cancelados(ticket, lista_tickets_cancelados)
+                Ticket.quitar_ticket_de_vuelo(vuelo, ticket)                
                 print("Ticket cancelado con exito.")
-                ticket_cancelado = ticket
-                return ticket_cancelado
+                return
             
-        Ticket.agregar_en_tickets_cancelados(ticket_cancelado)
+        input("\nPresione Enter para continuar...")
+        return
 
     @staticmethod      
-    def agregar_en_tickets_cancelados(ticket_cancelado):
-        Sistema.lista_tickets_cancelados.append(ticket_cancelado)
+    def agregar_en_tickets_cancelados(ticket_cancelado, lista_tickets_cancelados):
+        lista_tickets_cancelados.append(ticket_cancelado)
+
+    @staticmethod
+    def quitar_ticket_de_vuelo(vuelo, ticket):
+        if ticket in vuelo.tickets:
+            vuelo.tickets.remove(ticket)

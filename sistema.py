@@ -73,6 +73,13 @@ class Sistema:
         codigo="AIRLINE002"
     )
 
+    ticket_V1 = Ticket(
+        id_ticket="TCKT001",
+        cliente=cliente1,
+        vuelo="FL001",
+        estado="Activo"
+    )
+
     vuelo1 = Vuelos(
         origen="Montevideo",
         destino="Buenos Aires",
@@ -82,8 +89,10 @@ class Sistema:
         capacidad=150,
         tipo_vuelo="Internacional",
         id_vuelo="FL001",
-        estado_vuelo="Programado"
+        estado_vuelo="Programado",
+        tickets = []
     )
+    vuelo1.agregar_ticket(ticket_V1)
     vuelo2 = Vuelos(
         origen="Buenos Aires",
         destino="São Paulo",
@@ -93,8 +102,9 @@ class Sistema:
         capacidad=180,
         tipo_vuelo="Internacional",
         id_vuelo="FL002",
-        estado_vuelo="Confirmado"
-    )
+        estado_vuelo="Confirmado",
+        tickets=[]
+    )    
 
     lista_clientes = []
     lista_tripulantes = []
@@ -216,7 +226,9 @@ class Sistema:
                 Vuelos.visualizar_vuelos(Sistema.lista_vuelos)
             case 8:
                 Utiles.cls()
-                Ticket.cancelar_ticket()
+                Ticket.cancelar_ticket(Sistema.lista_vuelos, Sistema.lista_tickets_cancelados)
+                Vuelos.mostrar_vuelo(Sistema.vuelo1)
+                input("\nPresione Enter para continuar...")
             case 9:
                 Utiles.cls()
                 Vuelos.cancelar_vuelo(Sistema.lista_vuelos)
