@@ -1,5 +1,6 @@
 from entidades.vuelos import Vuelos
 from utiles import Utiles
+from excepciones.excepciones import Excepciones as exc
 
 class Ticket:
     def __init__(self, id_ticket, cliente, estado, vuelo):
@@ -30,8 +31,6 @@ class Ticket:
 
     @estado.setter
     def estado(self, value):
-        if value not in ("Activo", "Cancelado"):
-            raise ValueError("Estado debe ser 'Activo' o 'Cancelado'.")
         self.__estado = value
 
     @property
@@ -46,21 +45,37 @@ class Ticket:
         pass
     
     @staticmethod
-    def cancelar_ticket(lista_vuelos, lista_tickets_cancelados):
+    def cancelar_ticket(id_cliente,lista_vuelos, lista_tickets_cancelados):
         Utiles.cls()
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
-        id_ticket = input("Ingrese ticket a cancelar: ")
+        try:
+            vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)
+        except exc.ObjetoNoEncontradoError as e:
+            print(e.mensaje)
+            input("\nPresione Enter para continuar...")
+            return
+        
+        if not vuelo.tickets:
+            print("No hay tickets en este vuelo.")
+            input("\nPresione Enter para continuar...")
+            return            
+        else:        
+            id_ticket = input("Ingrese ticket a cancelar: ")
 
-        for ticket in vuelo.tickets:
-            if ticket.id_ticket.upper() == id_ticket.upper():
-                ticket.estado = "Cancelado"
-                Ticket.agregar_en_tickets_cancelados(ticket, lista_tickets_cancelados)
-                Ticket.quitar_ticket_de_vuelo(vuelo, ticket)                
-                print("Ticket cancelado con exito.")
-                return
-            
-        input("\nPresione Enter para continuar...")
-        return
+            for ticket in vuelo.tickets:
+
+                if (ticket.estado != "Cancelado" 
+                    and ticket.id_ticket.upper() == id_ticket.upper() 
+                    and ticket.cliente.documentoId.upper() == id_cliente.upper()):
+
+                    ticket.estado = "Cancelado"
+                    Ticket.agregar_en_tickets_cancelados(ticket, lista_tickets_cancelados)
+                    Ticket.quitar_ticket_de_vuelo(vuelo, ticket)                
+                    print("Ticket cancelado con exito.")
+                    input("\nPresione Enter para continuar...")
+                    return
+
+            print("Ticket no encontrado o ya cancelado.")
+            input("\nPresione Enter para continuar...")       
 
     @staticmethod      
     def agregar_en_tickets_cancelados(ticket_cancelado, lista_tickets_cancelados):

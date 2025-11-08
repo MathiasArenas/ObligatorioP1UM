@@ -154,14 +154,14 @@ class Vuelos:
             if vuelo.id_vuelo.upper() == id_vuelo.upper():
                 return vuelo            
       
-        raise exc.objetoNoEncontradoError("Vuelo no encontrado.")     
+        raise exc.ObjetoNoEncontradoError("Vuelo no encontrado.")     
 
     @staticmethod
     def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
 
         try:
             vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)        
-        except exc.objetoNoEncontradoError as e:
+        except exc.ObjetoNoEncontradoError as e:
             print(e.mensaje)
             input("\nPresione Enter para continuar...")
             return
@@ -239,7 +239,8 @@ class Vuelos:
 
     
     def agregar_ticket(self, ticket):
-        if len(self.__tickets) < self.__capacidad:
-            self.__tickets.append(ticket)
-        else:
-            print("No se pueden agregar más tickets, capacidad máxima alcanzada.")
+        if len(self.__tickets) >= self.__capacidad:
+            raise exc.CapacidadExcedidaError("No se pueden agregar más tickets, capacidad máxima alcanzada.")
+        
+        self.__tickets.append(ticket)
+       

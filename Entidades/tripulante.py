@@ -68,7 +68,7 @@ class Tripulante(Persona):
         tripulante = Tripulante.buscar_tripulante_por_id(lista_tripulantes, documentoId)
 
         if not tripulante:
-            raise Excepciones.objetoNoEncontradoError(f"No se encontró el tripulante con documento {documentoId}.")
+            raise Excepciones.ObjetoNoEncontradoError(f"No se encontró el tripulante con documento {documentoId}.")
         else:
             disponible = Tripulante.verificar_disponibilidad_tripulante(vuelo, documentoId, lista_vuelos)
             if not disponible:

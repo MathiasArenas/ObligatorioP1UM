@@ -226,9 +226,8 @@ class Sistema:
                 Vuelos.visualizar_vuelos(Sistema.lista_vuelos)
             case 8:
                 Utiles.cls()
-                Ticket.cancelar_ticket(Sistema.lista_vuelos, Sistema.lista_tickets_cancelados)
-                Vuelos.mostrar_vuelo(Sistema.vuelo1)
-                input("\nPresione Enter para continuar...")
+                id_cliente = input("Ingrese el ID del cliente para cancelar ticket: ")
+                Ticket.cancelar_ticket(id_cliente,Sistema.lista_vuelos, Sistema.lista_tickets_cancelados)                
             case 9:
                 Utiles.cls()
                 Vuelos.cancelar_vuelo(Sistema.lista_vuelos)
