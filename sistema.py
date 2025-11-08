@@ -100,6 +100,7 @@ class Sistema:
     lista_tripulantes = []
     lista_companias = []
     lista_vuelos = []
+    lista_tickets_cancelados = []
 
     lista_clientes.extend([cliente1, cliente2, cliente3])
     lista_tripulantes.extend([tripulante1, tripulante2])
