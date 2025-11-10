@@ -41,7 +41,18 @@ class Excepciones:
         def __init__(self, mensaje="Error en la asignación"):
             super().__init__(mensaje)
 
-    class ObjetoNoEncontradoError(ValidacionError):
-        """Excepción para cuando un objeto no es encontrado"""
-        def __init__(self, mensaje="El objeto no fue encontrado"):
-            super().__init__(mensaje)            
+    class ObjetoNoEncontradoError(Exception):
+        pass
+
+    class VueloNoEncontradoError(ObjetoNoEncontradoError):
+        def __init__(self, mensaje="Vuelo no encontrado"):
+            super().__init__(mensaje)
+
+    class ClienteNoEncontradoError(ObjetoNoEncontradoError):
+        def __init__(self, mensaje="Cliente no encontrado"):
+            super().__init__(mensaje)
+
+    class TicketNoEncontradoError(ObjetoNoEncontradoError):
+        def __init__(self, mensaje="Tikcet no encontrado"):
+            super().__init__(mensaje)
+           

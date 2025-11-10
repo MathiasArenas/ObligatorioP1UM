@@ -13,6 +13,7 @@ from logica.vuelos_logica import VuelosLogica
 from logica.compania_logica import CompaniaLogica
 from logica.equipaje_logica import EquipajeLogica
 from logica.ticket_logica import TicketLogica
+from excepciones.excepciones import Excepciones as exc
 
 class Sistema:
     
@@ -224,10 +225,36 @@ class Sistema:
                 Utiles.cls()
                 #Vuelos.visualizar_vuelos()
                 Vuelos.visualizar_vuelos(Sistema.lista_vuelos)
+
             case 8:
                 Utiles.cls()
-                id_cliente = input("Ingrese el ID del cliente para cancelar ticket: ")
-                Ticket.cancelar_ticket(id_cliente,Sistema.lista_vuelos, Sistema.lista_tickets_cancelados)                
+                try:
+                    if not Sistema.lista_vuelos:
+                        raise exc.ObjetoNoEncontradoError("No hay vuelos registrados.")
+
+                    Vuelos.mostrar_lista_vuelos(Sistema.lista_vuelos)
+                    id_vuelo = input("Ingrese el ID del vuelo: ")
+                    vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos, id_vuelo)
+
+                    id_cliente = input("Ingrese el ID del cliente para cancelar ticket: ")
+                    Ticket.buscar_cliente_en_vuelo(vuelo, id_cliente)
+
+                    id_ticket = input("Ingrese ID del ticket: ")
+                    ticket = Ticket.cancelar_ticket(vuelo, id_cliente, id_ticket)
+                    Sistema.lista_tickets_cancelados.append(ticket)
+
+                    print(f"Ticket cancelado")
+                    input("\nPresione Enter para continuar...")
+
+                except exc.VueloNoEncontradoError as e:
+                    print(f"{e}")
+                except exc.ClienteNoEncontradoError as e:
+                    print(f"{e}")
+                except exc.TicketNoEncontradoError as e:
+                    print(f"{e}")
+                finally:
+                    input("\nPresione Enter para continuar...")
+
             case 9:
                 Utiles.cls()
                 Vuelos.cancelar_vuelo(Sistema.lista_vuelos)

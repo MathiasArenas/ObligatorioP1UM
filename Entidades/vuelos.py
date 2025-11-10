@@ -141,20 +141,19 @@ class Vuelos:
         Utiles.cls()
         print("Lista de Vuelos:")
         for vuelo in lista_vuelos:
-            Vuelos.mostrar_vuelo(vuelo)
-        
+            Vuelos.mostrar_vuelo(vuelo)       
    
+    
     @staticmethod
-    def buscar_vuelo_por_id(lista_vuelos):
-        Utiles.cls()
-        Vuelos.mostrar_lista_vuelos(lista_vuelos)
-        id_vuelo = Utiles.controlar_string(input("Ingrese el ID del vuelo: "))    
-        
+    def buscar_vuelo_por_id(lista_vuelos, id_vuelo):
+        if not lista_vuelos:
+            raise exc.VueloNoEncontradoError("No hay vuelos registrados.")
+
         for vuelo in lista_vuelos:
             if vuelo.id_vuelo.upper() == id_vuelo.upper():
-                return vuelo            
-      
-        raise exc.ObjetoNoEncontradoError("Vuelo no encontrado.")     
+                return vuelo
+
+        raise exc.VueloNoEncontradoError("Vuelo no encontrado.")    
 
     @staticmethod
     def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
