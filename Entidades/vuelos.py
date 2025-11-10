@@ -3,6 +3,7 @@ from entidades.compania import Compania
 from utiles import Utiles
 from excepciones.excepciones import Excepciones as exc
 import datetime
+import  datetime
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
