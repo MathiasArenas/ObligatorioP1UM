@@ -2,6 +2,7 @@ from entidades.tripulante import Tripulante
 from entidades.compania import Compania  
 from utiles import Utiles
 from excepciones.excepciones import Excepciones as exc
+import datetime
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
@@ -131,17 +132,75 @@ class Vuelos:
     def mostrar_vuelo(self):
         print(self)
 
-    def registrar_vuelo():
-        pass
+    def registrar_vuelo(lista_companias):
+        
+        if not lista_companias:
+            print("No hay compañías registradas. Debe crear al menos una compañía antes de crear un vuelo.")
+            input("\nPresione Enter para continuar...")
+            return None
+
+        origen = input("Ingrese el origen del vuelo: ")
+        destino = input("Ingrese el destino del vuelo: ")
+        duracion = input("Ingrese la duración del vuelo (en horas): ")
+        fecha = input("Ingrese la fecha del vuelo (DD/MM/AAAA): ")
+
+        print("\nCompañías disponibles:")
+        for idx, comp in enumerate(lista_companias):
+            print(f"{idx + 1}. {comp.nombre} ({comp.codigo})") 
+
+        seleccion = input("Seleccione el número de la compañía: ")
+        try:
+            seleccion = int(seleccion)
+            compania = lista_companias[seleccion - 1]
+        except (ValueError, IndexError):
+            raise ValueError("Selección inválida de compañía.")
+
+        capacidad = input("Ingrese la capacidad del vuelo: ")
+        tipo_vuelo = input("Ingrese el tipo de vuelo (Nacional/Internacional): ")
+        id_vuelo = Utiles().generar_id_unico()
+        estado_vuelo = "Activo"
+
+        tipo_vuelo = Vuelos.validar_tipo_vuelo(tipo_vuelo)
+
+        vuelo = Vuelos(
+            origen=origen,
+            destino=destino,
+            duracion=duracion,
+            fecha=fecha,
+            compania=compania,
+            capacidad=capacidad,
+            tipo_vuelo=tipo_vuelo,
+            id_vuelo=id_vuelo,
+            estado_vuelo=estado_vuelo
+        )
+
+        print(f"\nVuelo {id_vuelo} registrado correctamente.")
+        return vuelo
+    
+    @staticmethod
     def validar_tipo_vuelo(tipo_vuelo):
-        pass
+        tipos_validos = ['Nacional', 'Internacional']
+        if tipo_vuelo in tipos_validos:
+            return tipo_vuelo
+        else:
+            raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
 
     @staticmethod
     def mostrar_lista_vuelos(lista_vuelos):
         Utiles.cls()
         print("Lista de Vuelos:")
         for vuelo in lista_vuelos:
-            Vuelos.mostrar_vuelo(vuelo)       
+            Vuelos.mostrar_vuelo(vuelo)   
+    
+    @staticmethod
+    def mostrar_vuelo_para_seleccion(lista_vuelos):
+        Utiles.cls()
+        print("Vuelos disponibles:")
+        for vuelo in lista_vuelos:
+            if vuelo.estado_vuelo != "Cancelado" and vuelo.fecha > datetime.datetime.now().strftime("%d/%m/%Y"):
+                print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
+        id_vuelo = input("Ingrese el ID del vuelo que desea seleccionar: ")
+        return id_vuelo
    
     
     @staticmethod
@@ -156,14 +215,7 @@ class Vuelos:
         raise exc.VueloNoEncontradoError("Vuelo no encontrado.")    
 
     @staticmethod
-    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes):
-
-        try:
-            vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos)        
-        except exc.ObjetoNoEncontradoError as e:
-            print(e.mensaje)
-            input("\nPresione Enter para continuar...")
-            return
+    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes,vuelo):
         
         try:
             tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)

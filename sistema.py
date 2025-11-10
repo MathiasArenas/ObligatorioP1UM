@@ -7,9 +7,7 @@ from entidades.tripulante import Tripulante
 from entidades.vuelos import Vuelos
 from entidades.compania import Compania
 from entidades.ticket import Ticket
-from logica.vuelos_logica import VuelosLogica
 from logica.equipaje_logica import EquipajeLogica
-from logica.ticket_logica import TicketLogica
 from excepciones.excepciones import Excepciones as exc
 
 class Sistema:
@@ -108,6 +106,7 @@ class Sistema:
     lista_tripulantes = []
     lista_companias = []
     lista_vuelos = []
+    lista_tickets = []
     lista_tickets_cancelados = []
 
     lista_clientes.extend([cliente1, cliente2, cliente3])
@@ -197,21 +196,24 @@ class Sistema:
                 compania.mostrar_compania()
             case 3:
                 Utiles.cls()
-                vuelo = VuelosLogica.registrar_vuelo(Sistema.lista_companias)
+                vuelo = Vuelos.registrar_vuelo(Sistema.lista_companias)
                 if vuelo is None:
                     # Si no se pudo crear el vuelo (por ejemplo, no hay compañías), volver al menú principal
                     return
                 Sistema.lista_vuelos.append(vuelo)
-                VuelosLogica.mostrar_vuelo(vuelo)
+                Vuelos.mostrar_vuelo(vuelo)
             case 4:
                 Utiles.cls()
-                #ticket = TicketLogica.crear_ticket()
-                ticket = TicketLogica.crear_ticket(Sistema.lista_clientes, Sistema.lista_vuelos)
+                id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
+                ticket = Ticket.crear_ticket(Sistema.lista_clientes, Sistema.lista_vuelos,vuelo)
                 if ticket:
                     Sistema.lista_tickets.append(ticket)
             case 5:
                 Utiles.cls()
-                Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes)                
+                id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
+                Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes,vuelo)                
             case 6:
                 Utiles.cls()
                 equipaje = EquipajeLogica.registrar_equipaje(Sistema.lista_vuelos, Sistema.lista_tickets)
