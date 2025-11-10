@@ -39,7 +39,15 @@ class Ticket:
 
     @vuelo.setter
     def vuelo(self, value):
+        if not isinstance(value, Vuelos):
+            raise TypeError("El vuelo asignado debe ser un objeto de la clase Vuelos.")
         self.__vuelo = value
+
+    def __str__(self):
+        return (f"Ticket ID: {self.id_ticket} - "
+                f"Cliente: {self.cliente.nombre} {self.cliente.apellido}, "
+                f"Estado: {self.estado}, "
+                f"Vuelo ID: {self.vuelo.id_vuelo}")
 
     def crear_ticket(lista_clientes, lista_vuelos, vuelo):
         id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(lista_vuelos)

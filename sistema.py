@@ -69,13 +69,6 @@ class Sistema:
         codigo="AIRLINE002"
     )
 
-    ticket_V1 = Ticket(
-        id_ticket="TCKT001",
-        cliente=cliente1,
-        vuelo="FL001",
-        estado="Activo"
-    )
-
     vuelo1 = Vuelos(
         origen="Montevideo",
         destino="Buenos Aires",
@@ -88,6 +81,15 @@ class Sistema:
         estado_vuelo="Programado",
         tickets = []
     )
+
+    ticket_V1 = Ticket(
+        id_ticket="TCKT001",
+        cliente=cliente1,
+        vuelo= vuelo1,
+        estado="Activo"
+    )
+
+   
     vuelo1.agregar_ticket(ticket_V1)
     vuelo2 = Vuelos(
         origen="Buenos Aires",

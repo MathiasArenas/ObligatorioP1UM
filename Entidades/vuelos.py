@@ -3,7 +3,6 @@ from entidades.compania import Compania
 from utiles import Utiles
 from excepciones.excepciones import Excepciones as exc
 import datetime
-import  datetime
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
@@ -295,4 +294,8 @@ class Vuelos:
             raise exc.CapacidadExcedidaError("No se pueden agregar más tickets, capacidad máxima alcanzada.")
         
         self.__tickets.append(ticket)
-       
+
+    def listar_tickets_por_vuelo(self):
+        print(f"\nTickets para el vuelo {self.id_vuelo}:")
+        for ticket in self.tickets:
+            print(ticket)

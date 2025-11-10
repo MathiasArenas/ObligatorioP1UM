@@ -59,6 +59,8 @@ class Equipaje:
             print("Vuelo no encontrado.")
             input("\nPresione Enter para continuar...")
             return None
+        
+        vuelo.listar_tickets_por_vuelo()   
 
         id_ticket = input("Ingrese el número de ticket: ")
         ticket = next((t for t in lista_tickets if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo), None)
