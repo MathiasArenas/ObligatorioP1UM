@@ -1,3 +1,5 @@
+from utiles import Utiles
+
 class Compania:
     def __init__(self,nombre, pais, codigo):
         self.__nombre = nombre
@@ -24,9 +26,19 @@ class Compania:
     @codigo.setter
     def codigo(self, codigo): 
         self.__codigo = codigo
+        
+    # def validar_compania(self, compania): 
+    #     if compania in Compania.lista_companias:
+    #         return compania   
+    #     else:
+    #         raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}") # revisar luego
 
-    def registrar_compania(self):
-        pass
+    def registrar_compania():
+        nombre = input("Ingrese el nombre de la compañia: ")
+        pais = input("Ingrese el país de la compañia: ")
+        codigo = Utiles().generar_id_unico()
+        compania = Compania(nombre, pais, codigo)
+        return compania
     
     def __str__(self):
         return (f"\nCompañía: {self.nombre} "

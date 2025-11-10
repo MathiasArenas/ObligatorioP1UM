@@ -7,10 +7,7 @@ from entidades.tripulante import Tripulante
 from entidades.vuelos import Vuelos
 from entidades.compania import Compania
 from entidades.ticket import Ticket
-from logica.cliente_logica import ClienteLogica
-from logica.tripulante_logica import TripulanteLogica
 from logica.vuelos_logica import VuelosLogica
-from logica.compania_logica import CompaniaLogica
 from logica.equipaje_logica import EquipajeLogica
 from logica.ticket_logica import TicketLogica
 from excepciones.excepciones import Excepciones as exc
@@ -179,12 +176,12 @@ class Sistema:
                 match opcion_persona:
                     case 1: # Registrar Cliente
                         Utiles.cls()
-                        cliente = ClienteLogica.registrar_persona()
+                        cliente = Cliente.registrar_persona()
                         Sistema.lista_clientes.append(cliente)                        
                         cliente.mostrar_cliente()
                     case 2: # Registrar Tripulante
                         Utiles.cls()
-                        tripulante = TripulanteLogica.registrar_persona()
+                        tripulante = Tripulante.registrar_persona()
                         Sistema.lista_tripulantes.append(tripulante)
                         tripulante.mostrar_tripulante()
                     case 0:
@@ -195,7 +192,7 @@ class Sistema:
                         print("Opción no válida")
             case 2:
                 Utiles.cls()
-                compania =CompaniaLogica.registrar_compania()
+                compania =Compania.registrar_compania()
                 Sistema.lista_companias.append(compania)
                 compania.mostrar_compania()
             case 3:

@@ -1,14 +1,14 @@
-from entidades.cliente import Cliente
+# from entidades.cliente import Cliente
 
-class ClienteLogica:
+# class ClienteLogica:
     
-    def registrar_persona():
-        nombre = input ("Ingrese el nombre del cliente: ")
-        apellido = input ("Ingrese el apellido del cliente: ")
-        documentoId = input ("Ingrese el documento de identidad del cliente: ")
-        email = input ("Ingrese el email del cliente: ")
-        celular = input ("Ingrese el celular del cliente: ")
-        nacionalidad = input ("Ingrese la nacionalidad del cliente: ")
-        cliente = Cliente(nombre, apellido, documentoId, email, celular, nacionalidad,[])
+#     def registrar_persona():
+#         nombre = input ("Ingrese el nombre del cliente: ")
+#         apellido = input ("Ingrese el apellido del cliente: ")
+#         documentoId = input ("Ingrese el documento de identidad del cliente: ")
+#         email = input ("Ingrese el email del cliente: ")
+#         celular = input ("Ingrese el celular del cliente: ")
+#         nacionalidad = input ("Ingrese la nacionalidad del cliente: ")
+#         cliente = Cliente(nombre, apellido, documentoId, email, celular, nacionalidad,[])
         
-        return (cliente)
+#         return (cliente)

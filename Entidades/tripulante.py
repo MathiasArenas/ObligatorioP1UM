@@ -29,8 +29,18 @@ class Tripulante(Persona):
     def horas_vuelo(self, horas_vuelo):
         self.__horas_vuelo = horas_vuelo
     
-    def registrar_persona(self):
-        pass
+    @staticmethod
+    def registrar_persona():
+        nombre = input ("Ingrese el nombre del tripulante: ")
+        apellido = input ("Ingrese el apellido del tripulante: ")
+        documentoId = input ("Ingrese el documento de identidad del tripulante: ")
+        email = input ("Ingrese el email del tripulante: ")
+        celular = input ("Ingrese el celular del tripulante: ")
+        rol = input ("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): ")
+        fecha_ingreso = input ("Ingrese la fecha de ingreso del tripulante (DD/MM/AAAA): ")
+        #horas_vuelo = input ("Ingrese las horas de vuelo del tripulante: ") 
+        tripulante = Tripulante (nombre, apellido, documentoId, email, celular, rol, fecha_ingreso,[]) 
+        return tripulante
 
     def __str__(self):
         return (
