@@ -7,8 +7,8 @@ from entidades.tripulante import Tripulante
 from entidades.vuelos import Vuelos
 from entidades.compania import Compania
 from entidades.ticket import Ticket
-from logica.equipaje_logica import EquipajeLogica
 from excepciones.excepciones import Excepciones as exc
+from entidades.equipaje import Equipaje
 
 class Sistema:
     
@@ -216,7 +216,9 @@ class Sistema:
                 Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes,vuelo)                
             case 6:
                 Utiles.cls()
-                equipaje = EquipajeLogica.registrar_equipaje(Sistema.lista_vuelos, Sistema.lista_tickets)
+                id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
+                equipaje = Equipaje.registrar_equipaje(Sistema.lista_vuelos, Sistema.lista_tickets,vuelo)
                 if equipaje:
                     Sistema.lista_equipajes.append(equipaje)
 

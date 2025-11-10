@@ -11,8 +11,9 @@ from entidades.ticket import Ticket
 #        equipaje.registrar_equipaje()
 #        return ("Equipaje registrado", equipaje.peso_en_kg, equipaje.pasajero, equipaje.vuelo, equipaje.costo)
 
-class EquipajeLogica:
+#class EquipajeLogica:
 
+"""
     def registrar_equipaje(self, codigo_equipaje, peso_en_kg, pasajero, vuelo, costo):
         equipaje = Equipaje(codigo_equipaje, peso_en_kg, pasajero, vuelo, costo)
         equipaje.registrar_equipaje()
@@ -75,3 +76,4 @@ class EquipajeLogica:
         print(equipaje)
         input("\nPresione Enter para continuar...")
         return equipaje
+        """
