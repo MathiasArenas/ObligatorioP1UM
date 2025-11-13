@@ -49,18 +49,16 @@ class Ticket:
                 f"Estado: {self.estado}, "
                 f"Vuelo ID: {self.vuelo.id_vuelo}")
 
-    def crear_ticket(lista_clientes, lista_vuelos, vuelo):
-        id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(lista_vuelos)
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos,id_vuelo)
-        if not vuelo:
-            print("Vuelo no encontrado.")
-            return None
+    def crear_ticket(lista_clientes, vuelo):
+   
         if int(vuelo.capacidad) <= 0:
             print("No hay asientos disponibles en este vuelo.")
             return None
 
-        # Filtrar clientes no asignados al vuelo
-        clientes_disponibles = [c for c in lista_clientes if c not in vuelo.clientes]
+        clientes_disponibles = []
+        for cliente in lista_clientes:            
+            if not any(ticket.cliente.documentoId == cliente.documentoId for ticket in vuelo.tickets):
+                clientes_disponibles.append(cliente)
 
         if not clientes_disponibles:
             print("No hay clientes disponibles para asignar a este vuelo.")
@@ -87,14 +85,13 @@ class Ticket:
             vuelo=vuelo
         )
 
-        # Asignar cliente al vuelo
         vuelo.clientes.append(cliente)
-
-        # Reducir capacidad
         vuelo.capacidad = int(vuelo.capacidad) - 1
+        vuelo.tickets.append(ticket)
 
         print(f"Ticket creado exitosamente para {cliente.nombre} en vuelo {vuelo.id_vuelo}.")
-        print(f"ID Ticket: {id_ticket}")
+        print(f"Ticket: {ticket}")
+        input("Presione Enter para continuar...")
         return ticket
 
     @staticmethod

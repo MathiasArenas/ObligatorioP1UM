@@ -57,6 +57,16 @@ class Sistema:
         fecha_ingreso="2015-03-20",
         horas_vuelo=2500
     )
+    tripulante3 = Tripulante(
+        nombre="Juan",
+        apellido="Mendez",
+        documentoId="99887744",
+        email="juan.mendez@airline.com",
+        celular="095555123",
+        rol="Copiloto",
+        fecha_ingreso="2015-03-20",
+        horas_vuelo=150
+    )
 
     compania1 = Compania(
         nombre="Sky Airlines",
@@ -90,7 +100,8 @@ class Sistema:
     )
 
    
-    vuelo1.agregar_ticket(ticket_V1)
+    # vuelo1.agregar_ticket(ticket_V1)
+    vuelo1.tickets.append(ticket_V1)
     vuelo2 = Vuelos(
         origen="Buenos Aires",
         destino="São Paulo",
@@ -112,7 +123,7 @@ class Sistema:
     lista_tickets_cancelados = []
 
     lista_clientes.extend([cliente1, cliente2, cliente3])
-    lista_tripulantes.extend([tripulante1, tripulante2])
+    lista_tripulantes.extend([tripulante1, tripulante2, tripulante3])
     lista_companias.extend([compania1, compania2])
     lista_vuelos.extend([vuelo1, vuelo2])
 
@@ -206,19 +217,30 @@ class Sistema:
                 Vuelos.mostrar_vuelo(vuelo)
             case 4:
                 Utiles.cls()
-                id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                id_vuelo = input("Ingrese el ID del vuelo para el ticket: ")
                 vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
-                ticket = Ticket.crear_ticket(Sistema.lista_clientes, Sistema.lista_vuelos,vuelo)
-                if ticket:
-                    Sistema.lista_tickets.append(ticket)
+                ticket = Ticket.crear_ticket(Sistema.lista_clientes,vuelo)
+
             case 5:
                 Utiles.cls()
-                id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
-                vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
-                Vuelos.asignar_personal_vuelo(Sistema.lista_vuelos, Sistema.lista_tripulantes,vuelo)                
+                try:
+                    Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                    id_vuelo = input("Ingrese el ID del vuelo para asignar personal: ")
+                    vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
+                    Vuelos.asignar_personal_vuelo(Sistema.lista_tripulantes,vuelo)    
+                
+                except exc.VueloNoEncontradoError as e:
+                    print(f"{e}")
+                except exc.TripulanteYaAsignadoError as e:
+                    print(f"{e}")
+                finally:
+                    input("\nPresione Enter para continuar...")
+                            
             case 6:
                 Utiles.cls()
-                id_vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                id_vuelo = input("Ingrese el ID del vuelo para registrar equipaje: ")
                 vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
                 equipaje = Equipaje.registrar_equipaje(Sistema.lista_vuelos, Sistema.lista_tickets,vuelo)
                 if equipaje:
@@ -226,14 +248,11 @@ class Sistema:
 
             case 7:
                 Utiles.cls()
-                #Vuelos.visualizar_vuelos()
                 Vuelos.visualizar_vuelos(Sistema.lista_vuelos)
 
             case 8:
                 Utiles.cls()
                 try:
-                    if not Sistema.lista_vuelos:
-                        raise exc.ObjetoNoEncontradoError("No hay vuelos registrados.")
 
                     Vuelos.mostrar_lista_vuelos(Sistema.lista_vuelos)
                     id_vuelo = input("Ingrese el ID del vuelo: ")

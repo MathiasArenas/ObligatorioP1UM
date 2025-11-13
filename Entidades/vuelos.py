@@ -199,9 +199,7 @@ class Vuelos:
         for vuelo in lista_vuelos:
             if vuelo.estado_vuelo != "Cancelado" and vuelo.fecha > datetime.datetime.now().strftime("%d/%m/%Y"):
                 print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
-        id_vuelo = input("Ingrese el ID del vuelo que desea seleccionar: ")
-        return id_vuelo
-   
+
     
     @staticmethod
     def buscar_vuelo_por_id(lista_vuelos, id_vuelo):
@@ -212,23 +210,75 @@ class Vuelos:
             if vuelo.id_vuelo.upper() == id_vuelo.upper():
                 return vuelo
 
-        raise exc.VueloNoEncontradoError("Vuelo no encontrado.")    
+        raise exc.VueloNoEncontradoError("Vuelo no encontrado.")
+    
+    @staticmethod
+    def seleccionar_tripulante_por_rol(lista_tripulantes, vuelo, rol):
+        disponibles = [t for t in lista_tripulantes if t.rol == rol and t not in vuelo.tripulantes]
+        if not disponibles:
+            print(f"No hay {rol} disponible para asignar.")
+            return None
+
+        print(f"\nTripulantes disponibles para {rol}:")
+        for i, t in enumerate(disponibles, start=1):
+            print(f"{i}. {t.nombre} - Documento: {t.documentoId}")
+
+        try:
+            indice = int(input(f"Seleccione el número del {rol}: "))
+            return disponibles[indice - 1]
+        except (ValueError, IndexError):
+            print("Selección inválida.")
+            return None
+
 
     @staticmethod
-    def asignar_personal_vuelo(lista_vuelos, lista_tripulantes,vuelo):
-        
-        try:
-            tripulante = Tripulante.validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes)
-        except exc.DatoDuplicadoError as e:
-            print(e.mensaje)
-            input("\nPresione Enter para continuar...")
-            return
+    def asignar_personal_vuelo(lista_tripulantes, vuelo):
+        roles_requeridos = ["Piloto", "Copiloto", "Azafata"]
+        continuar = True
 
-        lista_vuelos[lista_vuelos.index(vuelo)].tripulantes.append(tripulante)
+        while continuar:
+            roles_actuales = {t.rol for t in vuelo.tripulantes}
+            print(f"\nRoles asignados actualmente: {roles_actuales}")
 
-        print(f"Tripulante {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.\n")
-        print(vuelo)
-        input("\nPresione Enter para continuar...")
+            if all(rol in roles_actuales for rol in roles_requeridos):
+                opcion = input("El vuelo ya tiene al menos un Piloto, Copiloto y Azafata. ¿Desea seguir? (S/N): ").strip().upper()
+                continuar = (opcion == "S")
+                if not continuar:
+                    print("Asignación finalizada.")
+                    continue
+
+            print("\nAsignar Tripulante al Vuelo")
+            print("1. Piloto\n2. Copiloto\n3. Azafata")
+            opcion_rol = input("Ingrese el número del rol a asignar: ").strip()
+
+            match opcion_rol:
+                case "1":
+                    rol = "Piloto"
+                    print("Seleccione un Piloto:")
+                    tripulante = Vuelos.seleccionar_tripulante_por_rol(lista_tripulantes, vuelo, rol)
+                case "2":
+                    rol = "Copiloto"
+                    print("Seleccione un Copiloto:")
+                    tripulante = Vuelos.seleccionar_tripulante_por_rol(lista_tripulantes, vuelo, rol)
+                case "3":
+                    rol = "Azafata"
+                    print("Seleccione una Azafata:")
+                    tripulante = Vuelos.seleccionar_tripulante_por_rol(lista_tripulantes, vuelo, rol)
+                case _:
+                    print("Rol inválido.")
+                    continue
+
+            if tripulante:
+                vuelo.tripulantes.append(tripulante)
+                print(f"{rol} {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
+            else:
+                print("\nNo se asignó ningún tripulante.")
+
+            continuar = input("¿Desea asignar otro tripulante? (S/N): ").strip().upper() == "S"
+
+        print("\nAsignación de tripulación finalizada.")
+        input("Presione Enter para continuar...")
+
 
     def asignar_cliente_a_vuelo(lista_clientes):
         pass

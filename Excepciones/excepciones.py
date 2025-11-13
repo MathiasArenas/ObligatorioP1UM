@@ -56,3 +56,6 @@ class Excepciones:
         def __init__(self, mensaje="Tikcet no encontrado"):
             super().__init__(mensaje)
            
+    class TripulanteYaAsignadoError(DatoDuplicadoError):
+        def __init__(self, mensaje="El tripulante ya está asignado a este vuelo"):
+            super().__init__(mensaje)
