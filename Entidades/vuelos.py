@@ -6,7 +6,7 @@ import datetime
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
-                 tickets=None):
+                 tickets=None, causa_cancelacion=None, fecha_cancelacion=None):
         self.__origen = origen
         self.__destino = destino
         self.__duracion = duracion
@@ -20,6 +20,9 @@ class Vuelos:
         self.__clientes = []
         self.__equipajes = []
         self.__tickets = []
+        self.__causa_cancelacion = causa_cancelacion
+        self.__fecha_cancelacion = fecha_cancelacion
+        
 
     @property
     def origen(self):    
@@ -111,6 +114,22 @@ class Vuelos:
     @tickets.setter
     def tickets(self, tickets): 
         self.__tickets = tickets
+        
+    @property
+    def causa_cancelacion(self):
+        return self.__causa_cancelacion
+    
+    @causa_cancelacion.setter
+    def causa_cancelacion(self, causa_cancelacion):
+        self.__causa_cancelacion = causa_cancelacion
+
+    @property
+    def fecha_cancelacion(self):
+        return self.__fecha_cancelacion
+
+    @fecha_cancelacion.setter
+    def fecha_cancelacion(self, fecha_cancelacion):
+        self.__fecha_cancelacion = fecha_cancelacion
 
     def __str__(self):
         return (
@@ -184,13 +203,6 @@ class Vuelos:
             return tipo_vuelo
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
-
-    # @staticmethod
-    # def mostrar_lista_vuelos(lista_vuelos):
-    #     Utiles.cls()
-    #     print("Lista de Vuelos:")
-    #     for vuelo in lista_vuelos:
-    #         Vuelos.mostrar_vuelo(vuelo)  
     
     @staticmethod
     def mostrar_lista_vuelos(lista_vuelos):
@@ -242,14 +254,6 @@ class Vuelos:
             else:
                 print("Número fuera de rango. Intente nuevamente.")
     
-    # @staticmethod
-    # def mostrar_vuelo_para_seleccion(lista_vuelos):
-    #     Utiles.cls()
-    #     print("Vuelos disponibles:")
-    #     for vuelo in lista_vuelos:
-    #         if vuelo.estado_vuelo != "Cancelado" and vuelo.fecha > datetime.datetime.now().strftime("%d/%m/%Y"):
-    #             print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
-
     
     @staticmethod
     def buscar_vuelo_por_id(lista_vuelos, id_vuelo):
@@ -320,6 +324,9 @@ class Vuelos:
 
             if tripulante:
                 vuelo.tripulantes.append(tripulante)
+                
+                # agregar horas voladas al tripulante
+                tripulante.horas_voladas += int(vuelo.duracion)
                 print(f"{rol} {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
             else:
                 print("\nNo se asignó ningún tripulante.")
@@ -404,3 +411,18 @@ class Vuelos:
         print(f"\nEquipajes para el vuelo {self.id_vuelo}:")
         for equipaje in self.equipajes:
             print(equipaje)
+            
+    @staticmethod        
+    def cancelar_vuelo(lista_vuelos):
+        if not lista_vuelos:
+            print("No hay vuelos registrados.")
+            return
+        vuelo_cancelar = input("Seleccione el vuelo a cancelar:")
+        for vuelo in lista_vuelos:
+            print(f"\nID Vuelo: {vuelo.id_vuelo} | Origen: {vuelo.origen} | Destino: {vuelo.destino} | Fecha: {vuelo.fecha} | Compañía: {vuelo.compania.nombre} | Estado: {vuelo.estado_vuelo}")
+
+        vuelo_cancelar.causa_cancelacion = input("Ingrese la causa de la cancelación del vuelo: ")
+        fecha_cancelacion = input("Ingrese la fecha de cancelación (DD/MM/AAAA): ")
+        vuelo.estado_vuelo = "Cancelado"
+        print(f"El vuelo {vuelo_cancelar.id_vuelo} ha sido cancelado por la siguiente causa: {vuelo_cancelar.causa_cancelacion} en la fecha {fecha_cancelacion}.")
+        

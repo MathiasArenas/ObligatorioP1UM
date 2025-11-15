@@ -59,7 +59,7 @@ class Sistema:
     vuelo2 = Vuelos("Buenos Aires", "São Paulo", 2.5, "2026-06-16 14:20", compania2, 2, "Internacional", "FL002", "Activo", [])
     vuelo3 = Vuelos("Santiago", "Lima", 3.0, "2026-06-17 09:00", compania3, 3, "Internacional", "FL003", "Activo", [])
     vuelo4 = Vuelos("Montevideo", "Asunción", 2.0, "2026-06-18 11:45", compania5, 4, "Internacional", "FL004", "Activo", [])
-    vuelo5 = Vuelos("Montevideo", "Punta del Este", 0.75, "2026-06-23 07:30", compania1, 100, "Nacionala", "FL005", "Activo", [])
+    vuelo5 = Vuelos("Montevideo", "Punta del Este", 0.75, "2026-06-23 07:30", compania1, 100, "Nacional", "FL005", "Activo", [])
 
     # Tickets
     ticket_v1_1 = Ticket("TCKT_v1_1", cliente1, vuelo1, "Activo")
