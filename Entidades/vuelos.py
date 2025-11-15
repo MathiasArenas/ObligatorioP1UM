@@ -342,13 +342,13 @@ class Vuelos:
     def asignar_equipaje_a_vuelo(self, equipaje):
         self.__equipajes.append(equipaje)     
         
-    def informe_pasajeros_por_vuelo(lista_vuelos):
-        for vuelo in lista_vuelos:
-            print(f"Vuelo ID: {vuelo.id_vuelo}")
-            print("Pasajeros:")
-            for cliente in vuelo.clientes:
-                print(f" - {cliente.nombre}, {cliente.cedula}, {cliente.nacionalidad}, {cliente.cantidad_equipaje}")
-            print("\n")
+def informe_pasajeros_por_vuelo(lista_vuelos):
+    for vuelo in lista_vuelos:
+        print(f"Vuelo {vuelo.id_vuelo}:")
+        for ticket in vuelo.tickets:
+            cliente = ticket.cliente
+            equipajes = [e for e in vuelo.equipajes if e.pasajero.documentoId == cliente.documentoId]
+            print(f"  {cliente.nombre}, {cliente.documentoId}, {cliente.nacionalidad}, {len(equipajes)} equipaje(s)")
 
     @staticmethod
     def visualizar_vuelos(lista_vuelos):

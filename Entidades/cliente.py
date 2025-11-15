@@ -2,10 +2,11 @@ from entidades.persona import Persona
 from utiles import Utiles
 
 class Cliente(Persona):
-    def __init__(self, nombre, apellido, documentoId, email, celular,nacionalidad,historial_vuelos=None):
+    def __init__(self, nombre, apellido, documentoId, email, celular,nacionalidad,historial_vuelos=None, fecha_ingreso_sistema=None):
         super().__init__(nombre, apellido, documentoId, email, celular)
         self.__nacionalidad = nacionalidad
         self.__historial_vuelos = historial_vuelos if None else []
+        self.__fecha_ingreso_sistema = fecha_ingreso_sistema
         
     @property
     def nacionalidad(self): 
@@ -20,6 +21,14 @@ class Cliente(Persona):
     @historial_vuelos.setter
     def historial_vuelos(self, historial_vuelos):
         self.__historial_vuelos = historial_vuelos
+
+    @property
+    def fecha_ingreso_sistema(self): 
+        return self.__fecha_ingreso_sistema
+    
+    @fecha_ingreso_sistema.setter
+    def fecha_ingreso_sistema(self, fecha_ingreso_sistema):
+        self.__fecha_ingreso_sistema = fecha_ingreso_sistema
 
     def registrar_persona():
         nombre = Utiles.controlar_string (input ("Ingrese el nombre del cliente: "))
