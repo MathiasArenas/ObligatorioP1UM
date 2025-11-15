@@ -185,20 +185,70 @@ class Vuelos:
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
 
+    # @staticmethod
+    # def mostrar_lista_vuelos(lista_vuelos):
+    #     Utiles.cls()
+    #     print("Lista de Vuelos:")
+    #     for vuelo in lista_vuelos:
+    #         Vuelos.mostrar_vuelo(vuelo)  
+    
     @staticmethod
     def mostrar_lista_vuelos(lista_vuelos):
         Utiles.cls()
         print("Lista de Vuelos:")
-        for vuelo in lista_vuelos:
-            Vuelos.mostrar_vuelo(vuelo)   
+
+        if not lista_vuelos:
+            print("No hay vuelos registrados.")
+            return
+
+        for index, vuelo in enumerate(lista_vuelos, start=1):
+            print(
+                f"{index}. ID: {vuelo.id_vuelo} | "
+                f"{vuelo.origen} → {vuelo.destino} | "
+                f"Fecha: {vuelo.fecha} | Estado: {vuelo.estado_vuelo}"
+            )
     
     @staticmethod
     def mostrar_vuelo_para_seleccion(lista_vuelos):
         Utiles.cls()
-        print("Vuelos disponibles:")
-        for vuelo in lista_vuelos:
-            if vuelo.estado_vuelo != "Cancelado" and vuelo.fecha > datetime.datetime.now().strftime("%d/%m/%Y"):
-                print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
+        print("Seleccione un vuelo:\n")
+
+        # Filtrar vuelos válidos: no cancelados y fecha futura
+        vuelos_validos = [
+            v for v in lista_vuelos
+            if v.estado_vuelo != "Cancelado"
+        ]
+
+        if not vuelos_validos:
+            print("No hay vuelos disponibles.")
+            return None
+
+        # Mostrar numerados
+        for index, vuelo in enumerate(vuelos_validos, start=1):
+            print(f"{index}. {vuelo.origen} → {vuelo.destino} | Fecha: {vuelo.fecha} | ID: {vuelo.id_vuelo}")
+
+        # Selección por número
+        while True:
+            seleccion = input("\nIngrese el número del vuelo: ")
+
+            if not seleccion.isdigit():
+                print("Debe ingresar un número.")
+                continue
+
+            seleccion = int(seleccion)
+
+            if 1 <= seleccion <= len(vuelos_validos):
+                return vuelos_validos[seleccion - 1]
+            else:
+                print("Número fuera de rango. Intente nuevamente.")
+    
+    # @staticmethod
+    # def mostrar_vuelo_para_seleccion(lista_vuelos):
+    #     Utiles.cls()
+    #     print("Vuelos disponibles:")
+    #     for vuelo in lista_vuelos:
+    #         if vuelo.estado_vuelo != "Cancelado" and vuelo.fecha > datetime.datetime.now().strftime("%d/%m/%Y"):
+    #             print(f"ID Vuelo: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
 
     
     @staticmethod
