@@ -86,6 +86,8 @@ class Ticket:
         )
 
         vuelo.clientes.append(cliente)
+        # agregar historial al cliente
+        cliente.historial_vuelos.append(vuelo)
         vuelo.capacidad = int(vuelo.capacidad) - 1
         vuelo.tickets.append(ticket)
 
