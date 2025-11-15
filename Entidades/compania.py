@@ -34,8 +34,8 @@ class Compania:
     #         raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}") # revisar luego
 
     def registrar_compania():
-        nombre = input("Ingrese el nombre de la compañia: ")
-        pais = input("Ingrese el país de la compañia: ")
+        nombre = Utiles.controlar_string (input("Ingrese el nombre de la compañia: "))
+        pais = Utiles.controlar_string (input("Ingrese el país de la compañia: "))
         codigo = Utiles().generar_id_unico()
         compania = Compania(nombre, pais, codigo)
         return compania

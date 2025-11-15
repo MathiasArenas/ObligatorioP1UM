@@ -22,12 +22,12 @@ class Cliente(Persona):
         self.__historial_vuelos = historial_vuelos
 
     def registrar_persona():
-        nombre = input ("Ingrese el nombre del cliente: ")
-        apellido = input ("Ingrese el apellido del cliente: ")
-        documentoId = input ("Ingrese el documento de identidad del cliente: ")
-        email = input ("Ingrese el email del cliente: ")
-        celular = input ("Ingrese el celular del cliente: ")
-        nacionalidad = input ("Ingrese la nacionalidad del cliente: ")
+        nombre = Utiles.controlar_string (input ("Ingrese el nombre del cliente: "))
+        apellido = Utiles.controlar_string (input ("Ingrese el apellido del cliente: "))
+        documentoId = Utiles.controlar_numero (input ("Ingrese el documento de identidad del cliente: "))
+        email = Utiles.controlar_email (input ("Ingrese el email del cliente: "))
+        celular = Utiles.controlar_numero (input ("Ingrese el celular del cliente: "))
+        nacionalidad = Utiles.controlar_string (input ("Ingrese la nacionalidad del cliente: "))
         cliente = Cliente(nombre, apellido, documentoId, email, celular, nacionalidad,[])
         
         return (cliente)
