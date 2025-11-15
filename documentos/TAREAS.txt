@@ -17,12 +17,7 @@ Diego
 semana 2
 
 1- controles y exepciones  -- todos
-2- revisa crear ticket  -- mathias
 3- ajuste registrar equipaje -- Horacio
-4 - cancelar ticket --diego
-5 - cancelar vuelo -- ema
-
-seman 3
-
-separar logica a Entidades
-crear datos prueba 
+4 - cancelar ticket --diego vaciar equipaje en bodega
+5 - cancelar vuelo -- ema ?
+6 - crear datos prueba 
