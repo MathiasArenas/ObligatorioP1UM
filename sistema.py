@@ -188,10 +188,14 @@ class Sistema:
                 Vuelos.mostrar_vuelo(vuelo)
             case 4:
                 Utiles.cls()
-                Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
-                id_vuelo = input("Ingrese el ID del vuelo para el ticket: ")
-                vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
-                ticket = Ticket.crear_ticket(Sistema.lista_clientes,vuelo)
+                vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+
+                if vuelo is None:
+                    print("Selección inválida.")
+                    input("Enter para continuar...")
+                    return
+
+                Ticket.crear_ticket(Sistema.lista_clientes, vuelo)
 
             case 5:
                 Utiles.cls()
