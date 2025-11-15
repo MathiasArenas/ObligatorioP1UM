@@ -1,7 +1,4 @@
-import os
-from entidades import equipaje
 from utiles import Utiles
-from entidades.persona import Persona
 from entidades.cliente import Cliente
 from entidades.tripulante import Tripulante
 from entidades.vuelos import Vuelos
@@ -62,35 +59,35 @@ class Sistema:
     vuelo5 = Vuelos("Montevideo", "Punta del Este", 0.75, "2026-06-23 07:30", compania1, 100, "Nacional", "FL005", "Activo", [])
 
     # Tickets
-    ticket_v1_1 = Ticket("TCKT_v1_1", cliente1, vuelo1, "Activo")
+    ticket_v1_1 = Ticket("TCKT_v1_1", cliente1, "Activo", vuelo1, numero_asiento=1)
     vuelo1.tickets.append(ticket_v1_1)
     vuelo1.tripulantes.extend([tripulante1, tripulante2, tripulante3])
 
-    ticket_v1_2 = Ticket("TCKT_v1_2", cliente6, vuelo1, "Activo")
+    ticket_v1_2 = Ticket("TCKT_v1_2", cliente6, "Activo", vuelo1, numero_asiento=2)
     vuelo1.tickets.append(ticket_v1_2)
 
-    ticket_v1_3 = Ticket("TCKT_v1_3", cliente7, vuelo1, "Activo")
+    ticket_v1_3 = Ticket("TCKT_v1_3", cliente7, "Activo", vuelo1, numero_asiento=3)
     vuelo1.tickets.append(ticket_v1_3)
 
-    ticket_v1_4 = Ticket("TCKT_v1_4", cliente5, vuelo1, "Activo")
+    ticket_v1_4 = Ticket("TCKT_v1_4", cliente5, "Activo", vuelo1, numero_asiento=4)
     vuelo1.tickets.append(ticket_v1_4)
 
-    ticket_v2_1 = Ticket("TCKT_v2_1", cliente2, vuelo2, "Activo")
+    ticket_v2_1 = Ticket("TCKT_v2_1", cliente2, "Activo", vuelo2, numero_asiento=1)
     vuelo2.tickets.append(ticket_v2_1)
 
-    ticket_v2_2 = Ticket("TCKT_v2_2", cliente8, vuelo2, "Activo")
-    vuelo1.tickets.append(ticket_v2_2)
+    ticket_v2_2 = Ticket("TCKT_v2_2", cliente8, "Activo", vuelo2, numero_asiento=2)
+    vuelo2.tickets.append(ticket_v2_2)
 
-    ticket_v2_3 = Ticket("TCKT_v2_3", cliente9, vuelo2, "Activo")
+    ticket_v2_3 = Ticket("TCKT_v2_3", cliente9, "Activo", vuelo2, numero_asiento=3)
     vuelo2.tickets.append(ticket_v2_3)
 
-    ticket_v3 = Ticket("TCKT_v3_1", cliente3, vuelo3, "Activo")
+    ticket_v3 = Ticket("TCKT_v3_1", cliente3, "Activo", vuelo3, numero_asiento=1)
     vuelo3.tickets.append(ticket_v3)
 
-    ticket_v3_2 = Ticket("TCKT_v3_2", cliente10, vuelo3, "Activo")
+    ticket_v3_2 = Ticket("TCKT_v3_2", cliente10, "Activo", vuelo3, numero_asiento=2)
     vuelo3.tickets.append(ticket_v3_2)
 
-    ticket_v4_1 = Ticket("TCKT_v4_1", cliente4, vuelo4, "Activo")
+    ticket_v4_1 = Ticket("TCKT_v4_1", cliente4, "Activo", vuelo4, numero_asiento=1)
     vuelo4.tickets.append(ticket_v4_1)
 
     lista_clientes.extend([cliente1, cliente2, cliente3, cliente4, cliente5, cliente6, cliente7, cliente8, cliente9, cliente10])
@@ -131,7 +128,7 @@ class Sistema:
     @staticmethod    
     def menu_tripulante():
         print('1. Piloto')
-        print('2. Copilito')
+        print('2. Copiloto')
         print('3. Azafata')
         print('0. Volver al menú principal\n')
 
@@ -182,7 +179,7 @@ class Sistema:
                 Utiles.cls()
                 vuelo = Vuelos.registrar_vuelo(Sistema.lista_companias)
                 if vuelo is None:
-                    # Si no se pudo crear el vuelo (por ejemplo, no hay compañías), volver al menú principal
+                    
                     return
                 Sistema.lista_vuelos.append(vuelo)
                 Vuelos.mostrar_vuelo(vuelo)
@@ -200,9 +197,7 @@ class Sistema:
             case 5:
                 Utiles.cls()
                 try:
-                    Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
-                    id_vuelo = input("Ingrese el ID del vuelo para asignar personal: ")
-                    vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
+                    vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
                     Vuelos.asignar_personal_vuelo(Sistema.lista_tripulantes,vuelo)    
                 
                 except exc.VueloNoEncontradoError as e:
@@ -214,13 +209,9 @@ class Sistema:
                             
             case 6:
                 Utiles.cls()
-                Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
-                id_vuelo = input("Ingrese el ID del vuelo para registrar equipaje: ")
-                vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
-                equipaje = Equipaje.registrar_equipaje(vuelo)
+                vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                Equipaje.registrar_equipaje(vuelo)
                 vuelo.listar_equipajes_por_vuelo()
-                input("\nPresione Enter para continuar...")
-
 
             case 7:
                 Utiles.cls()
@@ -230,19 +221,12 @@ class Sistema:
                 Utiles.cls()
                 try:
 
-                    Vuelos.mostrar_lista_vuelos(Sistema.lista_vuelos)
-                    id_vuelo = input("Ingrese el ID del vuelo: ")
-                    vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos, id_vuelo)
-
-                    id_cliente = input("Ingrese el ID del cliente para cancelar ticket: ")
-                    Ticket.buscar_cliente_en_vuelo(vuelo, id_cliente)
-
-                    id_ticket = input("Ingrese ID del ticket: ")
-                    ticket = Ticket.cancelar_ticket(vuelo, id_cliente, id_ticket)
+                    vuelo = Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
+                    ticket = Ticket.mostrar_ticket_para_seleccion_y_cancelar(vuelo)
+                        
                     Sistema.lista_tickets_cancelados.append(ticket)
 
                     print(f"Ticket cancelado")
-                    input("\nPresione Enter para continuar...")
 
                 except exc.VueloNoEncontradoError as e:
                     print(f"{e}")

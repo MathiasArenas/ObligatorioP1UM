@@ -1,5 +1,3 @@
-from entidades.vuelos import Vuelos
-
 class Equipaje:
     def __init__(self, codigo_equipaje, peso_en_kg, pasajero, vuelo, costo):
         self.__codigo_equipaje = codigo_equipaje
@@ -57,15 +55,14 @@ class Equipaje:
         vuelo.listar_tickets_por_vuelo()   
 
         id_ticket = input("Ingrese el número de ticket: ")
+        ticket = None
         for t in vuelo.tickets:
-            if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo:
+            if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo and t.estado != "Cancelado":
                 ticket = t
                 break
-        else:
-            ticket = None
 
         if not ticket or not ticket.cliente:
-            print("Ticket inválido o sin cliente asignado.")
+            print("Ticket inválido, cancelado o sin cliente asignado.")
             input("\nPresione Enter para continuar...")
             return None
 
@@ -80,6 +77,11 @@ class Equipaje:
             input("\nPresione Enter para continuar...")
             return None
 
+        if any(e.pasajero.documentoId == ticket.cliente.documentoId for e in vuelo.equipajes):
+            print("Este pasajero ya tiene un equipaje registrado para este vuelo.")
+            input("\nPresione Enter para continuar...")
+            return None
+
         tipo = vuelo.tipo_vuelo.lower()
         costo = 0
 
@@ -90,8 +92,7 @@ class Equipaje:
         elif 33 <= peso <= 45:
             costo = 200 if tipo == "internacional" else 60
 
-        
-        codigo_equipaje = f"{vuelo.id_vuelo}-{ticket.id_ticket}"
+        codigo_equipaje = f"{vuelo.id_vuelo}-{ticket.numero_asiento if getattr(ticket, 'numero_asiento', None) is not None else ticket.id_ticket}"
 
         equipaje = Equipaje(
             codigo_equipaje=codigo_equipaje,
@@ -101,9 +102,8 @@ class Equipaje:
             costo=costo
         )
 
-        vuelo.asignar_equipaje_a_vuelo(equipaje)
+        vuelo.equipajes.append(equipaje)
 
         print("\nEquipaje registrado exitosamente:")
         print(equipaje)
         input("\nPresione Enter para continuar...")
-        return equipaje

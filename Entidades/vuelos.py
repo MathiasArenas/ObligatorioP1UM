@@ -1,8 +1,6 @@
-from entidades.tripulante import Tripulante
 from entidades.compania import Compania  
 from utiles import Utiles
 from excepciones.excepciones import Excepciones as exc
-import datetime
 
 class Vuelos:
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
@@ -12,18 +10,17 @@ class Vuelos:
         self.__duracion = duracion
         self.__fecha = fecha
         self.__compania = compania
-        self.__capacidad = capacidad
+        self.__capacidad_total = int(capacidad)
         self.__tipo_vuelo = tipo_vuelo
         self.__id_vuelo = id_vuelo
         self.__estado_vuelo = estado_vuelo
         self.__tripulantes = []
-        self.__clientes = []
         self.__equipajes = []
         self.__tickets = []
+        self.__clientes = []
         self.__causa_cancelacion = causa_cancelacion
         self.__fecha_cancelacion = fecha_cancelacion
         
-
     @property
     def origen(self):    
         return self.__origen
@@ -60,10 +57,19 @@ class Vuelos:
 
     @property
     def capacidad(self):
-        return self.__capacidad
+        return self.__capacidad_total
     @capacidad.setter
     def capacidad(self, capacidad): 
-        self.__capacidad = capacidad
+        self.__capacidad_total = int(capacidad)
+
+    @property
+    def capacidad_total(self):
+        return self.__capacidad_total
+
+    @property
+    def asientos_libres(self):
+        ocupados = len([t for t in self.__tickets if t.estado != "Cancelado"])
+        return max(self.__capacidad_total - ocupados, 0)
     
     @property
     def tipo_vuelo(self):
@@ -138,7 +144,7 @@ class Vuelos:
             f"Destino: {self.destino},"
             f"Duración: {self.duracion} horas,"
             f"Fecha: {self.fecha},"
-            f"Compañía: {self.compania},"
+            f"Compañía: {getattr(self.compania, 'nombre', self.compania)},"
             f"Capacidad: {self.capacidad} pasajeros,"
             f"Tipo de Vuelo: {self.tipo_vuelo},"
             f"Estado del Vuelo: {self.estado_vuelo},"
@@ -198,9 +204,10 @@ class Vuelos:
     
     @staticmethod
     def validar_tipo_vuelo(tipo_vuelo):
-        tipos_validos = ['nacional', 'internacional']
-        if tipo_vuelo.lower() in tipos_validos:
-            return tipo_vuelo
+        tipos_validos = { 'nacional': 'Nacional', 'internacional': 'Internacional' }
+        clave = tipo_vuelo.lower()
+        if clave in tipos_validos:
+            return tipos_validos[clave]
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
     
@@ -225,7 +232,6 @@ class Vuelos:
         Utiles.cls()
         print("Seleccione un vuelo:\n")
 
-        # Filtrar vuelos válidos: no cancelados y fecha futura
         vuelos_validos = [
             v for v in lista_vuelos
             if v.estado_vuelo != "Cancelado"
@@ -235,11 +241,9 @@ class Vuelos:
             print("No hay vuelos disponibles.")
             return None
 
-        # Mostrar numerados
         for index, vuelo in enumerate(vuelos_validos, start=1):
             print(f"{index}. {vuelo.origen} → {vuelo.destino} | Fecha: {vuelo.fecha} | ID: {vuelo.id_vuelo}")
 
-        # Selección por número
         while True:
             seleccion = input("\nIngrese el número del vuelo: ")
 
@@ -325,8 +329,10 @@ class Vuelos:
             if tripulante:
                 vuelo.tripulantes.append(tripulante)
                 
-                # agregar horas voladas al tripulante
-                tripulante.horas_voladas += int(vuelo.duracion)
+                try:
+                    tripulante.horas_vuelo = float(tripulante.horas_vuelo) + float(vuelo.duracion)
+                except Exception:
+                    pass
                 print(f"{rol} {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
             else:
                 print("\nNo se asignó ningún tripulante.")
@@ -339,23 +345,89 @@ class Vuelos:
 
     def asignar_cliente_a_vuelo(lista_clientes):
         pass
+    
     def asignar_equipaje_a_vuelo(self, equipaje):
         self.__equipajes.append(equipaje)     
-        
-def informe_pasajeros_por_vuelo(lista_vuelos):
-    for vuelo in lista_vuelos:
-        print(f"Vuelo {vuelo.id_vuelo}:")
-        for ticket in vuelo.tickets:
-            cliente = ticket.cliente
-            equipajes = [e for e in vuelo.equipajes if e.pasajero.documentoId == cliente.documentoId]
-            print(f"  {cliente.nombre}, {cliente.documentoId}, {cliente.nacionalidad}, {len(equipajes)} equipaje(s)")
+    
+    @staticmethod
+    def informe_pasajeros_por_vuelo(lista_vuelos):
+        Utiles.cls()
+        print("Informe de pasajeros por vuelo:")
+        for vuelo in lista_vuelos:
+            print(f"\nVuelo {vuelo.id_vuelo} ({vuelo.origen} → {vuelo.destino})")
+            if not vuelo.tickets:
+                print("  - Sin tickets")
+                continue
+            for ticket in vuelo.tickets:
+                if ticket.estado == "Cancelado":
+                    continue
+                cliente = ticket.cliente
+                equipajes = [e for e in vuelo.equipajes if e.pasajero.documentoId == cliente.documentoId]
+                print(f"  - Asiento {getattr(ticket, 'numero_asiento', 'N/A')}: {cliente.nombre} ({cliente.documentoId}), {getattr(cliente, 'nacionalidad', 'N/A')}, {len(equipajes)} equipaje(s)")
+        input("\nPresione Enter para continuar...")
 
     @staticmethod
     def visualizar_vuelos(lista_vuelos):
-        Vuelos.mostrar_lista_vuelos(lista_vuelos)
+        Utiles.cls()
+        
+        if not lista_vuelos:
+            print("No hay vuelos registrados.")
+            input("\nPresione Enter para continuar...")
+            return
+        
+        print("Seleccione un vuelo para ver detalles:\n")
+        
+        for index, vuelo in enumerate(lista_vuelos, start=1):
+            print(f"{index}. ID: {vuelo.id_vuelo} | {vuelo.origen} → {vuelo.destino} | Fecha: {vuelo.fecha} | Estado: {vuelo.estado_vuelo}")
+        
+        while True:
+            seleccion = input("\nIngrese el número del vuelo (0 para volver): ")
+            
+            if seleccion == "0":
+                return
+                
+            if not seleccion.isdigit():
+                print("Debe ingresar un número.")
+                continue
+            
+            seleccion = int(seleccion)
+            
+            if 1 <= seleccion <= len(lista_vuelos):
+                vuelo = lista_vuelos[seleccion - 1]
+                break
+            else:
+                print("Número fuera de rango. Intente nuevamente.")
+        
+        Utiles.cls()
+        print("Detalle del vuelo:")
+        print("-"*60)
+        print(f"Vuelo {vuelo.id_vuelo} | {vuelo.origen} → {vuelo.destino} | Fecha: {vuelo.fecha} | Estado: {vuelo.estado_vuelo}")
+        print(f"Compañía: {getattr(vuelo.compania,'nombre', vuelo.compania)} | Capacidad Total: {vuelo.capacidad_total} | Asientos libres: {vuelo.asientos_libres}")
+        
+        if vuelo.tripulantes:
+            roles = {"Piloto": [], "Copiloto": [], "Azafata": []}
+            for t in vuelo.tripulantes:
+                roles.setdefault(t.rol, []).append(f"{t.nombre} {t.apellido}")
+            print("Tripulación:")
+            for rol, personas in roles.items():
+                if personas:
+                    print(f"  {rol}: "+ ", ".join(personas))
+        else:
+            print("Sin tripulación asignada.")
+        
+        activos = [t for t in vuelo.tickets if t.estado != "Cancelado"]
+        if activos:
+            print("Pasajeros:")
+            for t in sorted(activos, key=lambda x: (x.numero_asiento or 0)):
+                c = t.cliente
+                print(f"  Asiento {t.numero_asiento}: {c.nombre} {c.apellido} ({c.documentoId})")
+        else:
+            print("Sin pasajeros.")
+        
+        print("-"*60)
         input("\nPresione Enter para continuar...")
 
-        
+    @staticmethod
     def informe_personal_asignado(lista_vuelos):
         Utiles.cls()
         print("Informe de personal asignado por vuelo:")
@@ -363,16 +435,17 @@ def informe_pasajeros_por_vuelo(lista_vuelos):
             print(f"\nVuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}")
             if vuelo.tripulantes:
                 for tripulante in vuelo.tripulantes:
-                    print(f"  - Tripulante Documento: {tripulante.documentoId}, Nombre: {tripulante.nombre} {tripulante.apellido}, Rol: {tripulante.rol}")
+                    print(f"  - Documento: {tripulante.documentoId}, Nombre: {tripulante.nombre} {tripulante.apellido}, Rol: {tripulante.rol}")
             else:
                 print("  No hay tripulantes asignados a este vuelo.")
         input("\nPresione Enter para continuar...")
 
+    @staticmethod
     def informe_vuelos_por_compania(lista_vuelos):
         Utiles.cls()
         companias_vuelos = {}
         for vuelo in lista_vuelos:
-            nombre_compania = vuelo.compania.nombre
+            nombre_compania = getattr(vuelo.compania, 'nombre', 'N/A')
             if nombre_compania not in companias_vuelos:
                 companias_vuelos[nombre_compania] = []
             companias_vuelos[nombre_compania].append(vuelo)
@@ -384,6 +457,7 @@ def informe_pasajeros_por_vuelo(lista_vuelos):
                 print(f"  - Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Estado: {vuelo.estado_vuelo}")
         input("\nPresione Enter para continuar...")
 
+    @staticmethod
     def informe_vuelos_cancelados(lista_vuelos):
         Utiles.cls()
         print("Informe de vuelos cancelados:")
@@ -392,20 +466,36 @@ def informe_pasajeros_por_vuelo(lista_vuelos):
             print("No hay vuelos cancelados.")
         else:
             for vuelo in vuelos_cancelados:
-                print(f"Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, Fecha: {vuelo.fecha}, Compañía: {vuelo.compania.nombre}, Causa de Cancelación: {getattr(vuelo, 'causa_cancelacion', 'N/A')}")
+                pasajeros_afectados = sum(1 for t in vuelo.tickets if t.estado != "Cancelado")
+                print(
+                    f"Vuelo ID: {vuelo.id_vuelo}, Origen: {vuelo.origen}, Destino: {vuelo.destino}, "
+                    f"Fecha: {vuelo.fecha}, Compañía: {getattr(vuelo.compania, 'nombre', 'N/A')}, "
+                    f"Causa: {getattr(vuelo, 'causa_cancelacion', 'N/A')}, Pasajeros afectados: {pasajeros_afectados}"
+                )
         input("\nPresione Enter para continuar...")
 
     
     def agregar_ticket(self, ticket):
-        if len(self.__tickets) >= self.__capacidad:
+        if len([t for t in self.__tickets if t.estado != "Cancelado"]) >= self.__capacidad_total:
             raise exc.CapacidadExcedidaError("No se pueden agregar más tickets, capacidad máxima alcanzada.")
-        
         self.__tickets.append(ticket)
 
     def listar_tickets_por_vuelo(self):
         print(f"\nTickets para el vuelo {self.id_vuelo}:")
-        for ticket in self.tickets:
-            print(ticket)
+        tickets_activos = [t for t in self.tickets if t.estado != "Cancelado"]
+        tickets_cancelados = [t for t in self.tickets if t.estado == "Cancelado"]
+        
+        if tickets_activos:
+            print("\n--- Tickets Activos ---")
+            for ticket in tickets_activos:
+                print(ticket)
+        else:
+            print("  No hay tickets activos.")
+            
+        if tickets_cancelados:
+            print("\n--- Tickets Cancelados ---")
+            for ticket in tickets_cancelados:
+                print(ticket)
             
     def listar_equipajes_por_vuelo(self):
         print(f"\nEquipajes para el vuelo {self.id_vuelo}:")
@@ -417,12 +507,86 @@ def informe_pasajeros_por_vuelo(lista_vuelos):
         if not lista_vuelos:
             print("No hay vuelos registrados.")
             return
-        vuelo_cancelar = input("Seleccione el vuelo a cancelar:")
-        for vuelo in lista_vuelos:
-            print(f"\nID Vuelo: {vuelo.id_vuelo} | Origen: {vuelo.origen} | Destino: {vuelo.destino} | Fecha: {vuelo.fecha} | Compañía: {vuelo.compania.nombre} | Estado: {vuelo.estado_vuelo}")
 
-        vuelo_cancelar.causa_cancelacion = input("Ingrese la causa de la cancelación del vuelo: ")
-        fecha_cancelacion = input("Ingrese la fecha de cancelación (DD/MM/AAAA): ")
-        vuelo.estado_vuelo = "Cancelado"
-        print(f"El vuelo {vuelo_cancelar.id_vuelo} ha sido cancelado por la siguiente causa: {vuelo_cancelar.causa_cancelacion} en la fecha {fecha_cancelacion}.")
-        
+        Vuelos.mostrar_lista_vuelos(lista_vuelos)
+        id_vuelo = input("\nIngrese el ID del vuelo a cancelar: ")
+        try:
+            origen = Vuelos.buscar_vuelo_por_id(lista_vuelos, id_vuelo)
+        except exc.VueloNoEncontradoError as e:
+            print(str(e))
+            input("\nPresione Enter para continuar...")
+            return
+
+        if origen.estado_vuelo == "Cancelado":
+            print("El vuelo ya está cancelado.")
+            input("\nPresione Enter para continuar...")
+            return
+
+        print("\nVuelos disponibles para reasignar (excluye cancelados y el mismo vuelo):")
+        destinos = [v for v in lista_vuelos if v.id_vuelo != origen.id_vuelo and v.estado_vuelo != "Cancelado"]
+        if not destinos:
+            print("No hay vuelos destino disponibles para la reasignación.")
+            input("\nPresione Enter para continuar...")
+            return
+        for i, v in enumerate(destinos, start=1):
+            print(f"{i}. {v.id_vuelo} | {v.origen} → {v.destino} | {v.fecha} | Libres: {v.asientos_libres}")
+        try:
+            idx = int(input("Seleccione el número del vuelo destino: "))
+            destino = destinos[idx-1]
+        except (ValueError, IndexError):
+            print("Selección inválida.")
+            input("\nPresione Enter para continuar...")
+            return
+
+        tickets_activos_origen = [t for t in origen.tickets if t.estado != "Cancelado"]
+        if destino.asientos_libres < len(tickets_activos_origen):
+            print("El vuelo destino no tiene asientos suficientes para reasignar a todos los pasajeros.")
+            input("\nPresione Enter para continuar...")
+            return
+
+        causa = input("Ingrese la causa de la cancelación del vuelo: ")
+        fecha_canc = Utiles.controlar_fecha(input("Ingrese la fecha de cancelación (DD/MM/AAAA): "))
+        origen.causa_cancelacion = causa
+        origen.fecha_cancelacion = fecha_canc
+        origen.estado_vuelo = "Cancelado"
+
+        for t in origen.tripulantes:
+            if all(t.documentoId != d.documentoId for d in destino.tripulantes):
+                destino.tripulantes.append(t)
+
+        def siguiente_asiento(dest):
+            ocupados = {tt.numero_asiento for tt in dest.tickets if tt.estado != "Cancelado" and tt.numero_asiento is not None}
+            for n in range(1, dest.capacidad_total + 1):
+                if n not in ocupados:
+                    return n
+            return None
+
+        a_mover = list(tickets_activos_origen)
+        for t in a_mover:
+            t.estado = "Cancelado"
+            
+            from entidades.ticket import Ticket
+            nuevo_asiento = siguiente_asiento(destino)
+            nuevo_ticket = Ticket(
+                id_ticket=Utiles().generar_id_unico(),
+                cliente=t.cliente,
+                estado="Activo",
+                vuelo=destino,
+                numero_asiento=nuevo_asiento
+            )
+            destino.tickets.append(nuevo_ticket)
+            
+            for e in list(origen.equipajes):
+                if e.pasajero.documentoId == t.cliente.documentoId:
+                    if e in origen.equipajes:
+                        origen.equipajes.remove(e)
+                    e.vuelo = destino
+                    
+                    if nuevo_asiento is not None:
+                        e.codigo_equipaje = f"{destino.id_vuelo}-{nuevo_asiento}"
+                    destino.equipajes.append(e)
+
+        print(
+            f"El vuelo {origen.id_vuelo} ha sido cancelado y todos los pasajeros y equipajes fueron reasignados al vuelo {destino.id_vuelo}."
+        )
+        input("\nPresione Enter para continuar...")

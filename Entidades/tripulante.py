@@ -38,7 +38,8 @@ class Tripulante(Persona):
         celular = Utiles.controlar_numero (input ("Ingrese el celular del tripulante: "))
         rol = Utiles.controlar_string (input ("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): "))
         fecha_ingreso = Utiles.controlar_fecha (input ("Ingrese la fecha de ingreso del tripulante (DD/MM/AAAA): "))
-        tripulante = Tripulante (nombre, apellido, documentoId, email, celular, rol, fecha_ingreso,[]) 
+        horas_vuelo = Utiles.controlar_numero (input ("Ingrese la cantidad de horas de vuelo acumuladas: "))
+        tripulante = Tripulante (nombre, apellido, documentoId, email, celular, rol, fecha_ingreso, horas_vuelo) 
         return tripulante
 
     def __str__(self):
@@ -50,7 +51,7 @@ class Tripulante(Persona):
 
     def mostrar_tripulante(self):
         Utiles.cls()
-        print("\Tripulante registrado exitosamente:")
+        print("\nTripulante registrado exitosamente:")
         print(self)
         input("\nPresione Enter para continuar...")
 

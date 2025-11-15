@@ -27,11 +27,11 @@ class Compania:
     def codigo(self, codigo): 
         self.__codigo = codigo
         
-    # def validar_compania(self, compania): 
-    #     if compania in Compania.lista_companias:
-    #         return compania   
-    #     else:
-    #         raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}") # revisar luego
+    def validar_compania(self, compania): 
+        if compania in Compania.lista_companias:
+            return compania   
+        else:
+            raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}")
 
     def registrar_compania():
         nombre = Utiles.controlar_string (input("Ingrese el nombre de la compañia: "))

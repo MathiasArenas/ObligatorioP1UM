@@ -1,5 +1,5 @@
-import os # Importar el módulo 'os' para operaciones del sistema
-import re # Importar el módulo 're' para expresiones regulares
+import os 
+import re
 
 class Utiles:
     def __init__(self):
@@ -46,8 +46,6 @@ class Utiles:
     
     @staticmethod
     def controlar_email(entrada):
-        # Expresión regular simple para validar email
-        # Este patrón verifica que el email tenga un formato básico correcto
         patron = r'^[\w\.-]+@[\w\.-]+\.\w+$'
 
         while True:
@@ -55,3 +53,8 @@ class Utiles:
                 return entrada
             else:
                 entrada = input("Email inválido. Ingrese un email válido (ej: ejemplo@correo.com): ")
+
+    @staticmethod
+    def obtener_fecha_actual():
+        from datetime import datetime
+        return datetime.now().strftime("%d/%m/%Y")
