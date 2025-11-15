@@ -282,8 +282,8 @@ class Vuelos:
 
     def asignar_cliente_a_vuelo(lista_clientes):
         pass
-    def asignar_equipaje_a_vuelo(lista_equipajes):
-        pass      
+    def asignar_equipaje_a_vuelo(self, equipaje):
+        self.__equipajes.append(equipaje)     
         
     def informe_pasajeros_por_vuelo(lista_vuelos):
         for vuelo in lista_vuelos:
@@ -349,3 +349,8 @@ class Vuelos:
         print(f"\nTickets para el vuelo {self.id_vuelo}:")
         for ticket in self.tickets:
             print(ticket)
+            
+    def listar_equipajes_por_vuelo(self):
+        print(f"\nEquipajes para el vuelo {self.id_vuelo}:")
+        for equipaje in self.equipajes:
+            print(equipaje)
