@@ -242,9 +242,10 @@ class Sistema:
                 Vuelos.mostrar_vuelo_para_seleccion(Sistema.lista_vuelos)
                 id_vuelo = input("Ingrese el ID del vuelo para registrar equipaje: ")
                 vuelo = Vuelos.buscar_vuelo_por_id(Sistema.lista_vuelos,id_vuelo)
-                equipaje = Equipaje.registrar_equipaje(Sistema.lista_vuelos, Sistema.lista_tickets,vuelo)
-                if equipaje:
-                    Sistema.lista_equipajes.append(equipaje)
+                equipaje = Equipaje.registrar_equipaje(vuelo)
+                vuelo.listar_equipajes_por_vuelo()
+                input("\nPresione Enter para continuar...")
+
 
             case 7:
                 Utiles.cls()

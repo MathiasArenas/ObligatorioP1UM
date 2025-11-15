@@ -52,18 +52,17 @@ class Equipaje:
 
     
 
-    def registrar_equipaje(lista_vuelos, lista_tickets,vuelo):
-        vuelo = Vuelos.buscar_vuelo_por_id(lista_vuelos,vuelo.id_vuelo)
-
-        if not vuelo:
-            print("Vuelo no encontrado.")
-            input("\nPresione Enter para continuar...")
-            return None
-        
+    def registrar_equipaje(vuelo):
+              
         vuelo.listar_tickets_por_vuelo()   
 
         id_ticket = input("Ingrese el número de ticket: ")
-        ticket = next((t for t in lista_tickets if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo), None)
+        for t in vuelo.tickets:
+            if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo:
+                ticket = t
+                break
+        else:
+            ticket = None
 
         if not ticket or not ticket.cliente:
             print("Ticket inválido o sin cliente asignado.")
@@ -102,7 +101,7 @@ class Equipaje:
             costo=costo
         )
 
-        vuelo.equipajes.append(equipaje)
+        vuelo.asignar_equipaje_a_vuelo(equipaje)
 
         print("\nEquipaje registrado exitosamente:")
         print(equipaje)
