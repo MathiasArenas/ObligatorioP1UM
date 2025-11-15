@@ -158,10 +158,10 @@ class Vuelos:
             input("\nPresione Enter para continuar...")
             return None
 
-        origen = input("Ingrese el origen del vuelo: ")
-        destino = input("Ingrese el destino del vuelo: ")
-        duracion = input("Ingrese la duración del vuelo (en horas): ")
-        fecha = input("Ingrese la fecha del vuelo (DD/MM/AAAA): ")
+        origen = Utiles.controlar_string (input("Ingrese el origen del vuelo: "))
+        destino = Utiles.controlar_string (input("Ingrese el destino del vuelo: "))
+        duracion = Utiles.controlar_numero (input("Ingrese la duración del vuelo (en horas): "))
+        fecha = Utiles.controlar_fecha (input("Ingrese la fecha del vuelo (DD/MM/AAAA): "))
 
         print("\nCompañías disponibles:")
         for idx, comp in enumerate(lista_companias):
@@ -174,8 +174,8 @@ class Vuelos:
         except (ValueError, IndexError):
             raise ValueError("Selección inválida de compañía.")
 
-        capacidad = input("Ingrese la capacidad del vuelo: ")
-        tipo_vuelo = input("Ingrese el tipo de vuelo (Nacional/Internacional): ")
+        capacidad = Utiles.controlar_numero (input("Ingrese la capacidad del vuelo: "))
+        tipo_vuelo = Utiles.controlar_string (input("Ingrese el tipo de vuelo (Nacional/Internacional): "))
         id_vuelo = Utiles().generar_id_unico()
         estado_vuelo = "Activo"
 
@@ -198,8 +198,8 @@ class Vuelos:
     
     @staticmethod
     def validar_tipo_vuelo(tipo_vuelo):
-        tipos_validos = ['Nacional', 'Internacional']
-        if tipo_vuelo in tipos_validos:
+        tipos_validos = ['nacional', 'internacional']
+        if tipo_vuelo.lower() in tipos_validos:
             return tipo_vuelo
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
