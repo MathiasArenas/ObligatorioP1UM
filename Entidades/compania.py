@@ -1,4 +1,5 @@
 from utiles import Utiles
+from excepciones.excepciones import Excepciones
 
 class Compania:
     def __init__(self,nombre, pais, codigo):
@@ -33,10 +34,14 @@ class Compania:
         else:
             raise ValueError(f"Compania '{compania}' no es válido. Debe ser uno de {Compania.lista_companias}")
 
-    def registrar_compania():
+    def registrar_compania(lista_companias):
         nombre = Utiles.controlar_string (input("Ingrese el nombre de la compañia: "))
         pais = Utiles.controlar_string (input("Ingrese el país de la compañia: "))
         codigo = Utiles().generar_id_unico()
+        for comp in lista_companias:
+            if comp.codigo == codigo:
+                raise Excepciones.DatoDuplicadoError(f"El Tripulante con documento {codigo} ya existe.")
+            
         compania = Compania(nombre, pais, codigo)
         return compania
     

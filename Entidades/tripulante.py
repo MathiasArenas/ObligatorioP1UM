@@ -30,10 +30,14 @@ class Tripulante(Persona):
         self.__horas_vuelo = horas_vuelo
     
     @staticmethod
-    def registrar_persona():
+    def registrar_persona(lista_tripulantes):
         nombre = Utiles.controlar_string (input ("Ingrese el nombre del tripulante: "))
         apellido = Utiles.controlar_string (input ("Ingrese el apellido del tripulante: "))
         documentoId = Utiles.controlar_numero (input ("Ingrese el documento de identidad del tripulante: "))
+        for t in lista_tripulantes:
+            if t.documentoId == documentoId:
+                raise Excepciones.DatoDuplicadoError(f"El Tripulante con documento {documentoId} ya existe.")
+            
         email = Utiles.controlar_email (input ("Ingrese el email del tripulante: "))
         celular = Utiles.controlar_numero (input ("Ingrese el celular del tripulante: "))
         rol = Utiles.controlar_string (input ("Ingrese el rol del tripulante (Piloto, Copiloto, Azafata): "))

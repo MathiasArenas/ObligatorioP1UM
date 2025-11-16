@@ -165,9 +165,13 @@ class Sistema:
                             input("\nPresione Enter para continuar...")
                     case 2: # Registrar Tripulante
                         Utiles.cls()
-                        tripulante = Tripulante.registrar_persona()
-                        Sistema.lista_tripulantes.append(tripulante)
-                        tripulante.mostrar_tripulante()
+                        try:
+                            tripulante = Tripulante.registrar_persona(Sistema.lista_tripulantes)
+                            Sistema.lista_tripulantes.append(tripulante)
+                            tripulante.mostrar_tripulante()
+                        except exc.DatoDuplicadoError as e:
+                            print(f"{e}")
+                            input("\nPresione Enter para continuar...")
                     case 0:
                         Utiles.cls()
                         Sistema.menu()
@@ -176,9 +180,13 @@ class Sistema:
                         print("Opción no válida")
             case 2:
                 Utiles.cls()
-                compania =Compania.registrar_compania()
-                Sistema.lista_companias.append(compania)
-                compania.mostrar_compania()
+                try:
+                    compania =Compania.registrar_compania(Sistema.lista_companias)
+                    Sistema.lista_companias.append(compania)
+                    compania.mostrar_compania()
+                except exc.DatoDuplicadoError as e:
+                    print(f"{e}")
+                    input("\nPresione Enter para continuar...")
             case 3:
                 Utiles.cls()
                 vuelo = Vuelos.registrar_vuelo(Sistema.lista_companias)
