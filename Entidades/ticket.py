@@ -184,3 +184,20 @@ class Ticket:
                 return ticket
             else:
                 print("Número fuera de rango. Intente nuevamente.")
+    
+    def listar_tickets_por_vuelo(self):
+        print("\n--- TICKETS DISPONIBLES PARA ESTE VUELO ---")
+
+        if not self.tickets:
+            print("No hay tickets para este vuelo.")
+            return
+
+        for t in self.tickets:
+            if t.estado != "Cancelado":
+                print(
+                    f"\nID Ticket: {t.id_ticket}\n"
+                    f"Cliente: {t.cliente.nombre} {t.cliente.apellido} - CI: {t.cliente.documentoId}\n"
+                    f"Estado: {t.estado}\n"
+                    f"Asiento: {getattr(t, 'numero_asiento', 'No asignado')}\n"
+                    f"Vuelo: {self.id_vuelo} ({self.origen} -> {self.destino})"
+                )

@@ -54,15 +54,34 @@ class Equipaje:
     @staticmethod
     def registrar_equipaje(vuelo):
         ex = Excepciones()
+         
+         # Obtener los tickets activos del vuelo
+        tickets_activos = [t for t in vuelo.tickets if t.estado != "Cancelado"]
               
-        vuelo.listar_tickets_por_vuelo()   
+        if not tickets_activos:
+            print("No hay tickets activos para este vuelo.")
+            input("\nPresione Enter para continuar...")
+            return None
 
-        id_ticket = input("Ingrese el número de ticket: ")
-        ticket = None
-        for t in vuelo.tickets:
-            if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo and t.estado != "Cancelado":
-                ticket = t
-                break
+        print("\n--- Tickets activos del vuelo ---")
+
+        # Mostrar tickets con más información
+        for i, t in enumerate(tickets_activos, 1):
+            print(
+                f"{i}. {t.id_ticket} - {t.cliente.nombre} {t.cliente.apellido},"
+                f"Estado: {t.estado},"
+                f" Asiento: {getattr(t, 'numero_asiento', 'No asignado')},"
+                f" Vuelo: {t.vuelo.id_vuelo} ({t.vuelo.origen} -> {t.vuelo.destino})\n"
+            )
+
+        # Selección del ticket
+        try:
+            indice = int(input("\nSeleccione el ticket por número: "))
+            ticket = tickets_activos[indice - 1]
+        except (ValueError, IndexError):
+            print("Selección inválida.")
+            input("\nPresione Enter para continuar...")
+            return None
         try:
             if not ticket:
                 raise Excepciones.TicketNoEncontradoError("El ticket no existe o no pertenece al vuelo.")
