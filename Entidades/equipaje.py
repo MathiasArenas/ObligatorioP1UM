@@ -1,3 +1,5 @@
+from excepciones.excepciones import Excepciones
+
 class Equipaje:
     def __init__(self, codigo_equipaje, peso_en_kg, pasajero, vuelo, costo):
         self.__codigo_equipaje = codigo_equipaje
@@ -49,8 +51,9 @@ class Equipaje:
             f"Peso: {self.peso_en_kg}kg, Costo: USD {self.costo}")
 
     
-
+    @staticmethod
     def registrar_equipaje(vuelo):
+        ex = Excepciones()
               
         vuelo.listar_tickets_por_vuelo()   
 
@@ -60,25 +63,36 @@ class Equipaje:
             if t.id_ticket == id_ticket and t.vuelo.id_vuelo == vuelo.id_vuelo and t.estado != "Cancelado":
                 ticket = t
                 break
+        try:
+            if not ticket:
+                raise Excepciones.TicketNoEncontradoError("El ticket no existe o no pertenece al vuelo.")
 
-        if not ticket or not ticket.cliente:
-            print("Ticket inválido, cancelado o sin cliente asignado.")
+            if not ticket.cliente:
+                raise Excepciones.AsignacionError("El ticket no tiene un pasajero asignado.")
+        except Exception as e:
+            print(f"\nError: {e}")
             input("\nPresione Enter para continuar...")
             return None
 
         try:
             peso = float(input("Ingrese el peso del equipaje en kg: "))
         except ValueError:
-            print("Peso inválido.")
+            print("Debe ingresar un número válido.")
             return None
-
-        if peso > 45:
-            print("No se admite equipaje mayor a 45kg.")
+        
+        try:
+            if peso > 45:
+                raise Excepciones.CapacidadExcedidaError("El equipaje no puede superar los 45 kg.")
+        except Exception as e:
+            print(f"\nError: {e}")
             input("\nPresione Enter para continuar...")
             return None
-
-        if any(e.pasajero.documentoId == ticket.cliente.documentoId for e in vuelo.equipajes):
-            print("Este pasajero ya tiene un equipaje registrado para este vuelo.")
+        
+        try:
+            if any(e.pasajero.documentoId == ticket.cliente.documentoId for e in vuelo.equipajes):
+                raise Excepciones.DatoDuplicadoError("Este pasajero ya tiene un equipaje registrado.")
+        except Exception as e:
+            print(f"\nError: {e}")
             input("\nPresione Enter para continuar...")
             return None
 
