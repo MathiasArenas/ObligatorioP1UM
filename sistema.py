@@ -156,9 +156,13 @@ class Sistema:
                 match opcion_persona:
                     case 1: # Registrar Cliente
                         Utiles.cls()
-                        cliente = Cliente.registrar_persona()
-                        Sistema.lista_clientes.append(cliente)                        
-                        cliente.mostrar_cliente()
+                        try:
+                            cliente = Cliente.registrar_persona(Sistema.lista_clientes)
+                            Sistema.lista_clientes.append(cliente)                        
+                            cliente.mostrar_cliente()
+                        except exc.DatoDuplicadoError as e:
+                            print(f"{e}")
+                            input("\nPresione Enter para continuar...")
                     case 2: # Registrar Tripulante
                         Utiles.cls()
                         tripulante = Tripulante.registrar_persona()

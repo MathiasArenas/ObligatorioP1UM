@@ -1,4 +1,5 @@
 from entidades.persona import Persona
+from excepciones.excepciones import Excepciones
 from utiles import Utiles
 
 class Cliente(Persona):
@@ -30,10 +31,23 @@ class Cliente(Persona):
     def fecha_ingreso_sistema(self, fecha_ingreso_sistema):
         self.__fecha_ingreso_sistema = fecha_ingreso_sistema
 
-    def registrar_persona():
-        nombre = Utiles.controlar_string (input ("Ingrese el nombre del cliente: "))
-        apellido = Utiles.controlar_string (input ("Ingrese el apellido del cliente: "))
-        documentoId = Utiles.controlar_numero (input ("Ingrese el documento de identidad del cliente: "))
+    @staticmethod
+    def registrar_persona(lista_clientes):
+        nombre = Utiles.controlar_string(input("Ingrese el nombre del cliente: "))
+        apellido = Utiles.controlar_string(input("Ingrese el apellido del cliente: "))
+        documentoId = Utiles.controlar_numero(input("Ingrese el documento de identidad del cliente: "))
+
+        for c in lista_clientes:
+            if c.documentoId == documentoId:
+                raise Excepciones.DatoDuplicadoError(f"El cliente con documento {documentoId} ya existe.")
+        
+        email = Utiles.controlar_email(input("Ingrese el email del cliente: "))
+        celular = Utiles.controlar_numero(input("Ingrese el celular del cliente: "))
+        nacionalidad = Utiles.controlar_string(input("Ingrese la nacionalidad del cliente: "))
+
+        cliente = Cliente(nombre, apellido, documentoId, email, celular, nacionalidad, [])
+        return cliente
+        
         email = Utiles.controlar_email (input ("Ingrese el email del cliente: "))
         celular = Utiles.controlar_numero (input ("Ingrese el celular del cliente: "))
         nacionalidad = Utiles.controlar_string (input ("Ingrese la nacionalidad del cliente: "))

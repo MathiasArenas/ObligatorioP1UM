@@ -22,7 +22,7 @@ class Excepciones:
 
     class FechaInvalidaError(ValidacionError):
         """Excepción para fechas inválidas"""
-        def __init__(self, mensaje="La fecha no tiene el formato correcto (AAAA-MM-DD)"):
+        def __init__(self, mensaje="La fecha no tiene el formato correcto (DD/MM/AA)"):
             super().__init__(mensaje)
 
     class DatoDuplicadoError(ValidacionError):
