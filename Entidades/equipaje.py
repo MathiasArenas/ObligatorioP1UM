@@ -71,7 +71,7 @@ class Equipaje:
                 f"{i}. {t.id_ticket} - {t.cliente.nombre} {t.cliente.apellido},"
                 f"Estado: {t.estado},"
                 f" Asiento: {getattr(t, 'numero_asiento', 'No asignado')},"
-                f" Vuelo: {t.vuelo.id_vuelo} ({t.vuelo.origen} -> {t.vuelo.destino})\n"
+                f" Vuelo: {t.vuelo.id_vuelo} ({t.vuelo.origen} -> {t.vuelo.destino})"
             )
 
         # Selección del ticket
