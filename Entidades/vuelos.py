@@ -3,6 +3,25 @@ from utiles import Utiles
 from excepciones.excepciones import Excepciones as exc
 
 class Vuelos:
+    CIUDADES_PAISES = {
+        'montevideo': 'Uruguay',
+        'punta del este': 'Uruguay',
+        'buenos aires': 'Argentina',
+        'córdoba': 'Argentina',
+        'mendoza': 'Argentina',
+        'rosario': 'Argentina',
+        'são paulo': 'Brasil',
+        'rio de janeiro': 'Brasil',
+        'brasilia': 'Brasil',
+        'porto alegre': 'Brasil',
+        'santiago': 'Chile',
+        'lima': 'Perú',
+        'asunción': 'Paraguay',
+        'bogotá': 'Colombia',
+        'medellín': 'Colombia',
+        'quito': 'Ecuador',
+        'ciudad de méxico': 'México'
+          }
     def __init__(self, origen,destino,duracion,fecha,compania,capacidad,tipo_vuelo,id_vuelo,estado_vuelo,
                  tickets=None, causa_cancelacion=None, fecha_cancelacion=None):
         self.__origen = origen
@@ -157,7 +176,7 @@ class Vuelos:
     def mostrar_vuelo(self):
         print(self)
 
-    def registrar_vuelo(lista_companias):
+    def registrar_vuelo(lista_companias, lista_vuelos):
         
         if not lista_companias:
             print("No hay compañías registradas. Debe crear al menos una compañía antes de crear un vuelo.")
@@ -181,11 +200,28 @@ class Vuelos:
             raise ValueError("Selección inválida de compañía.")
 
         capacidad = Utiles.controlar_numero (input("Ingrese la capacidad del vuelo: "))
-        tipo_vuelo = Utiles.controlar_string (input("Ingrese el tipo de vuelo (Nacional/Internacional): "))
-        id_vuelo = Utiles().generar_id_unico()
+        
+        tipo_vuelo_auto = Vuelos.determinar_tipo_vuelo(origen, destino)
+        if tipo_vuelo_auto:
+            print(f"\nTipo de vuelo detectado automáticamente: {tipo_vuelo_auto}")
+            confirmar = input("¿Es correcto? (S/N): ").strip().upper()
+            if confirmar == "S":
+                tipo_vuelo = tipo_vuelo_auto
+            else:
+                tipo_vuelo = Utiles.controlar_string(input("Ingrese el tipo de vuelo (Nacional/Internacional): "))
+                tipo_vuelo = Vuelos.validar_tipo_vuelo(tipo_vuelo)
+        else:
+            print("\nNo se pudo determinar automáticamente el tipo de vuelo.")
+            tipo_vuelo = Utiles.controlar_string(input("Ingrese el tipo de vuelo (Nacional/Internacional): "))
+            tipo_vuelo = Vuelos.validar_tipo_vuelo(tipo_vuelo)
+        
         estado_vuelo = "Activo"
-
-        tipo_vuelo = Vuelos.validar_tipo_vuelo(tipo_vuelo)
+        
+        id_vuelo = f"VL{len(lista_vuelos) + 1:03d}"
+        
+        for v in lista_vuelos:
+            if v.id_vuelo == id_vuelo:
+                raise exc.DatoDuplicadoError(f"El vuelo con ID {id_vuelo} ya existe.")
 
         vuelo = Vuelos(
             origen=origen,
@@ -203,6 +239,21 @@ class Vuelos:
         return vuelo
     
     @staticmethod
+    def determinar_tipo_vuelo(origen, destino):
+        origen_lower = origen.lower().strip()
+        destino_lower = destino.lower().strip()
+        
+        pais_origen = Vuelos.CIUDADES_PAISES.get(origen_lower)
+        pais_destino = Vuelos.CIUDADES_PAISES.get(destino_lower)
+        
+        if pais_origen and pais_destino:
+            if pais_origen == pais_destino:
+                return 'Nacional'
+            else:
+                return 'Internacional'
+        return None
+    
+    @staticmethod
     def validar_tipo_vuelo(tipo_vuelo):
         tipos_validos = { 'nacional': 'Nacional', 'internacional': 'Internacional' }
         clave = tipo_vuelo.lower()
@@ -210,6 +261,16 @@ class Vuelos:
             return tipos_validos[clave]
         else:
             raise ValueError(f"Tipo de vuelo inválido. Los tipos válidos son: {', '.join(tipos_validos)}")
+    
+    def validar_tripulacion_completa(self):
+        roles_actuales = {t.rol for t in self.tripulantes}
+        roles_requeridos = {"Piloto", "Copiloto", "Azafata"}
+        return roles_requeridos.issubset(roles_actuales)
+    
+    def obtener_roles_faltantes(self):
+        roles_actuales = {t.rol for t in self.tripulantes}
+        roles_requeridos = {"Piloto", "Copiloto", "Azafata"}
+        return roles_requeridos - roles_actuales
     
     @staticmethod
     def mostrar_lista_vuelos(lista_vuelos):
@@ -331,9 +392,11 @@ class Vuelos:
                 
                 try:
                     tripulante.horas_vuelo = float(tripulante.horas_vuelo) + float(vuelo.duracion)
-                except Exception:
-                    pass
-                print(f"{rol} {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
+                    print(f"{rol} {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
+                    print(f"Horas de vuelo actualizadas: {tripulante.horas_vuelo}")
+                except (ValueError, TypeError) as e:
+                    print(f"{rol} {tripulante.nombre} asignado al vuelo {vuelo.id_vuelo}.")
+                    print(f"Advertencia: No se pudieron actualizar las horas de vuelo. Error: {e}")
             else:
                 print("\nNo se asignó ningún tripulante.")
 
@@ -341,13 +404,6 @@ class Vuelos:
 
         print("\nAsignación de tripulación finalizada.")
         input("Presione Enter para continuar...")
-
-
-    def asignar_cliente_a_vuelo(lista_clientes):
-        pass
-    
-    def asignar_equipaje_a_vuelo(self, equipaje):
-        self.__equipajes.append(equipaje)     
     
     @staticmethod
     def informe_pasajeros_por_vuelo(lista_vuelos):
@@ -403,6 +459,10 @@ class Vuelos:
         print("-"*60)
         print(f"Vuelo {vuelo.id_vuelo} | {vuelo.origen} → {vuelo.destino} | Fecha: {vuelo.fecha} | Estado: {vuelo.estado_vuelo}")
         print(f"Compañía: {getattr(vuelo.compania,'nombre', vuelo.compania)} | Capacidad Total: {vuelo.capacidad_total} | Asientos libres: {vuelo.asientos_libres}")
+        
+        if not vuelo.validar_tripulacion_completa():
+            roles_faltantes = vuelo.obtener_roles_faltantes()
+            print(f"\n⚠️  ADVERTENCIA: Tripulación incompleta. Faltan: {', '.join(roles_faltantes)}")
         
         if vuelo.tripulantes:
             roles = {"Piloto": [], "Copiloto": [], "Azafata": []}
@@ -506,41 +566,63 @@ class Vuelos:
     def cancelar_vuelo(lista_vuelos):
         if not lista_vuelos:
             print("No hay vuelos registrados.")
+            input("\nPresione Enter para continuar...")
             return
 
-        Vuelos.mostrar_lista_vuelos(lista_vuelos)
-        id_vuelo = input("\nIngrese el ID del vuelo a cancelar: ")
+        # Mostrar vuelos activos para seleccionar
+        vuelos_activos = [v for v in lista_vuelos if v.estado_vuelo != "Cancelado"]
+        if not vuelos_activos:
+            print("No hay vuelos activos para cancelar.")
+            input("\nPresione Enter para continuar...")
+            return
+
+        print("Seleccione el vuelo a cancelar:\n")
+        for i, v in enumerate(vuelos_activos, start=1):
+            print(f"{i}. {v.id_vuelo} | {v.origen} → {v.destino} | {v.fecha} | Pasajeros: {len([t for t in v.tickets if t.estado != 'Cancelado'])}")
+
         try:
-            origen = Vuelos.buscar_vuelo_por_id(lista_vuelos, id_vuelo)
-        except exc.VueloNoEncontradoError as e:
-            print(str(e))
-            input("\nPresione Enter para continuar...")
-            return
-
-        if origen.estado_vuelo == "Cancelado":
-            print("El vuelo ya está cancelado.")
-            input("\nPresione Enter para continuar...")
-            return
-
-        print("\nVuelos disponibles para reasignar (excluye cancelados y el mismo vuelo):")
-        destinos = [v for v in lista_vuelos if v.id_vuelo != origen.id_vuelo and v.estado_vuelo != "Cancelado"]
-        if not destinos:
-            print("No hay vuelos destino disponibles para la reasignación.")
-            input("\nPresione Enter para continuar...")
-            return
-        for i, v in enumerate(destinos, start=1):
-            print(f"{i}. {v.id_vuelo} | {v.origen} → {v.destino} | {v.fecha} | Libres: {v.asientos_libres}")
-        try:
-            idx = int(input("Seleccione el número del vuelo destino: "))
-            destino = destinos[idx-1]
+            seleccion = int(input("\nIngrese el número del vuelo a cancelar: "))
+            origen = vuelos_activos[seleccion - 1]
         except (ValueError, IndexError):
             print("Selección inválida.")
             input("\nPresione Enter para continuar...")
             return
 
+        # Buscar vuelos con mismo origen y destino para reasignar
+        vuelos_compatibles = [
+            v for v in lista_vuelos 
+            if v.id_vuelo != origen.id_vuelo 
+            and v.estado_vuelo != "Cancelado"
+            and v.origen.lower() == origen.origen.lower()
+            and v.destino.lower() == origen.destino.lower()
+        ]
+
+        if not vuelos_compatibles:
+            print(f"\nNo se puede cancelar el vuelo.")
+            print(f"No hay otros vuelos activos con el mismo origen ({origen.origen}) y destino ({origen.destino}) para reasignar a los pasajeros.")
+            input("\nPresione Enter para continuar...")
+            return
+
         tickets_activos_origen = [t for t in origen.tickets if t.estado != "Cancelado"]
-        if destino.asientos_libres < len(tickets_activos_origen):
-            print("El vuelo destino no tiene asientos suficientes para reasignar a todos los pasajeros.")
+        
+        # Verificar que al menos un vuelo compatible tenga suficientes asientos
+        vuelos_con_capacidad = [v for v in vuelos_compatibles if v.asientos_libres >= len(tickets_activos_origen)]
+        
+        if not vuelos_con_capacidad:
+            print(f"\nNo se puede cancelar el vuelo.")
+            print(f"Ningún vuelo compatible tiene suficientes asientos libres para reasignar a los {len(tickets_activos_origen)} pasajeros.")
+            input("\nPresione Enter para continuar...")
+            return
+
+        print(f"\nVuelos disponibles para reasignar ({origen.origen} → {origen.destino}):")
+        for i, v in enumerate(vuelos_con_capacidad, start=1):
+            print(f"{i}. {v.id_vuelo} | Fecha: {v.fecha} | Libres: {v.asientos_libres} | Compañía: {getattr(v.compania, 'nombre', 'N/A')}")
+        
+        try:
+            idx = int(input("\nSeleccione el número del vuelo destino: "))
+            destino = vuelos_con_capacidad[idx-1]
+        except (ValueError, IndexError):
+            print("Selección inválida.")
             input("\nPresione Enter para continuar...")
             return
 
@@ -567,8 +649,9 @@ class Vuelos:
             
             from entidades.ticket import Ticket
             nuevo_asiento = siguiente_asiento(destino)
+            nuevo_id_ticket = f"TKT_{destino.id_vuelo}_{len(destino.tickets) + 1:03d}"
             nuevo_ticket = Ticket(
-                id_ticket=Utiles().generar_id_unico(),
+                id_ticket=nuevo_id_ticket,
                 cliente=t.cliente,
                 estado="Activo",
                 vuelo=destino,

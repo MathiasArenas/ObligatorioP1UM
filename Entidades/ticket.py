@@ -60,6 +60,16 @@ class Ticket:
                 f"Asiento: {self.numero_asiento}")
 
     def crear_ticket(lista_clientes, vuelo):
+        
+        if not vuelo.validar_tripulacion_completa():
+            roles_faltantes = vuelo.obtener_roles_faltantes()
+            print(f"\nADVERTENCIA: Este vuelo no tiene tripulación completa.")
+            print(f"Faltan: {', '.join(roles_faltantes)}")
+            confirmar = input("¿Desea crear el ticket de todos modos? (S/N): ").strip().upper()
+            if confirmar != "S":
+                print("Creación de ticket cancelada.")
+                input("Presione Enter para continuar...")
+                return None
    
         if int(vuelo.asientos_libres) <= 0:
             print("No hay asientos disponibles en este vuelo.")
@@ -86,7 +96,7 @@ class Ticket:
             print("Selección inválida.")
             return None
 
-        id_ticket = Utiles().generar_id_unico()
+        id_ticket = f"TKT_{vuelo.id_vuelo}_{len(vuelo.tickets) + 1:03d}"
         estado = "Activo"
 
         ocupados = {t.numero_asiento for t in vuelo.tickets if t.estado != "Cancelado" and t.numero_asiento is not None}
@@ -109,9 +119,11 @@ class Ticket:
         )
 
         vuelo.clientes.append(cliente)
-        if getattr(cliente, 'fecha_ingreso_sistema', None) in (None, "", 0):
+        
+        if cliente.fecha_ingreso_sistema is None:
             from datetime import datetime
             cliente.fecha_ingreso_sistema = datetime.now().strftime("%d/%m/%Y")
+        
         cliente.historial_vuelos.append(vuelo)
         vuelo.tickets.append(ticket)
 
@@ -119,35 +131,6 @@ class Ticket:
         print(f"Ticket: {ticket}")
         input("Presione Enter para continuar...")
         return ticket
-
-    @staticmethod
-    def cancelar_ticket(vuelo, id_cliente, id_ticket):
-        if not vuelo.tickets:
-            raise exc.TicketNoEncontradoError("El vuelo seleccionado no tiene tickets registrados.")
-
-        for ticket in vuelo.tickets:
-            if (
-                ticket.estado != "Cancelado"
-                and ticket.id_ticket.upper() == id_ticket.upper()
-                and ticket.cliente.documentoId.upper() == id_cliente.upper()
-            ):
-                ticket.estado = "Cancelado"
-                for e in vuelo.equipajes:
-                    if e.pasajero.documentoId.upper() == id_cliente.upper():
-                        vuelo.equipajes.remove(e)
-                        break
-                return ticket
-
-        raise exc.TicketNoEncontradoError("Ticket no encontrado o ya cancelado.")
-
-
-    @staticmethod
-    def buscar_cliente_en_vuelo(vuelo, id_cliente):
-        for ticket in vuelo.tickets:
-            if ticket.estado != "Cancelado" and ticket.cliente.documentoId.upper() == id_cliente.upper():
-                return ticket.cliente
-            
-        raise exc.ClienteNoEncontradoError(f"El cliente {id_cliente} no existe en vuelo {vuelo.id_vuelo}.")
     
     @staticmethod
     def mostrar_ticket_para_seleccion_y_cancelar(vuelo):
@@ -184,20 +167,3 @@ class Ticket:
                 return ticket
             else:
                 print("Número fuera de rango. Intente nuevamente.")
-    
-    def listar_tickets_por_vuelo(self):
-        print("\n--- TICKETS DISPONIBLES PARA ESTE VUELO ---")
-
-        if not self.tickets:
-            print("No hay tickets para este vuelo.")
-            return
-
-        for t in self.tickets:
-            if t.estado != "Cancelado":
-                print(
-                    f"\nID Ticket: {t.id_ticket}\n"
-                    f"Cliente: {t.cliente.nombre} {t.cliente.apellido} - CI: {t.cliente.documentoId}\n"
-                    f"Estado: {t.estado}\n"
-                    f"Asiento: {getattr(t, 'numero_asiento', 'No asignado')}\n"
-                    f"Vuelo: {self.id_vuelo} ({self.origen} -> {self.destino})"
-                )

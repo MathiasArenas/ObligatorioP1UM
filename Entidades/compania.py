@@ -37,10 +37,11 @@ class Compania:
     def registrar_compania(lista_companias):
         nombre = Utiles.controlar_string (input("Ingrese el nombre de la compañia: "))
         pais = Utiles.controlar_string (input("Ingrese el país de la compañia: "))
-        codigo = Utiles().generar_id_unico()
+        codigo = f"COMP{len(lista_companias) + 1:03d}"
+        
         for comp in lista_companias:
             if comp.codigo == codigo:
-                raise Excepciones.DatoDuplicadoError(f"El Tripulante con documento {codigo} ya existe.")
+                raise Excepciones.DatoDuplicadoError(f"La compañía con código {codigo} ya existe.")
             
         compania = Compania(nombre, pais, codigo)
         return compania

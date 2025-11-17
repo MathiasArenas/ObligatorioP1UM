@@ -73,29 +73,3 @@ class Tripulante(Persona):
                 return tripulante
         return None
     
-    @staticmethod
-    def validar_tripulante_para_vuelo(vuelo, lista_vuelos, lista_tripulantes):
-        Utiles.cls()
-        Tripulante.mostrar_lista_tripulantes(lista_tripulantes)
-
-        documentoId = input("Ingrese el documento del tripulante: ")
-        tripulante = Tripulante.buscar_tripulante_por_id(lista_tripulantes, documentoId)
-
-        if not tripulante:
-            raise Excepciones.ObjetoNoEncontradoError(f"No se encontró el tripulante con documento {documentoId}.")
-        else:
-            disponible = Tripulante.verificar_disponibilidad_tripulante(vuelo, documentoId, lista_vuelos)
-            if not disponible:
-                raise Excepciones.DatoDuplicadoError(f"El tripulante {documentoId} está asignado en vuelo {vuelo.id_vuelo} - destino {vuelo.destino}.")
-            
-        return tripulante
-    
-    @staticmethod
-    def verificar_disponibilidad_tripulante(vuelo, documentoId, lista_vuelos):        
-        for v in lista_vuelos:
-            if vuelo.fecha == v.fecha:               
-                for tripulante in v.tripulantes:
-                    if tripulante.documentoId == documentoId:
-                        return False
-        return True
-    
