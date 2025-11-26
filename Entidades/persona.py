@@ -1,5 +1,7 @@
+# Importa herramientas para crear clases abstractas
 from abc import ABC, abstractmethod
 
+# Clase abstracta Persona: sirve como base para otras clases (Cliente, Tripulante, etc.)
 class Persona(ABC):
     def __init__(self, nombre, apellido, documentoId, email, celular):
         self.__nombre = nombre
@@ -8,6 +10,8 @@ class Persona(ABC):
         self.__email = email
         self.__celular = celular
         
+    #getters y setters
+    
     @property
     def nombre(self): 
         return self.__nombre
@@ -43,10 +47,12 @@ class Persona(ABC):
     def celular(self, celular): 
         self.__celular = celular
         
+    # Método abstracto: obliga a las clases hijas a implementar su propia forma de registrar personas
     @abstractmethod
     def registrar_persona(self):
         pass
 
+    # Representación en formato string de la persona (lo que se imprime)
     def __str__(self):
         return (
             f"\nNombre: {self.nombre},"
